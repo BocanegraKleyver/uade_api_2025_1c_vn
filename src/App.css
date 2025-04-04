@@ -5,6 +5,9 @@
   flex-direction: column;
   background-color: #f8f4e9;
   color: #2c1810;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .App-logo {
@@ -26,6 +29,11 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header h1 {
@@ -33,15 +41,29 @@
   font-size: 2.5rem;
   font-family: 'Playfair Display', serif;
   letter-spacing: 1px;
+  padding: 0 1rem;
+  word-wrap: break-word;
+  text-align: center;
+  max-width: 100%;
+}
+
+.header nav {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .header nav ul {
   list-style: none;
   padding: 0;
-  margin: 1rem 0 0 0;
+  margin: 0;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
 }
 
 .header nav a {
@@ -51,6 +73,10 @@
   transition: color 0.3s ease;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+  white-space: nowrap;
+  display: inline-block;
+  min-width: 120px;
+  text-align: center;
 }
 
 .header nav a:hover {
@@ -64,6 +90,7 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .hero {
@@ -72,6 +99,8 @@
   padding: 3rem;
   margin-bottom: 2rem;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero h2 {
@@ -86,6 +115,8 @@
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .menu-section h2 {
@@ -112,6 +143,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 
 .menu-item {
@@ -123,6 +155,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .menu-item:hover {
@@ -157,6 +191,8 @@
   color: #f8f4e9;
   padding: 1rem;
   margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @keyframes App-logo-spin {
@@ -168,19 +204,42 @@
   }
 }
 
+/* Estilos para tablets */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 1.5rem;
+  }
+  
+  .menu-items {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Estilos para tablets pequeñas y móviles grandes */
 @media (max-width: 768px) {
   .header {
     padding: 1rem;
+    flex-direction: column;
+    align-items: center;
   }
 
   .header h1 {
     font-size: 1.8rem;
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .header nav {
+    margin-top: 0.5rem;
+    width: 100%;
   }
 
   .header nav ul {
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 0.5rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   .header nav a {
@@ -188,6 +247,8 @@
     padding: 0.8rem;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
+    width: 100%;
+    min-width: auto;
   }
 
   .main-content {
@@ -236,6 +297,7 @@
   }
 }
 
+/* Estilos para móviles pequeños */
 @media (max-width: 480px) {
   .header h1 {
     font-size: 1.5rem;
@@ -247,5 +309,13 @@
 
   .menu-section h2 {
     font-size: 1.3rem;
+  }
+  
+  .menu-item {
+    padding: 0.8rem;
+  }
+  
+  .price {
+    font-size: 1rem;
   }
 }
