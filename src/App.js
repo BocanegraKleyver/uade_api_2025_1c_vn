@@ -62,15 +62,18 @@ function App() {
               title="Flan Casero"
               description="Con dulce de leche y crema"
               price="$400"
+              isVegetarian={false}
             />
             <MenuItem 
               title="Tiramisú"
               description="Clásico postre italiano"
               price="$450"
+              isVegetarian={false}
             />
             <MenuItem 
               title="Helado Artesanal"
               description="3 bochas a elección"
+              image="https://img.freepik.com/foto-gratis/tres-bolas-helado-fresa-vainilla-cafe-cubierto-jarabe-chocolate_141793-476.jpg"
               price="$350"
             />
           </div>
