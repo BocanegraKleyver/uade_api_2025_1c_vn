@@ -80,7 +80,7 @@
 }
 
 .header nav a:hover {
-  color: #d4a373;
+  color: #aa914a;
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -175,6 +175,15 @@
   font-size: 0.9rem;
 }
 
+.menu-item img {
+  width: 75%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0 auto 1rem auto;
+  display: block;
+  object-fit: cover
+}
+
 .price {
   display: block;
   color: #d4a373;
@@ -204,7 +213,7 @@
   }
 }
 
-/* Estilos para tablets */
+
 @media (max-width: 1024px) {
   .main-content {
     padding: 1.5rem;
@@ -213,9 +222,16 @@
   .menu-items {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
+  .menu-item img {
+    width: 75%;
+    height: auto;
+    border-radius: 8px;
+    margin: 0 auto 1rem auto;
+    display: block;
+  }
 }
 
-/* Estilos para tablets pequeñas y móviles grandes */
+
 @media (max-width: 768px) {
   .header {
     padding: 1rem;
@@ -247,8 +263,11 @@
     padding: 0.8rem;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
-    width: 100%;
     min-width: auto;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
   }
 
   .main-content {
@@ -295,9 +314,15 @@
     font-size: 1.1rem;
     margin-top: 0.5rem;
   }
+  .menu-item img {
+    width: 75%;
+    height: auto;
+    border-radius: 8px;
+    margin: 0 auto 1rem auto;
+    display: block;
+  }
 }
 
-/* Estilos para móviles pequeños */
 @media (max-width: 480px) {
   .header h1 {
     font-size: 1.5rem;
@@ -317,5 +342,12 @@
   
   .price {
     font-size: 1rem;
+  }
+  .menu-item img {
+    width: 75%;
+    height: auto;
+    border-radius: 8px;
+    margin: 0 auto 1rem auto;
+    display: block;
   }
 }
