@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 
 function MenuItem({ title, description, price, image, isVegetarian }) {
   return (
@@ -12,4 +12,20 @@ function MenuItem({ title, description, price, image, isVegetarian }) {
   );
 }
 
-export default MenuItem; 
+export default MenuItem; */
+
+
+import React from 'react';
+
+const MenuItem = ({ item }) => {
+  return (
+    <div style={{ borderBottom: '1px solid #ccc', marginBottom: '1.5rem', paddingBottom: '1rem' }}>
+      <h3>{item.nombre} - ${item.precio}</h3>
+      <p><strong>{item.descripcion}</strong></p>
+      <p><em>Ingredientes:</em> {item.ingredientes.join(', ')}</p>
+      <p><em>Alérgenos:</em> {item.alergenos.join(', ')}</p>
+    </div>
+  );
+};
+
+export default MenuItem;

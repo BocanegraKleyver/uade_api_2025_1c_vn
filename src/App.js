@@ -1,4 +1,4 @@
-import './App.css';
+/*import './App.css';
 import Header from './components/layout/Header';
 import MenuItem from './components/menu/MenuItem';
 
@@ -116,5 +116,25 @@ function App() {
     </div>
   );
 }
+
+export default App;
+*/
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/layout/Header";
+import Menu from "./pages/Menu";
+import PlatoDetalle from "./pages/PlatoDetalle";
+
+const App = () => {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Menu />} />
+        <Route path="/plato/:nombre" element={<PlatoDetalle />} />
+      </Routes>
+    </>
+  );
+};
 
 export default App;

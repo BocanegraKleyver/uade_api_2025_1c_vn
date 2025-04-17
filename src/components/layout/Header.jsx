@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 
 function Header() {
   return (
@@ -16,4 +16,23 @@ function Header() {
   );
 }
 
-export default Header; 
+export default Header; */
+
+import React from 'react';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+
+const Header = () => {
+  return (
+    <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
+      <Toolbar>
+        <Box sx={{ width: '100%', textAlign: 'center' }}>
+          <Typography variant="h5" component="div">
+            Sabores Urbanos
+          </Typography>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
