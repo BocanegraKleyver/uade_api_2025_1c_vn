@@ -30,18 +30,18 @@ const imagenes = {
   alfajores,
   tostadasddl: tostadasDDL,
   fernetcoca,
-  malbec
+  malbec,
 };
 
 const MenuCategory = ({ categoria, platos }) => {
   const navigate = useNavigate();
 
   return (
-    <Accordion>
+    <Accordion disableGutters>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h6">{categoria}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{ transition: 'all 0.3s ease-in-out' }}>
         <Box display="flex" flexDirection="column" gap={2}>
           {platos.map((plato, index) => {
             const nombreFormateado = plato.nombre.toLowerCase().replace(/\s+/g, '');
@@ -65,18 +65,20 @@ const MenuCategory = ({ categoria, platos }) => {
                   alignItems: 'flex-end',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  boxShadow: 3,
+                  boxShadow: 5,
                   transition: 'transform 0.2s ease-in-out',
                   '&:hover': {
-                    transform: 'scale(1.02)'
-                  }
+                    transform: 'scale(1.01)',
+                  },
                 }}
               >
                 <Box
                   sx={{
                     width: '100%',
-                    background: 'rgba(0, 0, 0, 0.5)',
-                    padding: 2
+                    backdropFilter: 'blur(6px)',
+                    background: 'rgba(0,0,0,0.4)',
+                    padding: 2,
+                    transition: 'all 0.3s ease',
                   }}
                 >
                   <Typography variant="h6">{plato.nombre}</Typography>
