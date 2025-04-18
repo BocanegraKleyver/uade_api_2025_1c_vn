@@ -15,12 +15,11 @@ const Footer = () => {
         mt: 6,
       }}
     >
-      {/* Nombre del restaurante */}
+
       <Typography variant="h6" sx={{ mb: 2 }}>
         Sabores Urbanos
       </Typography>
 
-      {/* Información de contacto */}
       <Stack direction="column" spacing={1} sx={{ alignItems: 'center', mb: 2 }}>
         <Box display="flex" alignItems="center" gap={1}>
           <LocationOnIcon fontSize="small" />
@@ -36,7 +35,7 @@ const Footer = () => {
         </Box>
       </Stack>
 
-      {/* Mapa embebido */}
+
       <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto', mb: 3 }}>
         <iframe
           title="Mapa UADE"
@@ -50,7 +49,6 @@ const Footer = () => {
         ></iframe>
       </Box>
 
-      {/* Derechos reservados */}
       <Typography variant="caption">
         © {new Date().getFullYear()} Sabores Urbanos. Todos los derechos reservados.
       </Typography>

@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import menuData from '../data/menuData';
-import {
-  Container,
-  Typography,
-  Button,
-  TextField,
-  Rating,
-  Box,
-  Divider,
-  Paper,
-  Chip,
-  Stack
-} from '@mui/material';
+import {Container,Typography,Button,TextField,Rating,Box,Divider,Paper,Chip,Stack} from '@mui/material';
 import { getReseñas, guardarReseña } from '../services/reseñasService';
 import Footer from '../components/layout/Footer';
 
-// 📸 Imágenes
 import empanadassaltenas from '../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../assets/platos/chorizoalaparrilla.jpg';

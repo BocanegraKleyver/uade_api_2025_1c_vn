@@ -1,20 +1,9 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Card,
-  Box,
-  Rating,
-  Chip,
-  Stack,
-} from '@mui/material';
+import {Accordion,AccordionSummary,AccordionDetails,Typography,Card,Box,Rating,Chip,Stack,} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// 📸 Imágenes importadas
 import empanadassaltenas from '../../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../../assets/platos/chorizoalaparrilla.jpg';
@@ -100,11 +89,11 @@ const MenuCategory = ({ categoria, platos }) => {
   const normalizarNombre = (str) =>
     str
       .toLowerCase()
-      .normalize('NFD')            // descompone tildes
-      .replace(/[\u0300-\u036f]/g, '') // elimina acentos
-      .replace(/ñ/g, 'n')          // ñ → n
-      .replace(/-/g, '')           // elimina guiones
-      .replace(/\s+/g, '');        // elimina espacios
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ñ/g, 'n')
+      .replace(/-/g, '')
+      .replace(/\s+/g, '');
 
   const obtenerPromedioYCantidad = (nombrePlato) => {
     const key = `reseñas_${nombrePlato}`;
@@ -126,7 +115,7 @@ const MenuCategory = ({ categoria, platos }) => {
       <AccordionDetails>
         <Box display="flex" flexDirection="column" gap={2}>
         {platos.map((plato, index) => {
-  const nombreFormateado = normalizarNombre(plato.nombre); // 👈 usamos la función acá
+  const nombreFormateado = normalizarNombre(plato.nombre);
   const imagen = imagenes[nombreFormateado] || null;
   const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
 

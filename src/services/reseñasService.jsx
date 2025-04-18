@@ -1,5 +1,3 @@
-// services/reseñaService.js
-
 export const getReseñas = (platoNombre) => {
     const key = `reseñas_${platoNombre}`;
     const stored = localStorage.getItem(key);

@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  useMediaQuery,
-  Button
-} from '@mui/material';
+import {AppBar,Toolbar,Typography,IconButton,Drawer,List,ListItem,ListItemText,Box,useMediaQuery,Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -50,7 +38,7 @@ const Header = () => {
           Sabores Urbanos
         </Typography>
 
-        {/* 👇 Desktop - Botón Contacto */}
+        {/* Desktop - Botón Contacto */}
         {!isMobile && (
           <Box sx={{ position: 'absolute', right: 16 }}>
             <Button
@@ -64,7 +52,7 @@ const Header = () => {
           </Box>
         )}
 
-        {/* 👇 Mobile - Drawer con links */}
+        {/* Mobile - Drawer con links */}
         {isMobile && (
           <>
             <IconButton
