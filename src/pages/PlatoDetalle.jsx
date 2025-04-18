@@ -100,6 +100,10 @@ const PlatoDetalle = () => {
     }
   }, [plato?.nombre]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const agregarReseña = () => {
     const tieneError = {
       nombre: !nuevoNombre.trim(),
@@ -149,103 +153,151 @@ const PlatoDetalle = () => {
           marginBottom: 6,
         }}
       >
-        <Typography variant="h4" gutterBottom>{plato.nombre}</Typography>
-
-        {imagen && (
-          <img
-            src={imagen}
-            alt={plato.nombre}
-            style={{
-              width: '100%',
-              maxWidth: '500px',
-              borderRadius: '8px',
-              marginBottom: '1rem'
-            }}
-          />
-        )}
-
-        <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
-          {plato.descripcion}
-        </Typography>
-        <Typography><strong>Precio:</strong> ${plato.precio}</Typography>
-        <Typography><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
-
-        {plato.etiquetas?.length > 0 && (
-          <Stack direction="row" spacing={1} sx={{ mt: 1, mb: 2, flexWrap: 'wrap' }}>
-            {plato.etiquetas.map((et, i) => (
-              <Chip
-                key={i}
-                label={`${getEtiquetaIcono(et)} ${et}`}
-                size="small"
-                sx={{
-                  bgcolor: 'rgba(255,255,255,0.8)',
-                  color: '#333',
-                  fontWeight: 'bold'
-                }}
-              />
-            ))}
-          </Stack>
-        )}
-
-        <Divider sx={{ marginY: 3 }} />
-
-        <Typography variant="h6" gutterBottom>Agregar reseña</Typography>
-        <Box display="flex" flexDirection="column" gap={2} maxWidth="500px">
-          <TextField
-            label="Tu nombre"
-            value={nuevoNombre}
-            onChange={(e) => setNuevoNombre(e.target.value)}
-            error={errores.nombre}
-            helperText={errores.nombre && 'Por favor ingresá tu nombre'}
-          />
-          <TextField
-            label="Comentario"
-            multiline
-            rows={3}
-            value={comentario}
-            onChange={(e) => setComentario(e.target.value)}
-            error={errores.comentario}
-            helperText={errores.comentario && 'Por favor escribí un comentario'}
-          />
-          <Box>
-            <Typography variant="body2" sx={{ mb: 1 }}>Valoración</Typography>
-            <Rating
-              name="valoracion"
-              value={valoracion}
-              onChange={(e, newValue) => setValoracion(newValue)}
+        {/* Imagen + Info lado a lado */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: 4,
+            mb: 4
+          }}
+        >
+          {imagen && (
+            <Box
+              component="img"
+              src={imagen}
+              alt={plato.nombre}
+              sx={{
+                width: { xs: '100%', md: '50%' },
+                borderRadius: 2,
+                objectFit: 'cover'
+              }}
             />
-            {errores.valoracion && (
-              <Typography variant="caption" color="error">
-                Por favor seleccioná una valoración
-              </Typography>
+          )}
+
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h4" gutterBottom>{plato.nombre}</Typography>
+            <Typography variant="subtitle1" sx={{ mb: 2 }}>
+              {plato.descripcion}
+            </Typography>
+            <Typography><strong>Precio:</strong> ${plato.precio}</Typography>
+            <Typography><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
+          
+            {reseñas.length > 0 ? (
+  <Box mt={2}>
+    <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <strong>Valoración promedio:</strong>
+      <Rating value={reseñas.reduce((a, b) => a + b.valoracion, 0) / reseñas.length} precision={0.5} readOnly size="small" />
+      ({reseñas.length} reseña{reseñas.length > 1 ? 's' : ''})
+    </Typography>
+  </Box>
+) : (
+  <Typography variant="body2" sx={{ mt: 2, fontStyle: 'italic' }}>
+    Este plato aún no tiene valoraciones.
+  </Typography>
+)}
+
+
+            {plato.etiquetas?.length > 0 && (
+              <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
+                {plato.etiquetas.map((et, i) => (
+                  <Chip
+                    key={i}
+                    label={`${getEtiquetaIcono(et)} ${et}`}
+                    size="small"
+                    sx={{
+                      bgcolor: 'rgba(255,255,255,0.8)',
+                      color: '#333',
+                      fontWeight: 'bold'
+                    }}
+                  />
+                ))}
+              </Stack>
             )}
           </Box>
-
-          <Button variant="contained" onClick={agregarReseña}>
-            Enviar reseña
-          </Button>
         </Box>
 
-        {reseñas.length > 0 && (
-          <>
-            <Divider sx={{ marginY: 3 }} />
-            <Typography variant="h6" gutterBottom>Reseñas</Typography>
-            {reseñas.map((r, index) => (
-              <Paper key={index} sx={{ padding: 2, marginBottom: 2 }}>
-                <Typography variant="subtitle1"><strong>{r.nombre}</strong> - {r.fecha}</Typography>
-                <Rating value={r.valoracion} readOnly />
-                <Typography>{r.comentario}</Typography>
-              </Paper>
-            ))}
-          </>
-        )}
+        {/* Reseñas lado a lado */}
+        <Divider sx={{ marginY: 3 }} />
+        <Typography variant="h6" gutterBottom>Opiniones de clientes</Typography>
 
-        <Button sx={{ marginTop: 3 }} variant="contained" onClick={() => navigate(-1)}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: 4,
+            mt: 2,
+          }}
+        >
+          {/* Formulario */}
+          <Box flex={1}>
+            <Typography variant="subtitle1" gutterBottom>Agregar reseña</Typography>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <TextField
+                label="Tu nombre"
+                value={nuevoNombre}
+                onChange={(e) => setNuevoNombre(e.target.value)}
+                error={errores.nombre}
+                helperText={errores.nombre && 'Por favor ingresá tu nombre'}
+              />
+              <TextField
+                label="Comentario"
+                multiline
+                rows={3}
+                value={comentario}
+                onChange={(e) => setComentario(e.target.value)}
+                error={errores.comentario}
+                helperText={errores.comentario && 'Por favor escribí un comentario'}
+              />
+              <Box>
+                <Typography variant="body2" sx={{ mb: 1 }}>Valoración</Typography>
+                <Rating
+                  name="valoracion"
+                  value={valoracion}
+                  onChange={(e, newValue) => setValoracion(newValue)}
+                />
+                {errores.valoracion && (
+                  <Typography variant="caption" color="error">
+                    Por favor seleccioná una valoración
+                  </Typography>
+                )}
+              </Box>
+              <Button variant="contained" onClick={agregarReseña}>
+                Enviar reseña
+              </Button>
+            </Box>
+          </Box>
+
+          {/* Lista de reseñas */}
+          {reseñas.length > 0 && (
+            <Box
+              flex={1}
+              sx={{
+                maxHeight: '400px',
+                overflowY: 'auto',
+                pr: 1,
+              }}
+            >
+              <Typography variant="subtitle1" gutterBottom>Reseñas previas</Typography>
+              {reseñas.map((r, index) => (
+                <Paper key={index} sx={{ padding: 2, mb: 2 }}>
+                  <Typography variant="subtitle2">
+                    <strong>{r.nombre}</strong> - {r.fecha}
+                  </Typography>
+                  <Rating value={r.valoracion} readOnly size="small" />
+                  <Typography variant="body2">{r.comentario}</Typography>
+                </Paper>
+              ))}
+            </Box>
+          )}
+        </Box>
+
+        <Button sx={{ marginTop: 4 }} variant="contained" onClick={() => navigate(-1)}>
           ⬅ Volver
         </Button>
       </Container>
 
-      <Footer /> {/* ✅ Se muestra siempre al final */}
+      <Footer />
     </>
   );
 };
