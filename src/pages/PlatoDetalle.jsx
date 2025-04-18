@@ -9,30 +9,70 @@ import {
   Rating,
   Box,
   Divider,
-  Paper
+  Paper,
+  Chip,
+  Stack
 } from '@mui/material';
 
-// Imágenes
+// 📸 Imágenes corregidas
 import medialunas from '../assets/platos/medialunas.jpg';
 import asado from '../assets/platos/asado.jpg';
 import milanesa from '../assets/platos/milanesa.jpg';
-import pizza from '../assets/platos/pizza.jpg';
-import hamburguesa from '../assets/platos/hamburguesa.jpg';
 import alfajores from '../assets/platos/alfajores.jpg';
 import tostadasDDL from '../assets/platos/tostadasDDL.jpg';
-import fernetcoca from '../assets/platos/fernetcoca.jpg';
+import fernetconcoca from '../assets/platos/fernetconcoca.jpg';
 import malbec from '../assets/platos/malbec.jpg';
+
+import omelettedeespinaca from '../assets/platos/omelettedeespinaca.jpg';
+import tostadoconjamónyqueso from '../assets/platos/tostadoconjamónyqueso.jpg';
+import ensaladacésar from '../assets/platos/ensaladacésar.jpg';
+import ensaladaveggie from '../assets/platos/ensaladaveggie.jpg';
+import ensaladaburrata from '../assets/platos/ensaladaburrata.jpg';
+import bifedechorizo from '../assets/platos/bifedechorizo.jpg';
+import bondiolaalacerveza from '../assets/platos/bondiolaalacerveza.jpg';
+import lasagnaveggie from '../assets/platos/lasagnaveggie.jpg';
+import pizzamargarita from '../assets/platos/pizzamargarita.jpg';
+import hamburguesacompleta from '../assets/platos/hamburguesacompleta.jpg';
+import hamburguesaveggie from '../assets/platos/hamburguesaveggie.jpg';
+import flancasero from '../assets/platos/flancasero.jpg';
+import volcándechocolate from '../assets/platos/volcándechocolate.jpg';
+import cheesecake from '../assets/platos/cheesecake.jpg';
+import cervezaipa from '../assets/platos/cervezaipa.jpg';
+import aguasaborizada from '../assets/platos/aguasaborizada.jpg';
 
 const imagenes = {
   medialunas,
   asado,
   milanesa,
-  pizza,
-  hamburguesa,
   alfajores,
   tostadasddl: tostadasDDL,
-  fernetcoca,
-  malbec
+  fernetconcoca,
+  malbec,
+  omelettedeespinaca,
+  tostadoconjamónyqueso,
+  ensaladacésar,
+  ensaladaveggie,
+  ensaladaburrata,
+  bifedechorizo,
+  bondiolaalacerveza,
+  lasagnaveggie,
+  pizzamargarita,
+  hamburguesacompleta,
+  hamburguesaveggie,
+  flancasero,
+  volcándechocolate,
+  cheesecake,
+  cervezaipa,
+  aguasaborizada
+};
+
+const getEtiquetaIcono = (etiqueta) => {
+  switch (etiqueta) {
+    case 'Picante': return '🌶️';
+    case 'Vegano': return '🥬';
+    case 'Sin lactosa': return '🥛';
+    default: return '';
+  }
 };
 
 const PlatoDetalle = () => {
@@ -52,7 +92,6 @@ const PlatoDetalle = () => {
   const [comentario, setComentario] = useState('');
   const [valoracion, setValoracion] = useState(0);
 
-  // Cargar reseñas desde localStorage al montar
   useEffect(() => {
     const guardadas = localStorage.getItem(reseñasKey);
     if (guardadas) {
@@ -60,7 +99,6 @@ const PlatoDetalle = () => {
     }
   }, [reseñasKey]);
 
-  // Guardar automáticamente cada vez que cambian
   useEffect(() => {
     localStorage.setItem(reseñasKey, JSON.stringify(reseñas));
   }, [reseñas, reseñasKey]);
@@ -110,8 +148,29 @@ const PlatoDetalle = () => {
       <Typography variant="subtitle1" sx={{ marginTop: 2 }}>
         {plato.descripcion}
       </Typography>
-      <Typography sx={{ marginTop: 2 }}><strong>Precio:</strong> ${plato.precio}</Typography>
-      <Typography><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
+      <Typography sx={{ marginTop: 2 }}>
+        <strong>Precio:</strong> ${plato.precio}
+      </Typography>
+      <Typography>
+        <strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}
+      </Typography>
+
+      {plato.etiquetas?.length > 0 && (
+        <Stack direction="row" spacing={1} sx={{ mt: 1, mb: 2, flexWrap: 'wrap' }}>
+          {plato.etiquetas.map((et, i) => (
+            <Chip
+              key={i}
+              label={`${getEtiquetaIcono(et)} ${et}`}
+              size="small"
+              sx={{
+                bgcolor: 'rgba(255,255,255,0.8)',
+                color: '#333',
+                fontWeight: 'bold'
+              }}
+            />
+          ))}
+        </Stack>
+      )}
 
       <Divider sx={{ marginY: 3 }} />
 
