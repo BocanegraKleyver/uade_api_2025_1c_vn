@@ -35,7 +35,6 @@ const Menu = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 🔎 Filtrar platos por búsqueda
   const categoriasFiltradas = menuData
     .map((cat) => ({
       ...cat,
@@ -43,7 +42,7 @@ const Menu = () => {
         p.nombre.toLowerCase().includes(busqueda.toLowerCase())
       ),
     }))
-    .filter((cat) => cat.platos.length > 0); // Solo mostrar si tiene resultados
+    .filter((cat) => cat.platos.length > 0);
 
   return (
     <>
@@ -60,7 +59,7 @@ const Menu = () => {
           position: 'relative',
         }}
       >
-        {/* Overlay para brillo */}
+        {/* Overlay oscuro */}
         <Box
           sx={{
             position: 'absolute',
@@ -130,10 +129,13 @@ const Menu = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          🍽️ Carta
+          📖 Menú digital
         </Typography>
 
-        {/* 🔍 Buscador */}
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          Explorá nuestra selección de platos divididos en categorías. ¡Hacé clic para ver más detalles y dejar tu reseña!
+        </Typography>
+
         <TextField
           label="Buscar plato..."
           variant="outlined"
@@ -143,7 +145,6 @@ const Menu = () => {
           sx={{ mb: 4 }}
         />
 
-        {/* Categorías filtradas */}
         {categoriasFiltradas.map((categoria, index) => (
           <MenuCategory key={index} {...categoria} />
         ))}

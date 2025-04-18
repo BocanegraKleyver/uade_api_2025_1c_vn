@@ -16,55 +16,67 @@ import {
 import { getReseñas, guardarReseña } from '../services/reseñasService';
 import Footer from '../components/layout/Footer';
 
-// 📸 Imágenes
-import medialunas from '../assets/platos/medialunas.jpg';
-import asado from '../assets/platos/asado.jpg';
-import milanesa from '../assets/platos/milanesa.jpg';
-import alfajores from '../assets/platos/alfajores.jpg';
-import tostadasDDL from '../assets/platos/tostadasDDL.jpg';
-import fernetconcoca from '../assets/platos/fernetconcoca.jpg';
-import malbec from '../assets/platos/malbec.jpg';
-import omelettedeespinaca from '../assets/platos/omelettedeespinaca.jpg';
-import tostadoconjamónyqueso from '../assets/platos/tostadoconjamónyqueso.jpg';
-import ensaladacésar from '../assets/platos/ensaladacésar.jpg';
+// 📸 Imágenes nuevas (resumido: se importan dinámicamente)
+import empanadas from '../assets/platos/empanadas.jpg';
+import provoleta from '../assets/platos/provoleta.jpg';
+import chorizoalaparrilla from '../assets/platos/chorizoalaparrilla.jpg';
+import bruschettamediterranea from '../assets/platos/bruschettamediterranea.jpg';
+import ensaladacesar from '../assets/platos/ensaladacesar.jpg';
 import ensaladaveggie from '../assets/platos/ensaladaveggie.jpg';
 import ensaladaburrata from '../assets/platos/ensaladaburrata.jpg';
 import bifedechorizo from '../assets/platos/bifedechorizo.jpg';
-import bondiolaalacerveza from '../assets/platos/bondiolaalacerveza.jpg';
+import asadocriollo from '../assets/platos/asadocriollo.jpg';
+import bondiolabraseada from '../assets/platos/bondiolabraseada.jpg';
+import supremanapolitana from '../assets/platos/supremanapolitana.jpg';
+import polloalverdeo from '../assets/platos/polloalverdeo.jpg';
+import truchapatagonica from '../assets/platos/truchapatagonica.jpg';
+import merluzaalimon from '../assets/platos/merluzaalimon.jpg';
+import noquisconbolognesa from '../assets/platos/noquisconbolognesa.jpg';
+import raviolesdeverdura from '../assets/platos/raviolesdeverdura.jpg';
 import lasagnaveggie from '../assets/platos/lasagnaveggie.jpg';
-import pizzamargarita from '../assets/platos/pizzamargarita.jpg';
-import hamburguesacompleta from '../assets/platos/hamburguesacompleta.jpg';
-import hamburguesaveggie from '../assets/platos/hamburguesaveggie.jpg';
 import flancasero from '../assets/platos/flancasero.jpg';
-import volcándechocolate from '../assets/platos/volcándechocolate.jpg';
+import volcandechocolate from '../assets/platos/volcandechocolate.jpg';
 import cheesecake from '../assets/platos/cheesecake.jpg';
+import alfajores from '../assets/platos/alfajores.jpg';
+import vinomalbec from '../assets/platos/vinomalbec.jpg';
 import cervezaipa from '../assets/platos/cervezaipa.jpg';
+import fernetconcoca from '../assets/platos/fernetconcoca.jpg';
 import aguasaborizada from '../assets/platos/aguasaborizada.jpg';
+import gaseosacocacola from '../assets/platos/gaseosacocacola.jpg';
+import limonadacasera from '../assets/platos/limonadacasera.jpg';
+import aguamineralcongas from '../assets/platos/aguamineralcongas.jpg';
+import aguamineralsingas from '../assets/platos/aguamineralsingas.jpg';
 
 const imagenes = {
-  medialunas,
-  asado,
-  milanesa,
-  alfajores,
-  tostadasddl: tostadasDDL,
-  fernetconcoca,
-  malbec,
-  omelettedeespinaca,
-  tostadoconjamónyqueso,
-  ensaladacésar,
+  empanadas,
+  provoleta,
+  chorizoalaparrilla,
+  bruschettamediterranea,
+  ensaladacesar,
   ensaladaveggie,
   ensaladaburrata,
   bifedechorizo,
-  bondiolaalacerveza,
+  asadocriollo,
+  bondiolabraseada,
+  supremanapolitana,
+  polloalverdeo,
+  truchapatagonica,
+  merluzaalimon,
+  noquisconbolognesa,
+  raviolesdeverdura,
   lasagnaveggie,
-  pizzamargarita,
-  hamburguesacompleta,
-  hamburguesaveggie,
   flancasero,
-  volcándechocolate,
+  volcandechocolate,
   cheesecake,
+  alfajores,
+  vinomalbec,
   cervezaipa,
+  fernetconcoca,
   aguasaborizada,
+  gaseosacocacola,
+  limonadacasera,
+  aguamineralcongas,
+  aguamineralsingas,
 };
 
 const getEtiquetaIcono = (etiqueta) => {
@@ -98,11 +110,8 @@ const PlatoDetalle = () => {
       const data = getReseñas(plato.nombre);
       setReseñas(data);
     }
-  }, [plato?.nombre]);
-
-  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [plato?.nombre]);
 
   const agregarReseña = () => {
     const tieneError = {
@@ -110,9 +119,7 @@ const PlatoDetalle = () => {
       comentario: !comentario.trim(),
       valoracion: valoracion === 0
     };
-
     setErrores(tieneError);
-
     if (tieneError.nombre || tieneError.comentario || tieneError.valoracion) return;
 
     const nueva = {
@@ -121,7 +128,6 @@ const PlatoDetalle = () => {
       valoracion,
       fecha: new Date().toLocaleDateString(),
     };
-
     const actualizadas = guardarReseña(plato.nombre, nueva);
     setReseñas(actualizadas);
     setNuevoNombre('');
@@ -153,50 +159,36 @@ const PlatoDetalle = () => {
           marginBottom: 6,
         }}
       >
-        {/* Imagen + Info lado a lado */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: 4,
-            mb: 4
-          }}
-        >
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4, mb: 4 }}>
           {imagen && (
             <Box
               component="img"
               src={imagen}
               alt={plato.nombre}
-              sx={{
-                width: { xs: '100%', md: '50%' },
-                borderRadius: 2,
-                objectFit: 'cover'
-              }}
+              sx={{ width: { xs: '100%', md: '50%' }, borderRadius: 2, objectFit: 'cover' }}
             />
           )}
 
           <Box sx={{ flex: 1 }}>
             <Typography variant="h4" gutterBottom>{plato.nombre}</Typography>
-            <Typography variant="subtitle1" sx={{ mb: 2 }}>
-              {plato.descripcion}
-            </Typography>
+            <Typography variant="subtitle1" sx={{ mb: 2 }}>{plato.descripcion}</Typography>
             <Typography><strong>Precio:</strong> ${plato.precio}</Typography>
+            <Typography><strong>Ingredientes:</strong> {plato.ingredientes.join(', ')}</Typography>
             <Typography><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
-          
-            {reseñas.length > 0 ? (
-  <Box mt={2}>
-    <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <strong>Valoración promedio:</strong>
-      <Rating value={reseñas.reduce((a, b) => a + b.valoracion, 0) / reseñas.length} precision={0.5} readOnly size="small" />
-      ({reseñas.length} reseña{reseñas.length > 1 ? 's' : ''})
-    </Typography>
-  </Box>
-) : (
-  <Typography variant="body2" sx={{ mt: 2, fontStyle: 'italic' }}>
-    Este plato aún no tiene valoraciones.
-  </Typography>
-)}
 
+            {reseñas.length > 0 ? (
+              <Box mt={2}>
+                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <strong>Valoración promedio:</strong>
+                  <Rating value={reseñas.reduce((a, b) => a + b.valoracion, 0) / reseñas.length} precision={0.5} readOnly size="small" />
+                  ({reseñas.length} reseña{reseñas.length > 1 ? 's' : ''})
+                </Typography>
+              </Box>
+            ) : (
+              <Typography variant="body2" sx={{ mt: 2, fontStyle: 'italic' }}>
+                Este plato aún no tiene valoraciones.
+              </Typography>
+            )}
 
             {plato.etiquetas?.length > 0 && (
               <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
@@ -205,11 +197,7 @@ const PlatoDetalle = () => {
                     key={i}
                     label={`${getEtiquetaIcono(et)} ${et}`}
                     size="small"
-                    sx={{
-                      bgcolor: 'rgba(255,255,255,0.8)',
-                      color: '#333',
-                      fontWeight: 'bold'
-                    }}
+                    sx={{ bgcolor: 'rgba(255,255,255,0.8)', color: '#333', fontWeight: 'bold' }}
                   />
                 ))}
               </Stack>
@@ -217,73 +205,30 @@ const PlatoDetalle = () => {
           </Box>
         </Box>
 
-        {/* Reseñas lado a lado */}
         <Divider sx={{ marginY: 3 }} />
         <Typography variant="h6" gutterBottom>Opiniones de clientes</Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: 4,
-            mt: 2,
-          }}
-        >
-          {/* Formulario */}
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4, mt: 2 }}>
           <Box flex={1}>
             <Typography variant="subtitle1" gutterBottom>Agregar reseña</Typography>
             <Box display="flex" flexDirection="column" gap={2}>
-              <TextField
-                label="Tu nombre"
-                value={nuevoNombre}
-                onChange={(e) => setNuevoNombre(e.target.value)}
-                error={errores.nombre}
-                helperText={errores.nombre && 'Por favor ingresá tu nombre'}
-              />
-              <TextField
-                label="Comentario"
-                multiline
-                rows={3}
-                value={comentario}
-                onChange={(e) => setComentario(e.target.value)}
-                error={errores.comentario}
-                helperText={errores.comentario && 'Por favor escribí un comentario'}
-              />
+              <TextField label="Tu nombre" value={nuevoNombre} onChange={(e) => setNuevoNombre(e.target.value)} error={errores.nombre} helperText={errores.nombre && 'Por favor ingresá tu nombre'} />
+              <TextField label="Comentario" multiline rows={3} value={comentario} onChange={(e) => setComentario(e.target.value)} error={errores.comentario} helperText={errores.comentario && 'Por favor escribí un comentario'} />
               <Box>
                 <Typography variant="body2" sx={{ mb: 1 }}>Valoración</Typography>
-                <Rating
-                  name="valoracion"
-                  value={valoracion}
-                  onChange={(e, newValue) => setValoracion(newValue)}
-                />
-                {errores.valoracion && (
-                  <Typography variant="caption" color="error">
-                    Por favor seleccioná una valoración
-                  </Typography>
-                )}
+                <Rating name="valoracion" value={valoracion} onChange={(e, newValue) => setValoracion(newValue)} />
+                {errores.valoracion && <Typography variant="caption" color="error">Por favor seleccioná una valoración</Typography>}
               </Box>
-              <Button variant="contained" onClick={agregarReseña}>
-                Enviar reseña
-              </Button>
+              <Button variant="contained" onClick={agregarReseña}>Enviar reseña</Button>
             </Box>
           </Box>
 
-          {/* Lista de reseñas */}
           {reseñas.length > 0 && (
-            <Box
-              flex={1}
-              sx={{
-                maxHeight: '400px',
-                overflowY: 'auto',
-                pr: 1,
-              }}
-            >
+            <Box flex={1} sx={{ maxHeight: '400px', overflowY: 'auto', pr: 1 }}>
               <Typography variant="subtitle1" gutterBottom>Reseñas previas</Typography>
               {reseñas.map((r, index) => (
                 <Paper key={index} sx={{ padding: 2, mb: 2 }}>
-                  <Typography variant="subtitle2">
-                    <strong>{r.nombre}</strong> - {r.fecha}
-                  </Typography>
+                  <Typography variant="subtitle2"><strong>{r.nombre}</strong> - {r.fecha}</Typography>
                   <Rating value={r.valoracion} readOnly size="small" />
                   <Typography variant="body2">{r.comentario}</Typography>
                 </Paper>
@@ -292,9 +237,7 @@ const PlatoDetalle = () => {
           )}
         </Box>
 
-        <Button sx={{ marginTop: 4 }} variant="contained" onClick={() => navigate(-1)}>
-          ⬅ Volver
-        </Button>
+        <Button sx={{ marginTop: 4 }} variant="contained" onClick={() => navigate(-1)}>⬅ Volver</Button>
       </Container>
 
       <Footer />

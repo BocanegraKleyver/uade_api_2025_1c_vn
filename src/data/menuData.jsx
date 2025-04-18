@@ -1,178 +1,441 @@
 const menuData = [
   {
-    categoria: "Desayunos",
-    platos: [
+    "categoria": "Entrantes",
+    "platos": [
       {
-        nombre: "Medialunas",
-        descripcion: "Croissants típicos argentinos dulces o salados",
-        precio: 1750,
-        alergenos: ["Gluten", "Lácteos"],
-        etiquetas: [] 
+        "nombre": "Empanadas Salteñas",
+        "descripcion": "Empanadas típicas del norte argentino con carne cortada a cuchillo",
+        "ingredientes": [
+          "Carne",
+          "Papa",
+          "Cebolla",
+          "Ají molido"
+        ],
+        "precio": 1800,
+        "alergenos": [
+          "Gluten"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Omelette de Espinaca",
-        descripcion: "Huevos batidos con espinaca fresca",
-        precio: 3000,
-        alergenos: ["Huevo"],
-        etiquetas: [] 
+        "nombre": "Provoleta",
+        "descripcion": "Queso provolone fundido con orégano y aceite de oliva",
+        "ingredientes": [
+          "Queso provolone",
+          "Orégano",
+          "Aceite de oliva"
+        ],
+        "precio": 4300,
+        "alergenos": [
+          "Lácteos"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Tostado con jamón y queso",
-        descripcion: "Pan de campo con jamón cocido y queso fundido",
-        precio: 3250,
-        alergenos: ["Gluten", "Lácteos"],
-        etiquetas: []
-      },
-    ]
-  },
-  {
-    categoria: "Ensaladas",
-    platos: [
-      {
-        nombre: "Ensalada César",
-        descripcion: "Lechuga, croutons, parmesano, pollo y aderezo César",
-        precio: 6250,
-        alergenos: ["Lácteos", "Huevo", "Gluten"],
-        etiquetas: []
+        "nombre": "Chorizo a la Parrilla",
+        "descripcion": "Chorizo criollo asado a la parrilla",
+        "ingredientes": [
+          "Chorizo",
+          "Pan"
+        ],
+        "precio": 3200,
+        "alergenos": [
+          "Gluten"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Ensalada Veggie",
-        descripcion: "Mix de hojas verdes, zanahoria, palta y tomate",
-        precio: 5750,
-        alergenos: [],
-        etiquetas: ["Vegano", "Sin lactosa"]
-      },
-      {
-        nombre: "Ensalada Burrata",
-        descripcion: "Burrata fresca, rúcula, tomates cherry y oliva",
-        precio: 8000,
-        alergenos: ["Lácteos"],
-        etiquetas: []
+        "nombre": "Bruschetta Mediterránea",
+        "descripcion": "Pan tostado con tomate, albahaca y aceite de oliva",
+        "ingredientes": [
+          "Pan",
+          "Tomate",
+          "Albahaca",
+          "Aceite de oliva"
+        ],
+        "precio": 3000,
+        "alergenos": [
+          "Gluten"
+        ],
+        "etiquetas": []
       }
     ]
   },
   {
-    categoria: "Platos Principales",
-    platos: [
+    "categoria": "Ensaladas",
+    "platos": [
       {
-        nombre: "Asado",
-        descripcion: "Corte de carne vacuna a la parrilla",
-        precio: 8750,
-        alergenos: [],
-        etiquetas: [] 
+        "nombre": "Ensalada César",
+        "descripcion": "Lechuga, croutons, parmesano, pollo y aderezo César",
+        "ingredientes": [
+          "Lechuga",
+          "Croutons",
+          "Pollo",
+          "Parmesano",
+          "Aderezo César"
+        ],
+        "precio": 6200,
+        "alergenos": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Bife de Chorizo",
-        descripcion: "Clásico corte argentino, con papas rústicas",
-        precio: 12250,
-        alergenos: [],
-        etiquetas: []
+        "nombre": "Ensalada Veggie",
+        "descripcion": "Mix de hojas verdes, zanahoria, palta y tomate",
+        "ingredientes": [
+          "Hojas verdes",
+          "Zanahoria",
+          "Palta",
+          "Tomate"
+        ],
+        "precio": 5800,
+        "alergenos": [],
+        "etiquetas": [
+          "Vegano",
+          "Sin lactosa"
+        ]
       },
       {
-        nombre: "Bondiola a la cerveza",
-        descripcion: "Bondiola de cerdo braseada en cerveza negra",
-        precio: 11500,
-        alergenos: [],
-        etiquetas: ["Picante"]
-      },
-      {
-        nombre: "Lasagna Veggie",
-        descripcion: "Capas de masa con vegetales, salsa y queso gratinado",
-        precio: 10250,
-        alergenos: ["Gluten", "Lácteos"],
-        etiquetas: ["Vegano"]
-      },
-    ]
-  },
-  {
-    categoria: "Pizzas y Hamburguesas",
-    platos: [
-      {
-        nombre: "Pizza Margarita",
-        descripcion: "Salsa de tomate, mozzarella y albahaca fresca",
-        precio: 7500,
-        alergenos: ["Gluten", "Lácteos"],
-        etiquetas: []
-      },
-      {
-        nombre: "Hamburguesa Completa",
-        descripcion: "Carne, lechuga, tomate, queso, jamón y huevo",
-        precio: 7000,
-        alergenos: ["Gluten", "Lácteos", "Huevo"],
-        etiquetas: []
-      },
-      {
-        nombre: "Hamburguesa Veggie",
-        descripcion: "Hamburguesa de garbanzos con vegetales",
-        precio: 7250,
-        alergenos: [],
-        etiquetas: ["Vegano"] 
+        "nombre": "Ensalada Burrata",
+        "descripcion": "Burrata fresca, rúcula, tomates cherry y oliva",
+        "ingredientes": [
+          "Burrata",
+          "Rúcula",
+          "Tomates cherry",
+          "Aceite de oliva"
+        ],
+        "precio": 7200,
+        "alergenos": [
+          "Lácteos"
+        ],
+        "etiquetas": []
       }
     ]
   },
   {
-    categoria: "Postres",
-    platos: [
+    "categoria": "Platos Principales - Carnes Rojas",
+    "platos": [
       {
-        nombre: "Flan Casero",
-        descripcion: "Clásico flan argentino con dulce de leche",
-        precio: 3000,
-        alergenos: ["Huevo", "Lácteos"],
-        etiquetas: []
+        "nombre": "Bife de Chorizo",
+        "descripcion": "Clásico corte argentino, con papas rústicas",
+        "ingredientes": [
+          "Bife de chorizo",
+          "Papas"
+        ],
+        "precio": 12100,
+        "alergenos": [],
+        "etiquetas": []
       },
       {
-        nombre: "Volcán de Chocolate",
-        descripcion: "Bizcochuelo relleno con chocolate fundido",
-        precio: 3500,
-        alergenos: ["Gluten", "Huevo", "Lácteos"],
-        etiquetas: []
+        "nombre": "Asado Criollo",
+        "descripcion": "Asado tradicional argentino con guarnición",
+        "ingredientes": [
+          "Costilla",
+          "Chinchulines",
+          "Guarnición"
+        ],
+        "precio": 13000,
+        "alergenos": [],
+        "etiquetas": []
       },
       {
-        nombre: "Cheesecake",
-        descripcion: "Tarta de queso y base de galletas",
-        precio: 3750,
-        alergenos: ["Lácteos", "Gluten"],
-        etiquetas: []
-      },
-      {
-        nombre: "Alfajores",
-        descripcion: "Alfajores de maicena con dulce de leche",
-        precio: 2250,
-        alergenos: ["Gluten", "Lácteos"],
-        etiquetas: []
+        "nombre": "Bondiola Braseada",
+        "descripcion": "Bondiola de cerdo cocida lentamente con salsa de vino",
+        "ingredientes": [
+          "Bondiola",
+          "Vino tinto",
+          "Cebolla"
+        ],
+        "precio": 11500,
+        "alergenos": [],
+        "etiquetas": []
       }
     ]
   },
   {
-    categoria: "Bebidas y Vinos",
-    platos: [
+    "categoria": "Platos Principales - Carnes Blancas",
+    "platos": [
       {
-        nombre: "Fernet con Coca",
-        descripcion: "Clásico argentino con hielo",
-        precio: 3000,
-        alergenos: [],
-        etiquetas: [] 
+        "nombre": "Pollo al Verdeo",
+        "descripcion": "Pechuga de pollo con salsa de verdeo y papas",
+        "ingredientes": [
+          "Pollo",
+          "Cebolla de verdeo",
+          "Papas"
+        ],
+        "precio": 8700,
+        "alergenos": [],
+        "etiquetas": []
       },
       {
-        nombre: "Malbec",
-        descripcion: "Vino tinto argentino por copa",
-        precio: 4000,
-        alergenos: [],
-        etiquetas: []
+        "nombre": "Suprema Napolitana",
+        "descripcion": "Pechuga rebozada con salsa, jamón y queso",
+        "ingredientes": [
+          "Pollo",
+          "Pan rallado",
+          "Jamón",
+          "Queso"
+        ],
+        "precio": 8900,
+        "alergenos": [
+          "Gluten",
+          "Lácteos"
+        ],
+        "etiquetas": []
+      }
+    ]
+  },
+  {
+    "categoria": "Platos Principales - Pescados",
+    "platos": [
+      {
+        "nombre": "Trucha Patagónica",
+        "descripcion": "Trucha grillada con limón y vegetales",
+        "ingredientes": [
+          "Trucha",
+          "Limón",
+          "Vegetales"
+        ],
+        "precio": 9900,
+        "alergenos": [
+          "Pescado"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Cerveza IPA",
-        descripcion: "Cerveza artesanal con lúpulo intenso",
-        precio: 3250,
-        alergenos: [],
-        etiquetas: []
+        "nombre": "Merluza al Limón",
+        "descripcion": "Filet de merluza con salsa de limón",
+        "ingredientes": [
+          "Merluza",
+          "Limón",
+          "Manteca"
+        ],
+        "precio": 9600,
+        "alergenos": [
+          "Pescado",
+          "Lácteos"
+        ],
+        "etiquetas": []
+      }
+    ]
+  },
+  {
+    "categoria": "Pastas",
+    "platos": [
+      {
+        "nombre": "Ñoquis con Salsa Bolognesa",
+        "descripcion": "Ñoquis caseros con salsa de carne",
+        "ingredientes": [
+          "Papa",
+          "Harina",
+          "Salsa bolognesa"
+        ],
+        "precio": 8800,
+        "alergenos": [
+          "Gluten"
+        ],
+        "etiquetas": []
       },
       {
-        nombre: "Agua Saborizada",
-        descripcion: "Con gas o sin gas, varios sabores",
-        precio: 2250,
-        alergenos: [],
-        etiquetas: [] 
+        "nombre": "Ravioles de Verdura",
+        "descripcion": "Ravioles rellenos con espinaca y ricota",
+        "ingredientes": [
+          "Harina",
+          "Espinaca",
+          "Ricota"
+        ],
+        "precio": 9100,
+        "alergenos": [
+          "Gluten",
+          "Lácteos"
+        ],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Lasagna Veggie",
+        "descripcion": "Capas de pasta con vegetales y queso",
+        "ingredientes": [
+          "Masa",
+          "Verduras",
+          "Queso"
+        ],
+        "precio": 10200,
+        "alergenos": [
+          "Gluten",
+          "Lácteos"
+        ],
+        "etiquetas": [
+          "Vegano"
+        ]
+      }
+    ]
+  },
+  {
+    "categoria": "Postres",
+    "platos": [
+      {
+        "nombre": "Flan Casero",
+        "descripcion": "Flan con dulce de leche y crema",
+        "ingredientes": [
+          "Leche",
+          "Huevo",
+          "Azúcar",
+          "Vainilla"
+        ],
+        "precio": 3000,
+        "alergenos": [
+          "Huevo",
+          "Lácteos"
+        ],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Volcán de Chocolate",
+        "descripcion": "Bizcochuelo relleno con chocolate fundido",
+        "ingredientes": [
+          "Chocolate",
+          "Harina",
+          "Huevo"
+        ],
+        "precio": 3600,
+        "alergenos": [
+          "Gluten",
+          "Huevo"
+        ],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Cheesecake",
+        "descripcion": "Tarta cremosa con frutos rojos",
+        "ingredientes": [
+          "Queso crema",
+          "Galletitas",
+          "Frutas"
+        ],
+        "precio": 3750,
+        "alergenos": [
+          "Lácteos",
+          "Gluten"
+        ],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Alfajores",
+        "descripcion": "Alfajores de maicena con dulce de leche",
+        "ingredientes": [
+          "Maicena",
+          "Dulce de leche",
+          "Coco"
+        ],
+        "precio": 2900,
+        "alergenos": [
+          "Lácteos",
+          "Gluten"
+        ],
+        "etiquetas": []
+      }
+    ]
+  },
+  {
+    "categoria": "Bebidas Alcohólicas",
+    "platos": [
+      {
+        "nombre": "Vino Malbec",
+        "descripcion": "Copa de vino tinto argentino",
+        "ingredientes": [
+          "Vino Malbec"
+        ],
+        "precio": 4200,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Cerveza IPA",
+        "descripcion": "Cerveza artesanal con lúpulo intenso",
+        "ingredientes": [
+          "Agua",
+          "Lúpulo",
+          "Malta"
+        ],
+        "precio": 3500,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Fernet con Coca",
+        "descripcion": "Fernet con Coca-Cola y hielo",
+        "ingredientes": [
+          "Fernet",
+          "Coca-Cola",
+          "Hielo"
+        ],
+        "precio": 3300,
+        "alergenos": [],
+        "etiquetas": []
+      }
+    ]
+  },
+  {
+    "categoria": "Bebidas sin alcohol",
+    "platos": [
+      {
+        "nombre": "Agua Saborizada",
+        "descripcion": "Agua con gas saborizada, varios sabores",
+        "ingredientes": [
+          "Agua",
+          "Saborizantes"
+        ],
+        "precio": 2000,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Gaseosa Coca-Cola",
+        "descripcion": "Gaseosa Coca-Cola 500ml",
+        "ingredientes": [
+          "Agua carbonatada",
+          "Azúcar",
+          "Cafeína"
+        ],
+        "precio": 2600,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Limonada Casera",
+        "descripcion": "Limonada natural con menta y jengibre",
+        "ingredientes": [
+          "Limón",
+          "Agua",
+          "Menta",
+          "Jengibre"
+        ],
+        "precio": 3000,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Agua mineral con gas",
+        "descripcion": "Agua embotellada con gas",
+        "ingredientes": [
+          "Agua gasificada"
+        ],
+        "precio": 1800,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
+        "nombre": "Agua mineral sin gas",
+        "descripcion": "Agua embotellada sin gas",
+        "ingredientes": [
+          "Agua natural"
+        ],
+        "precio": 1800,
+        "alergenos": [],
+        "etiquetas": []
       }
     ]
   }

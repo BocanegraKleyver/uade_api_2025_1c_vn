@@ -14,56 +14,75 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// Imágenes actualizadas
-import medialunas from '../../assets/platos/medialunas.jpg';
-import asado from '../../assets/platos/asado.jpg';
-import milanesa from '../../assets/platos/milanesa.jpg';
-import alfajores from '../../assets/platos/alfajores.jpg';
-import tostadasDDL from '../../assets/platos/tostadasDDL.jpg';
-import fernetconcoca from '../../assets/platos/fernetconcoca.jpg';
-import malbec from '../../assets/platos/malbec.jpg';
+// 📸 Imágenes importadas
+import empanadas from '../../assets/platos/empanadas.jpg';
+import provoleta from '../../assets/platos/provoleta.jpg';
+import chorizoalaparrilla from '../../assets/platos/chorizoalaparrilla.jpg';
+import bruschettamediterranea from '../../assets/platos/bruschettamediterranea.jpg';
 
-import omelettedeespinaca from '../../assets/platos/omelettedeespinaca.jpg';
-import tostadoconjamónyqueso from '../../assets/platos/tostadoconjamónyqueso.jpg';
-import ensaladacésar from '../../assets/platos/ensaladacésar.jpg';
+import ensaladacesar from '../../assets/platos/ensaladacesar.jpg';
 import ensaladaveggie from '../../assets/platos/ensaladaveggie.jpg';
 import ensaladaburrata from '../../assets/platos/ensaladaburrata.jpg';
+
 import bifedechorizo from '../../assets/platos/bifedechorizo.jpg';
-import bondiolaalacerveza from '../../assets/platos/bondiolaalacerveza.jpg';
+import asadocriollo from '../../assets/platos/asadocriollo.jpg';
+import bondiolabraseada from '../../assets/platos/bondiolabraseada.jpg';
+
+import supremanapolitana from '../../assets/platos/supremanapolitana.jpg';
+import polloalverdeo from '../../assets/platos/polloalverdeo.jpg';
+
+import truchapatagonica from '../../assets/platos/truchapatagonica.jpg';
+import merluzaalimon from '../../assets/platos/merluzaalimon.jpg';
+
+import noquisconbolognesa from '../../assets/platos/noquisconbolognesa.jpg';
+import raviolesdeverdura from '../../assets/platos/raviolesdeverdura.jpg';
 import lasagnaveggie from '../../assets/platos/lasagnaveggie.jpg';
-import pizzamargarita from '../../assets/platos/pizzamargarita.jpg';
-import hamburguesacompleta from '../../assets/platos/hamburguesacompleta.jpg';
-import hamburguesaveggie from '../../assets/platos/hamburguesaveggie.jpg';
+
 import flancasero from '../../assets/platos/flancasero.jpg';
-import volcándechocolate from '../../assets/platos/volcándechocolate.jpg';
+import volcandechocolate from '../../assets/platos/volcandechocolate.jpg';
 import cheesecake from '../../assets/platos/cheesecake.jpg';
+import alfajores from '../../assets/platos/alfajores.jpg';
+
+import vinomalbec from '../../assets/platos/vinomalbec.jpg';
 import cervezaipa from '../../assets/platos/cervezaipa.jpg';
+import fernetconcoca from '../../assets/platos/fernetconcoca.jpg';
+
 import aguasaborizada from '../../assets/platos/aguasaborizada.jpg';
+import gaseosacocacola from '../../assets/platos/gaseosacocacola.jpg';
+import limonadacasera from '../../assets/platos/limonadacasera.jpg';
+import aguamineralcongas from '../../assets/platos/aguamineralcongas.jpg';
+import aguamineralsingas from '../../assets/platos/aguamineralsingas.jpg';
 
 const imagenes = {
-  medialunas,
-  asado,
-  milanesa,
-  alfajores,
-  tostadasddl: tostadasDDL,
-  fernetconcoca,
-  malbec,
-  omelettedeespinaca,
-  tostadoconjamónyqueso,
-  ensaladacésar,
+  empanadas,
+  provoleta,
+  chorizoalaparrilla,
+  bruschettamediterranea,
+  ensaladacesar,
   ensaladaveggie,
   ensaladaburrata,
   bifedechorizo,
-  bondiolaalacerveza,
+  asadocriollo,
+  bondiolabraseada,
+  supremanapolitana,
+  polloalverdeo,
+  truchapatagonica,
+  merluzaalimon,
+  noquisconbolognesa,
+  raviolesdeverdura,
   lasagnaveggie,
-  pizzamargarita,
-  hamburguesacompleta,
-  hamburguesaveggie,
   flancasero,
-  volcándechocolate,
+  volcandechocolate,
   cheesecake,
+  alfajores,
+  vinomalbec,
   cervezaipa,
+  fernetconcoca,
   aguasaborizada,
+  gaseosacocacola,
+  limonadacasera,
+  aguamineralcongas,
+  aguamineralsingas,
 };
 
 const getEtiquetaIcono = (etiqueta) => {
@@ -147,12 +166,7 @@ const MenuCategory = ({ categoria, platos }) => {
                         alignItems: 'flex-start',
                       }}
                     >
-                      <Rating
-                        value={promedio}
-                        precision={0.5}
-                        readOnly
-                        size="small"
-                      />
+                      <Rating value={promedio} precision={0.5} readOnly size="small" />
                       <Typography variant="caption" sx={{ color: '#fff' }}>
                         ({cantidad} reseña{cantidad > 1 ? 's' : ''})
                       </Typography>
