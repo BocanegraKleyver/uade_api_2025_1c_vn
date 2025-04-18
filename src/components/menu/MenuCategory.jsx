@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 // Imágenes
 import medialunas from '../../assets/platos/medialunas.jpg';
@@ -54,7 +55,7 @@ const MenuCategory = ({ categoria, platos }) => {
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h6">{categoria}</Typography>
       </AccordionSummary>
-      <AccordionDetails sx={{ transition: 'all 0.3s ease-in-out' }}>
+      <AccordionDetails>
         <Box display="flex" flexDirection="column" gap={2}>
           {platos.map((plato, index) => {
             const nombreFormateado = plato.nombre.toLowerCase().replace(/\s+/g, '');
@@ -62,70 +63,75 @@ const MenuCategory = ({ categoria, platos }) => {
             const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
 
             return (
-              <Card
+              <motion.div
                 key={index}
-                onClick={() =>
-                  navigate(`/plato/${plato.nombre.toLowerCase().replace(/\s+/g, '-')}`)
-                }
-                sx={{
-                  height: 240,
-                  position: 'relative',
-                  color: 'white',
-                  backgroundImage: `url(${imagen})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  boxShadow: 5,
-                  transition: 'transform 0.2s ease-in-out',
-                  '&:hover': {
-                    transform: 'scale(1.01)',
-                  },
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {promedio > 0 && (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: 8,
-                      left: 8,
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                      borderRadius: '8px',
-                      px: 1.5,
-                      py: 0.5,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start'
-                    }}
-                  >
-                    <Rating
-                      value={promedio}
-                      precision={0.5}
-                      readOnly
-                      size="small"
-                    />
-                    <Typography variant="caption" sx={{ color: '#fff' }}>
-                      ({cantidad} reseña{cantidad > 1 ? 's' : ''})
-                    </Typography>
-                  </Box>
-                )}
-
-                <Box
+                <Card
+                  onClick={() =>
+                    navigate(`/plato/${plato.nombre.toLowerCase().replace(/\s+/g, '-')}`)
+                  }
                   sx={{
-                    width: '100%',
-                    backdropFilter: 'blur(6px)',
-                    background: 'rgba(0,0,0,0.4)',
-                    padding: 2,
-                    transition: 'all 0.3s ease',
+                    height: 240,
+                    position: 'relative',
+                    color: 'white',
+                    backgroundImage: `url(${imagen})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    boxShadow: 5,
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                    },
                   }}
                 >
-                  <Typography variant="h6">{plato.nombre}</Typography>
-                  <Typography variant="body2">${plato.precio}</Typography>
-                </Box>
-              </Card>
+                  {promedio > 0 && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 8,
+                        left: 8,
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        borderRadius: '8px',
+                        px: 1.5,
+                        py: 0.5,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start'
+                      }}
+                    >
+                      <Rating
+                        value={promedio}
+                        precision={0.5}
+                        readOnly
+                        size="small"
+                      />
+                      <Typography variant="caption" sx={{ color: '#fff' }}>
+                        ({cantidad} reseña{cantidad > 1 ? 's' : ''})
+                      </Typography>
+                    </Box>
+                  )}
+
+                  <Box
+                    sx={{
+                      width: '100%',
+                      backdropFilter: 'blur(6px)',
+                      background: 'rgba(0,0,0,0.4)',
+                      padding: 2,
+                    }}
+                  >
+                    <Typography variant="h6">{plato.nombre}</Typography>
+                    <Typography variant="body2">${plato.precio}</Typography>
+                  </Box>
+                </Card>
+              </motion.div>
             );
           })}
         </Box>

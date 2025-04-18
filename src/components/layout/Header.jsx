@@ -9,7 +9,8 @@ import {
   ListItem,
   ListItemText,
   Box,
-  useMediaQuery
+  useMediaQuery,
+  Button
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
@@ -35,7 +36,9 @@ const Header = () => {
         <ListItem button component={Link} to="/">
           <ListItemText primary="Carta" />
         </ListItem>
-        {/* Más items si querés agregar más rutas */}
+        <ListItem button component={Link} to="/contacto">
+          <ListItemText primary="Contacto" />
+        </ListItem>
       </List>
     </Box>
   );
@@ -43,10 +46,25 @@ const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-        <Typography variant="h5" component="div" sx={{ textAlign: 'center' }}>
+        <Typography variant="h5" component={Link} to="/" sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none' }}>
           Sabores Urbanos
         </Typography>
 
+        {/* 👇 Desktop - Botón Contacto */}
+        {!isMobile && (
+          <Box sx={{ position: 'absolute', right: 16 }}>
+            <Button
+              component={Link}
+              to="/contacto"
+              color="inherit"
+              sx={{ fontWeight: 'bold' }}
+            >
+              Contacto
+            </Button>
+          </Box>
+        )}
+
+        {/* 👇 Mobile - Drawer con links */}
         {isMobile && (
           <>
             <IconButton

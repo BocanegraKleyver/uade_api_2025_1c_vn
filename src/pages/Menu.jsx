@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Typography, Fab, Box, Button } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Fab,
+  Box,
+  Button,
+  TextField,
+} from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import menuData from '../data/menuData';
@@ -7,10 +14,12 @@ import MenuCategory from '../components/menu/MenuCategory';
 import Footer from '../components/layout/Footer';
 import fondoHero from '../assets/fondo-hero.jpg';
 import '@fontsource/playfair-display';
+import { motion } from 'framer-motion';
 
 const Menu = () => {
   const [visible, setVisible] = useState(false);
   const cartaRef = useRef(null);
+  const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setVisible(window.scrollY > 300);
@@ -25,6 +34,16 @@ const Menu = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // 🔎 Filtrar platos por búsqueda
+  const categoriasFiltradas = menuData
+    .map((cat) => ({
+      ...cat,
+      platos: cat.platos.filter((p) =>
+        p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+      ),
+    }))
+    .filter((cat) => cat.platos.length > 0); // Solo mostrar si tiene resultados
 
   return (
     <>
@@ -53,32 +72,46 @@ const Menu = () => {
           }}
         />
         <Box sx={{ zIndex: 2, textAlign: 'center', color: 'white' }}>
-          <Typography
-            variant="h2"
-            sx={{
-              mb: 3,
-              textShadow: '2px 2px 8px black',
-              fontFamily: 'Playfair Display',
-            }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
           >
-            Sabores Urbanos
-          </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            endIcon={<RestaurantMenuIcon />}
-            onClick={scrollToCarta}
-            sx={{
-              fontSize: '1.1rem',
-              paddingX: 4,
-              transition: 'transform 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'scale(1.05)',
-              },
-            }}
+            <Typography
+              variant="h2"
+              sx={{
+                mb: 3,
+                textShadow: '2px 2px 8px black',
+                fontFamily: 'Playfair Display',
+              }}
+            >
+              Sabores Urbanos
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
           >
-            Ver Carta
-          </Button>
+            <Button
+              variant="contained"
+              size="large"
+              endIcon={<RestaurantMenuIcon />}
+              onClick={scrollToCarta}
+              sx={{
+                fontSize: '1.1rem',
+                paddingX: 4,
+                transition: 'transform 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: 6,
+                },
+              }}
+            >
+              Ver Carta
+            </Button>
+          </motion.div>
         </Box>
       </Box>
 
@@ -99,9 +132,27 @@ const Menu = () => {
         <Typography variant="h4" gutterBottom>
           🍽️ Carta
         </Typography>
-        {menuData.map((categoria, index) => (
+
+        {/* 🔍 Buscador */}
+        <TextField
+          label="Buscar plato..."
+          variant="outlined"
+          fullWidth
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          sx={{ mb: 4 }}
+        />
+
+        {/* Categorías filtradas */}
+        {categoriasFiltradas.map((categoria, index) => (
           <MenuCategory key={index} {...categoria} />
         ))}
+
+        {categoriasFiltradas.length === 0 && (
+          <Typography variant="body1">
+            No se encontraron platos con "{busqueda}"
+          </Typography>
+        )}
       </Container>
 
       {/* Botón flotante */}
