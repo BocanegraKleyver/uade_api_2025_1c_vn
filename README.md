@@ -52,6 +52,8 @@ Abrí http://localhost:3000 para verlo en el navegador.
 
 Escaneá con tu celular para acceder directamente:
 
+<img src="./src/assets/QR-Sabores_Urbanos.png" alt="QR Sabores Urbanos" width="200"/>
+
 📬 Contacto
 
 Dirección: Lima 717, CABA Teléfono: (011) 9999-9999 Email: info@saboresurbanos.com

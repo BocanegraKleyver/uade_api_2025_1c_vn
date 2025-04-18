@@ -3,6 +3,7 @@ import { Box, Typography, Stack } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import qrSaboresUrbanos from '../../assets/QR-Sabores_Urbanos.png'
 
 const Footer = () => {
   return (
@@ -35,6 +36,17 @@ const Footer = () => {
         </Box>
       </Stack>
 
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography variant="body2" sx={{ mb: 1 }}>
+          También podés acceder a esta carta desde tu celular escaneando el QR:
+        </Typography>
+        <Box
+          component="img"
+          src={qrSaboresUrbanos}
+          alt="QR Sabores Urbanos"
+          sx={{ width: 120, height: 120, mx: 'auto' }}
+        />
+      </Box>
 
       <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto', mb: 3 }}>
         <iframe
