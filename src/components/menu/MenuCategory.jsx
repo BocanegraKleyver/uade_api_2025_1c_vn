@@ -6,6 +6,7 @@ import {
   Typography,
   Card,
   Box,
+  Rating
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +37,18 @@ const imagenes = {
 const MenuCategory = ({ categoria, platos }) => {
   const navigate = useNavigate();
 
+  const obtenerPromedioYCantidad = (nombrePlato) => {
+    const key = `reseñas_${nombrePlato}`;
+    const guardadas = localStorage.getItem(key);
+    if (!guardadas) return { promedio: 0, cantidad: 0 };
+    const lista = JSON.parse(guardadas);
+    const total = lista.reduce((acc, r) => acc + r.valoracion, 0);
+    return {
+      promedio: lista.length ? total / lista.length : 0,
+      cantidad: lista.length
+    };
+  };
+
   return (
     <Accordion disableGutters>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -46,6 +59,7 @@ const MenuCategory = ({ categoria, platos }) => {
           {platos.map((plato, index) => {
             const nombreFormateado = plato.nombre.toLowerCase().replace(/\s+/g, '');
             const imagen = imagenes[nombreFormateado] || null;
+            const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
 
             return (
               <Card
@@ -72,6 +86,33 @@ const MenuCategory = ({ categoria, platos }) => {
                   },
                 }}
               >
+                {promedio > 0 && (
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      left: 8,
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      borderRadius: '8px',
+                      px: 1.5,
+                      py: 0.5,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start'
+                    }}
+                  >
+                    <Rating
+                      value={promedio}
+                      precision={0.5}
+                      readOnly
+                      size="small"
+                    />
+                    <Typography variant="caption" sx={{ color: '#fff' }}>
+                      ({cantidad} reseña{cantidad > 1 ? 's' : ''})
+                    </Typography>
+                  </Box>
+                )}
+
                 <Box
                   sx={{
                     width: '100%',

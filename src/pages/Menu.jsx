@@ -3,11 +3,11 @@ import { Container, Typography, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import menuData from '../data/menuData';
 import MenuCategory from '../components/menu/MenuCategory';
+import Footer from '../components/layout/Footer';
 
 const Menu = () => {
   const [visible, setVisible] = useState(false);
 
-  // Mostrar el botón solo si se scrolleó hacia abajo
   useEffect(() => {
     const handleScroll = () => {
       setVisible(window.scrollY > 300);
@@ -16,19 +16,32 @@ const Menu = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Función para volver arriba
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <Container sx={{ marginTop: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        🍽️ Carta
-      </Typography>
-      {menuData.map((categoria, index) => (
-        <MenuCategory key={index} {...categoria} />
-      ))}
+    <>
+      {/* Carta */}
+      <Container
+        sx={{
+          background: 'rgba(255, 255, 255, 0.85)',
+          borderRadius: 3,
+          padding: 4,
+          backdropFilter: 'blur(10px)',
+          color: 'black',
+          boxShadow: 4,
+          marginTop: 6,
+          marginBottom: 6,
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          🍽️ Carta
+        </Typography>
+        {menuData.map((categoria, index) => (
+          <MenuCategory key={index} {...categoria} />
+        ))}
+      </Container>
 
       {/* Botón flotante */}
       {visible && (
@@ -45,7 +58,10 @@ const Menu = () => {
           <KeyboardArrowUpIcon />
         </Fab>
       )}
-    </Container>
+
+      {/* Footer */}
+      <Footer />
+    </>
   );
 };
 
