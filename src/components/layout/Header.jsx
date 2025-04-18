@@ -27,6 +27,9 @@ const Header = () => {
         <ListItem button component={Link} to="/contacto">
           <ListItemText primary="Contacto" />
         </ListItem>
+        <ListItem button component={Link} to="/nosotros">
+          <ListItemText primary="Sobre Nosotros" />
+        </ListItem>
       </List>
     </Box>
   );
@@ -34,13 +37,18 @@ const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-        <Typography variant="h5" component={Link} to="/" sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none' }}>
+        <Typography
+          variant="h5"
+          component={Link}
+          to="/"
+          sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none' }}
+        >
           Sabores Urbanos
         </Typography>
 
-        {/* Desktop - Botón Contacto */}
+        {/* Desktop - Botones Contacto y Sobre Nosotros */}
         {!isMobile && (
-          <Box sx={{ position: 'absolute', right: 16 }}>
+          <Box sx={{ position: 'absolute', right: 16, display: 'flex', gap: 2 }}>
             <Button
               component={Link}
               to="/contacto"
@@ -48,6 +56,14 @@ const Header = () => {
               sx={{ fontWeight: 'bold' }}
             >
               Contacto
+            </Button>
+            <Button
+              component={Link}
+              to="/nosotros"
+              color="inherit"
+              sx={{ fontWeight: 'bold' }}
+            >
+              Sobre Nosotros
             </Button>
           </Box>
         )}

@@ -4,6 +4,7 @@ import Header from "./components/layout/Header";
 import Menu from "./pages/Menu";
 import PlatoDetalle from "./pages/PlatoDetalle";
 import Contacto from "./pages/Contacto";
+import SobreNosotros from "./pages/SobreNosotros";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Menu />} />
         <Route path="/plato/:nombre" element={<PlatoDetalle />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/nosotros" element={<SobreNosotros />} />
       </Routes>
     </>
   );
