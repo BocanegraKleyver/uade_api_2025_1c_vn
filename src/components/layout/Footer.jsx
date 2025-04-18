@@ -11,7 +11,7 @@ const Footer = () => (
   }}>
     <Typography variant="body1" fontWeight="bold">Sabores Urbanos</Typography>
     <Typography variant="body2">📍 Lima 717, CABA</Typography>
-    <Typography variant="body2">📞 (011) 1111-1111</Typography>
+    <Typography variant="body2">📞 (011) 9999-9999</Typography>
     <Typography variant="body2">✉️ info@saboresurbanos.com</Typography>
 
     <Box sx={{ mt: 2 }}>
