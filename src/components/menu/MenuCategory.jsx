@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // 📸 Imágenes importadas
-import empanadas from '../../assets/platos/empanadas.jpg';
+import empanadas from '../../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../../assets/platos/chorizoalaparrilla.jpg';
 import bruschettamediterranea from '../../assets/platos/bruschettamediterranea.jpg';
@@ -97,6 +97,14 @@ const getEtiquetaIcono = (etiqueta) => {
 const MenuCategory = ({ categoria, platos }) => {
   const navigate = useNavigate();
 
+  const normalizarNombre = (str) =>
+    str
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ñ/g, 'n')
+      .replace(/\s+/g, '');
+
   const obtenerPromedioYCantidad = (nombrePlato) => {
     const key = `reseñas_${nombrePlato}`;
     const guardadas = localStorage.getItem(key);
@@ -116,10 +124,10 @@ const MenuCategory = ({ categoria, platos }) => {
       </AccordionSummary>
       <AccordionDetails>
         <Box display="flex" flexDirection="column" gap={2}>
-          {platos.map((plato, index) => {
-            const nombreFormateado = plato.nombre.toLowerCase().replace(/\s+/g, '');
-            const imagen = imagenes[nombreFormateado] || null;
-            const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
+        {platos.map((plato, index) => {
+  const nombreFormateado = normalizarNombre(plato.nombre); // 👈 usamos la función acá
+  const imagen = imagenes[nombreFormateado] || null;
+  const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
 
             return (
               <motion.div

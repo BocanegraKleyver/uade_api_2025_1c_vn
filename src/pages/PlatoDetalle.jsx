@@ -17,7 +17,7 @@ import { getReseñas, guardarReseña } from '../services/reseñasService';
 import Footer from '../components/layout/Footer';
 
 // 📸 Imágenes nuevas (resumido: se importan dinámicamente)
-import empanadas from '../assets/platos/empanadas.jpg';
+import empanadas from '../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../assets/platos/chorizoalaparrilla.jpg';
 import bruschettamediterranea from '../assets/platos/bruschettamediterranea.jpg';
