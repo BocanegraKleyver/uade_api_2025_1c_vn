@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+Sabores Urbanos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenido a Sabores Urbanos, una carta digital interactiva desarrollada como parte del proyecto académico para la materia Aplicaciones Interactivas - UADE.
 
-## Available Scripts
+Este proyecto representa una carta profesional para un restaurante argentino, diseñada con enfoque mobile-first, moderna, responsiva y con experiencia de usuario cuidada.
 
-In the project directory, you can run:
+🍽️ Descripción
 
-### `npm start`
+Sabores Urbanos permite visualizar y explorar platos organizados por categoría, filtrarlos con un buscador en tiempo real y ver detalles individuales con imagen, precio, alérgenos, etiquetas (🥬 Vegano, 🌶️ Picante, 🥛 Sin lactosa), y sistema de reseñas con estrellas y comentarios.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Además, incluye una sección de contacto, botón flotante para volver arriba, animaciones suaves, estilo glassmorphism, integración con localStorage, y QR para acceder desde celular.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🔧 Tecnologías utilizadas
 
-### `npm test`
+React (Vite)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Material UI (MUI)
 
-### `npm run build`
+Framer Motion (animaciones)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+React Router DOM
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+LocalStorage (para persistir reseñas)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🚀 Cómo correr el proyecto
 
-### `npm run eject`
+Clonar el repositorio:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+git clone https://github.com/BocanegraKleyver/uade_api_2025_1c_vn.git
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Instalar dependencias:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm install
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install @fontsource/playfair-display
+npm install framer-motion
+npm install @fontsource/inter
+npm install @fontsource/rubik
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Iniciar en entorno local:
 
-## Learn More
+npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Abrí http://localhost:3000 para verlo en el navegador.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🌐 Versión desplegada (Vercel)
 
-### Code Splitting
+🔗 https://uade-api-2025-1c-vn.vercel.app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+📱 QR de acceso
 
-### Analyzing the Bundle Size
+Escaneá con tu celular para acceder directamente:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+📬 Contacto
 
-### Making a Progressive Web App
+Dirección: Lima 717, CABA Teléfono: (011) 9999-9999 Email: info@saboresurbanos.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+👨‍💻 Autores
 
-### Advanced Configuration
+Bocanegra Kleyver - Legajo 1116590 - UADE - API 2025 - 1C - Viernes Turno Noche
+Lazbal Santiago - Legajo 1130853 - UADE - API 2025 - 1C - Viernes Turno Noche
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Profesores
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Sarasa, Maria Paula
+Fares, Francisco Joaquín
