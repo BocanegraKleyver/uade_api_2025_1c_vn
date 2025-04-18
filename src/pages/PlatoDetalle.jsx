@@ -16,8 +16,8 @@ import {
 import { getReseñas, guardarReseña } from '../services/reseñasService';
 import Footer from '../components/layout/Footer';
 
-// 📸 Imágenes nuevas (resumido: se importan dinámicamente)
-import empanadas from '../assets/platos/empanadassaltenas.jpg';
+// 📸 Imágenes
+import empanadassaltenas from '../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../assets/platos/chorizoalaparrilla.jpg';
 import bruschettamediterranea from '../assets/platos/bruschettamediterranea.jpg';
@@ -30,8 +30,8 @@ import bondiolabraseada from '../assets/platos/bondiolabraseada.jpg';
 import supremanapolitana from '../assets/platos/supremanapolitana.jpg';
 import polloalverdeo from '../assets/platos/polloalverdeo.jpg';
 import truchapatagonica from '../assets/platos/truchapatagonica.jpg';
-import merluzaalimon from '../assets/platos/merluzaalimon.jpg';
-import noquisconbolognesa from '../assets/platos/noquisconbolognesa.jpg';
+import merluzaallimon from '../assets/platos/merluzaallimon.jpg';
+import noquisconsalsabolognesa from '../assets/platos/noquisconsalsabolognesa.jpg';
 import raviolesdeverdura from '../assets/platos/raviolesdeverdura.jpg';
 import lasagnaveggie from '../assets/platos/lasagnaveggie.jpg';
 import flancasero from '../assets/platos/flancasero.jpg';
@@ -48,7 +48,7 @@ import aguamineralcongas from '../assets/platos/aguamineralcongas.jpg';
 import aguamineralsingas from '../assets/platos/aguamineralsingas.jpg';
 
 const imagenes = {
-  empanadas,
+  empanadassaltenas,
   provoleta,
   chorizoalaparrilla,
   bruschettamediterranea,
@@ -61,8 +61,8 @@ const imagenes = {
   supremanapolitana,
   polloalverdeo,
   truchapatagonica,
-  merluzaalimon,
-  noquisconbolognesa,
+  merluzaallimon,
+  noquisconsalsabolognesa,
   raviolesdeverdura,
   lasagnaveggie,
   flancasero,
@@ -88,6 +88,15 @@ const getEtiquetaIcono = (etiqueta) => {
   }
 };
 
+const normalizarNombre = (str) =>
+  str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ñ/g, 'n')
+    .replace(/-/g, '')
+    .replace(/\s+/g, '');
+
 const PlatoDetalle = () => {
   const { nombre } = useParams();
   const navigate = useNavigate();
@@ -96,7 +105,7 @@ const PlatoDetalle = () => {
     .flatMap(cat => cat.platos)
     .find(p => p.nombre.toLowerCase().replace(/\s+/g, '-') === nombre);
 
-  const nombreFormateado = plato?.nombre?.toLowerCase().replace(/\s+/g, '');
+  const nombreFormateado = plato ? normalizarNombre(plato.nombre) : '';
   const imagen = imagenes[nombreFormateado] || null;
 
   const [reseñas, setReseñas] = useState([]);

@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // 📸 Imágenes importadas
-import empanadas from '../../assets/platos/empanadassaltenas.jpg';
+import empanadassaltenas from '../../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../../assets/platos/provoleta.jpg';
 import chorizoalaparrilla from '../../assets/platos/chorizoalaparrilla.jpg';
 import bruschettamediterranea from '../../assets/platos/bruschettamediterranea.jpg';
@@ -32,9 +32,9 @@ import supremanapolitana from '../../assets/platos/supremanapolitana.jpg';
 import polloalverdeo from '../../assets/platos/polloalverdeo.jpg';
 
 import truchapatagonica from '../../assets/platos/truchapatagonica.jpg';
-import merluzaalimon from '../../assets/platos/merluzaalimon.jpg';
+import merluzaallimon from '../../assets/platos/merluzaallimon.jpg';
 
-import noquisconbolognesa from '../../assets/platos/noquisconbolognesa.jpg';
+import noquisconsalsabolognesa from '../../assets/platos/noquisconsalsabolognesa.jpg';
 import raviolesdeverdura from '../../assets/platos/raviolesdeverdura.jpg';
 import lasagnaveggie from '../../assets/platos/lasagnaveggie.jpg';
 
@@ -54,7 +54,7 @@ import aguamineralcongas from '../../assets/platos/aguamineralcongas.jpg';
 import aguamineralsingas from '../../assets/platos/aguamineralsingas.jpg';
 
 const imagenes = {
-  empanadas,
+  empanadassaltenas,
   provoleta,
   chorizoalaparrilla,
   bruschettamediterranea,
@@ -67,8 +67,8 @@ const imagenes = {
   supremanapolitana,
   polloalverdeo,
   truchapatagonica,
-  merluzaalimon,
-  noquisconbolognesa,
+  merluzaallimon,
+  noquisconsalsabolognesa,
   raviolesdeverdura,
   lasagnaveggie,
   flancasero,
@@ -100,10 +100,11 @@ const MenuCategory = ({ categoria, platos }) => {
   const normalizarNombre = (str) =>
     str
       .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/ñ/g, 'n')
-      .replace(/\s+/g, '');
+      .normalize('NFD')            // descompone tildes
+      .replace(/[\u0300-\u036f]/g, '') // elimina acentos
+      .replace(/ñ/g, 'n')          // ñ → n
+      .replace(/-/g, '')           // elimina guiones
+      .replace(/\s+/g, '');        // elimina espacios
 
   const obtenerPromedioYCantidad = (nombrePlato) => {
     const key = `reseñas_${nombrePlato}`;
