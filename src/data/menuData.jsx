@@ -293,6 +293,26 @@ const menuData = [
         "etiquetas": []
       },
       {
+        "nombre": "Tiramisú",
+        "descripcion": "Clásico postre italiano",
+        "ingredientes": [
+          "Queso mascarpone",
+          "Huevos",
+          "Azúcar",
+          "Bizcochos de soletilla",
+          "Café",
+          "Cacao en polvo",
+          "Licor (como amaretto o ron)"
+        ],
+        "precio": 3100,
+        "alergenos": [
+          "Huevos",
+          "Leche",
+          "Gluten",
+          "Alcohol (opcional)"
+        ]
+      },
+      {
         "nombre": "Volcán de Chocolate",
         "descripcion": "Bizcochuelo relleno con chocolate fundido",
         "ingredientes": [
