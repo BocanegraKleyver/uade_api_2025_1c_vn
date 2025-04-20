@@ -171,6 +171,20 @@ const menuData = [
         "etiquetas": []
       },
       {
+        "nombre": "Pollo a la Parrilla",
+        "descripcion": "Pollo a la parrilla con papas",
+        "ingredientes": [
+          "Pollo",
+          "Papas",
+          "Aceite",
+          "Sal",
+          "Pimienta"
+        ],
+        "precio": 9000,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
         "nombre": "Suprema Napolitana",
         "descripcion": "Pechuga rebozada con salsa, jamón y queso",
         "ingredientes": [
@@ -373,7 +387,7 @@ const menuData = [
         "etiquetas": []
       },
       {
-        "nombre": "Cerveza IPA",
+        "nombre": "Cerveza Artesanal",
         "descripcion": "Cerveza artesanal con lúpulo intenso",
         "ingredientes": [
           "Agua",

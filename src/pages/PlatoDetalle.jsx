@@ -35,6 +35,8 @@ import limonadacasera from '../assets/platos/limonadacasera.jpg';
 import aguamineralcongas from '../assets/platos/aguamineralcongas.jpg';
 import aguamineralsingas from '../assets/platos/aguamineralsingas.jpg';
 import tiramisu from '../assets/platos/tiramisu.jpg';
+import polloalaparrilla from '../assets/platos/polloalaparrilla.jpg';
+
 
 const imagenes = {
   empanadassaltenas,
@@ -49,6 +51,7 @@ const imagenes = {
   bondiolabraseada,
   supremanapolitana,
   polloalverdeo,
+  polloalaparrilla,
   truchapatagonica,
   merluzaallimon,
   noquisconsalsabolognesa,
