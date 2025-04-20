@@ -33,7 +33,7 @@ import cheesecake from '../../assets/platos/cheesecake.jpg';
 import alfajores from '../../assets/platos/alfajores.jpg';
 
 import vinomalbec from '../../assets/platos/vinomalbec.jpg';
-import cervezaipa from '../../assets/platos/cervezaipa.jpg';
+import cervezaartesanal from '../../assets/platos/cervezaartesanal.jpg';
 import fernetconcoca from '../../assets/platos/fernetconcoca.jpg';
 
 import aguasaborizada from '../../assets/platos/aguasaborizada.jpg';
@@ -68,7 +68,7 @@ const imagenes = {
   cheesecake,
   alfajores,
   vinomalbec,
-  cervezaipa,
+  cervezaartesanal,
   fernetconcoca,
   aguasaborizada,
   gaseosacocacola,
