@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accordion,AccordionSummary,AccordionDetails,Typography,Card,Box,Rating,Chip,Stack,} from '@mui/material';
+import {Accordion,AccordionSummary,AccordionDetails,Typography,Card,Box,Rating,Chip,Stack,Button} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -159,7 +159,7 @@ const MenuCategory = ({ categoria, platos }) => {
                         position: 'absolute',
                         top: 8,
                         left: 8,
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        backgroundColor: 'rgba(10, 10, 10, 0.6)',
                         borderRadius: '8px',
                         px: 1.5,
                         py: 0.5,
@@ -179,7 +179,7 @@ const MenuCategory = ({ categoria, platos }) => {
                     sx={{
                       width: '100%',
                       backdropFilter: 'blur(6px)',
-                      background: 'rgba(0,0,0,0.4)',
+                      background: 'rgba(0, 0, 0, 0.4)',
                       padding: 2,
                     }}
                   >
@@ -194,7 +194,7 @@ const MenuCategory = ({ categoria, platos }) => {
                             size="small"
                             label={`${getEtiquetaIcono(et)} ${et}`}
                             sx={{
-                              bgcolor: 'rgba(255,255,255,0.85)',
+                              bgcolor: 'rgba(255, 255, 255, 0.85)',
                               color: '#333',
                               fontWeight: 'bold',
                             }}
@@ -202,6 +202,34 @@ const MenuCategory = ({ categoria, platos }) => {
                         ))}
                       </Stack>
                     )}
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      bottom: 8,
+                      right: 8,
+                    }}
+                  >
+                    <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      backgroundColor: 'rgba(255,255,255,0.9)',
+                      color: '#000',
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255,255,255,1)',
+                      },
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Evita que se dispare el onClick del Card
+                      const url = `${window.location.origin}/plato/${plato.nombre.toLowerCase().replace(/\s+/g, '-')}`;
+                      navigator.clipboard.writeText(url);
+                      alert('📋 Link copiado al portapapeles!');
+                    }}
+                  >
+                    Compartir
+                    </Button>
                   </Box>
                 </Card>
               </motion.div>
@@ -212,5 +240,6 @@ const MenuCategory = ({ categoria, platos }) => {
     </Accordion>
   );
 };
+
 
 export default MenuCategory;

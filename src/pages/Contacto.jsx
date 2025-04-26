@@ -111,12 +111,13 @@ const Contacto = () => {
         >
           ⬅ Volver
         </Button>
-
-        <Snackbar
+      </Container>
+      <Snackbar
           open={openSnackbar}
           autoHideDuration={4000}
           onClose={() => setOpenSnackbar(false)}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          sx={{ mb: 22 }}
         >
           <Alert
             severity="success"
@@ -126,7 +127,6 @@ const Contacto = () => {
             ✅ Mensaje enviado. Le responderemos dentro de las próximas 24 hs. ¡Gracias!
           </Alert>
         </Snackbar>
-      </Container>
 
       <Footer />
     </>

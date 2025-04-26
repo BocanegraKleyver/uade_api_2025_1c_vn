@@ -172,22 +172,22 @@ const PlatoDetalle = () => {
           )}
 
           <Box sx={{ flex: 1 }}>
-            <Typography variant="h4" gutterBottom>{plato.nombre}</Typography>
-            <Typography variant="subtitle1" sx={{ mb: 2 }}>{plato.descripcion}</Typography>
-            <Typography><strong>Precio:</strong> ${plato.precio}</Typography>
-            <Typography><strong>Ingredientes:</strong> {plato.ingredientes.join(', ')}</Typography>
-            <Typography><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
+            <Typography variant="h3" gutterBottom  sx={{ fontFamily: 'Malaga', fontSize: '50px' }}>{plato.nombre}</Typography>
+            <Typography variant="subtitle1" sx={{fontSize:'16px' , mb: 2 }}>{plato.descripcion}</Typography>
+            <Typography variant="h6" sx={{ fontFamily: 'Pilsen Plakat', fontSize: '30px' , mb: 1 }}><strong>Precio:</strong> ${plato.precio}</Typography>
+            <Typography variant="h6" sx={{ mb: 1 }}><strong>Ingredientes:</strong> {plato.ingredientes.join(', ')}</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}><strong>Alérgenos:</strong> {plato.alergenos.join(', ') || 'Ninguno'}</Typography>
 
             {reseñas.length > 0 ? (
-              <Box mt={2}>
-                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box mt={5}>
+                <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <strong>Valoración promedio:</strong>
                   <Rating value={reseñas.reduce((a, b) => a + b.valoracion, 0) / reseñas.length} precision={0.5} readOnly size="small" />
                   ({reseñas.length} reseña{reseñas.length > 1 ? 's' : ''})
                 </Typography>
               </Box>
             ) : (
-              <Typography variant="body2" sx={{ mt: 2, fontStyle: 'italic' }}>
+              <Typography variant="subtitle1" sx={{ mt: 5, fontStyle: 'italic' }}>
                 Este plato aún no tiene valoraciones.
               </Typography>
             )}
