@@ -80,9 +80,9 @@ const imagenes = {
 
 const getEtiquetaIcono = (etiqueta) => {
   switch (etiqueta) {
-    case 'Picante': return '🌶️';
-    case 'Vegano': return '🥬';
-    case 'Sin lactosa': return '🥛';
+    case 'Picante': return '';
+    case 'Vegano': return '';
+    case 'Sin lactosa': return '';
     default: return '';
   }
 };

@@ -74,9 +74,9 @@ const imagenes = {
 
 const getEtiquetaIcono = (etiqueta) => {
   switch (etiqueta) {
-    case 'Picante': return '🌶️';
-    case 'Vegano': return '🥬';
-    case 'Sin lactosa': return '🥛';
+    case 'Picante': return '';
+    case 'Vegano': return '';
+    case 'Sin lactosa': return '';
     default: return '';
   }
 };
@@ -199,7 +199,7 @@ const PlatoDetalle = () => {
                     key={i}
                     label={`${getEtiquetaIcono(et)} ${et}`}
                     size="small"
-                    sx={{ bgcolor: 'rgba(255,255,255,0.8)', color: '#333', fontWeight: 'bold' }}
+                    sx={{ bgcolor: 'rgba(238, 195, 116, 0.8)', color: '#333', fontWeight: 'bold' }}
                   />
                 ))}
               </Stack>

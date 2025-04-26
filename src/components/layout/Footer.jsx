@@ -19,10 +19,11 @@ const Footer = () => {
           py: 4,
           mt: 6,
           px: 2,
+          borderTop: '4px solid transparent', 
+          borderImageSource: 'linear-gradient(to right, #ff5722, #ffc107)', 
+          borderImageSlice: 1,
         }}
       >
-        <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
-
         <Typography variant="h6" sx={{ mb: 2 }}>
           Sabores Urbanos
         </Typography>
@@ -87,7 +88,7 @@ const Footer = () => {
         px: 8,
       }}
     >
-      <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
+      <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)', mb: 4 }} />
 
       <Typography variant="h4" sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none', fontFamily: 'Bebas Neue', mb: 2 }}>
         Sabores Urbanos
@@ -148,7 +149,9 @@ const Footer = () => {
           </Box>
         </Stack>
       </Stack>
+      <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
     </Box>
+    
   );
 };
 
