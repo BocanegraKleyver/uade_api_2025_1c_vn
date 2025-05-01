@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Container,Typography,TextField,Button,Box,Stack,Paper,Snackbar,Alert} from '@mui/material';
+import {Container, Typography, TextField, Button, Box, Stack, Paper, Snackbar, Alert} from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -38,40 +38,62 @@ const Contacto = () => {
   return (
     <>
       <Container
+        maxWidth="lg"
         sx={{
           my: 6,
           background: 'rgba(255,255,255,0.85)',
           borderRadius: 3,
           padding: 4,
+          pb: 8,
           backdropFilter: 'blur(10px)',
           boxShadow: 4,
+          mx: 'auto',
         }}
       >
-        <Typography variant="h4" gutterBottom>
-           Contacto
+        <Typography
+          variant="h3"
+          gutterBottom
+          sx={{
+            fontFamily: 'Playfair Display',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mb: 4
+          }}
+        >
+          Contacto
         </Typography>
 
         <Stack spacing={2} sx={{ mb: 4 }}>
           <Box display="flex" alignItems="center" gap={1}>
             <LocationOnIcon />
-            <Typography>Lima 717, CABA</Typography>
+            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+              Lima 717, CABA
+            </Typography>
           </Box>
           <Box display="flex" alignItems="center" gap={1}>
             <PhoneIcon />
-            <Typography>(011) 9999-9999</Typography>
+            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+              (011) 9999-9999
+            </Typography>
           </Box>
           <Box display="flex" alignItems="center" gap={1}>
             <EmailIcon />
-            <Typography>info@saboresurbanos.com</Typography>
+            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+              info@saboresurbanos.com
+            </Typography>
           </Box>
         </Stack>
 
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-          <Typography variant="h6" gutterBottom>
+        <Paper elevation={3} sx={{ p: { xs: 3, md: 5 }, borderRadius: 2 }}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ fontFamily: 'Playfair Display', fontWeight: 'bold' }}
+          >
             Envíanos tu mensaje
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             <TextField
               label="Nombre"
               fullWidth
@@ -79,6 +101,7 @@ const Contacto = () => {
               onChange={(e) => setNombre(e.target.value)}
               error={errores.nombre}
               helperText={errores.nombre && 'Por favor ingresá tu nombre'}
+              inputProps={{ style: { fontFamily: 'Noto Znamenny Musical Notation' } }}
             />
             <TextField
               label="Email"
@@ -87,6 +110,7 @@ const Contacto = () => {
               onChange={(e) => setEmail(e.target.value)}
               error={errores.email}
               helperText={errores.email && 'Ingresá un email válido'}
+              inputProps={{ style: { fontFamily: 'Noto Znamenny Musical Notation' } }}
             />
             <TextField
               label="Mensaje"
@@ -97,8 +121,13 @@ const Contacto = () => {
               onChange={(e) => setMensaje(e.target.value)}
               error={errores.mensaje}
               helperText={errores.mensaje && 'Escribí un mensaje'}
+              inputProps={{ style: { fontFamily: 'Noto Znamenny Musical Notation' } }}
             />
-            <Button variant="contained" onClick={handleEnviar}>
+            <Button
+              variant="contained"
+              onClick={handleEnviar}
+              sx={{ fontWeight: 'bold' }}
+            >
               Enviar
             </Button>
           </Stack>
@@ -112,21 +141,23 @@ const Contacto = () => {
           ⬅ Volver
         </Button>
       </Container>
+
       <Snackbar
-          open={openSnackbar}
-          autoHideDuration={4000}
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        style={{ zIndex: 1300 }}
+      >
+        <Alert
+          severity="success"
           onClose={() => setOpenSnackbar(false)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          sx={{ mb: 22 }}
+          variant="filled"
+          sx={{ fontWeight: 'bold', fontFamily: 'Noto Znamenny Musical Notation' }}
         >
-          <Alert
-            severity="success"
-            onClose={() => setOpenSnackbar(false)}
-            variant="filled"
-          >
-            ✅ Mensaje enviado. Le responderemos dentro de las próximas 24 hs. ¡Gracias!
-          </Alert>
-        </Snackbar>
+          ✅ Mensaje enviado. Le responderemos dentro de las próximas 24 hs. ¡Gracias!
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </>

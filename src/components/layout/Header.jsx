@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {AppBar,Toolbar,Typography,IconButton,Drawer,List,ListItem,ListItemText,Box,useMediaQuery,Button} from '@mui/material';
+import {AppBar,Toolbar,Typography,IconButton,Drawer,List,ListItem,ListItemText,Box,useMediaQuery,Button,} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -9,9 +9,25 @@ const Header = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const toggleDrawer = (state) => () => {
-    setOpen(state);
+  const toggleDrawer = (state) => () => setOpen(state);
+
+  const estiloBoton = {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    fontFamily: 'Noto Znamenny Musical Notation',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    },
   };
+
+  const menuItems = [
+    { label: 'Home', to: '/' },
+    { label: 'Platos', to: '/plato' },
+    { label: 'Contacto', to: '/contacto' },
+    { label: 'Sobre Nosotros', to: '/nosotros' },
+  ];
 
   const drawerList = (
     <Box
@@ -21,104 +37,116 @@ const Header = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button component={Link} to="/"
-          sx={{
-           color: '#fff',
-           textDecoration: 'none',
-           '&:visited': { color: '#fff' },
-           '&:hover': { backgroundColor: '#222' }
-         }}
-        >
-          <ListItemText primary="Carta" />
-        </ListItem>
-        <ListItem button component={Link} to="/contacto"
-          sx={{
-          color: '#fff',
-          textDecoration: 'none',
-          '&:visited': { color: '#fff' },
-          '&:hover': { backgroundColor: '#222' }
-          }}
-        >
-          <ListItemText primary="Contacto" />
-        </ListItem>
-        <ListItem button component={Link} to="/nosotros"
-          sx={{
-          color: '#fff',
-          textDecoration: 'none',
-          '&:visited': { color: '#fff' },
-          '&:hover': { backgroundColor: '#222' }
-          }}
-        >
-          <ListItemText primary="Sobre Nosotros" />
-        </ListItem>
+        {menuItems.map((item) => (
+          <ListItem
+            button
+            key={item.to}
+            component={Link}
+            to={item.to}
+            sx={{
+              color: '#fff',
+              textDecoration: 'none',
+              '&:hover': { backgroundColor: '#222' },
+            }}
+          >
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontFamily: 'Noto Znamenny Musical Notation',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    color: '#fff',
+                  }}
+                >
+                  {item.label}
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
 
   return (
     <>
-    <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-        <Typography
-          variant="h5"
-          component={Link}
-          to="/"
-          sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none', fontFamily: 'Bebas Neue'}}
+      <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            px: 6,
+            py: 1.5,
+            position: 'relative',
+          }}
         >
-          Sabores Urbanos
-        </Typography>
+          <Typography
+            variant="h4"
+            component={Link}
+            to="/"
+            sx={{
+              fontFamily: 'Playfair Display',
+              color: '#fff',
+              textDecoration: 'none',
+              fontWeight: 'bold',
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Sabores Urbanos
+          </Typography>
 
-        {/* Desktop - Botones Contacto y Sobre Nosotros */}
-        {!isMobile && (
-          <Box sx={{ position: 'absolute', right: 16, display: 'flex', gap: 2 }}>
-            <Button
-              component={Link}
-              to="/contacto"
-              color="fff"
-              sx={{ fontWeight: 'bold', fontFamily: 'Noto Znamenny Musical Notation' }}
-            >
-              Contacto
-            </Button>
-            <Button
-              component={Link}
-              to="/nosotros"
-              color="fff"
-              sx={{ fontWeight: 'bold', fontFamily: 'Noto Znamenny Musical Notation' }}
-            >
-              Sobre Nosotros
-            </Button>
-          </Box>
-        )}
+          {!isMobile && (
+            <Box sx={{ position: 'absolute', right: 16, display: 'flex', gap: 3 }}>
+              {menuItems.map((item) => (
+                <Button
+                  key={item.to}
+                  component={Link}
+                  to={item.to}
+                  sx={estiloBoton}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Box>
+          )}
 
-        {/* Mobile - Drawer con links */}
-        {isMobile && (
-          <>
-            <IconButton
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-              sx={{ position: 'absolute', right: 10 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-                anchor="right"
-                open={open}
-                onClose={toggleDrawer(false)}
-                PaperProps={{
-                  sx: {
-                    backgroundColor: '#343434',
-                  }
-                }}
+          {isMobile && (
+            <>
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+                sx={{ position: 'absolute', right: 10 }}
               >
+                <MenuIcon />
+              </IconButton>
+              <Drawer
+  anchor="right"
+  open={open}
+  onClose={toggleDrawer(false)}
+  PaperProps={{
+    sx: {
+      backgroundColor: '#2c2c2c',
+      color: '#fff',
+      boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.5)',
+      borderLeft: '4px solid',
+      borderImage: 'linear-gradient(to bottom, #ff5722, #ffc107) 1',
+    },
+  }}
+>
                 {drawerList}
               </Drawer>
             </>
-        )}
-      </Toolbar>
-    </AppBar>
-    <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
+          )}
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
     </>
   );
 };

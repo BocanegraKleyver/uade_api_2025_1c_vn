@@ -475,4 +475,11 @@ const menuData = [
   }
 ];
 
+let idCounter = 1;
+menuData.forEach((categoria) => {
+  categoria.platos.forEach((plato) => {
+    plato.id = idCounter++;
+  });
+});
+
 export default menuData;

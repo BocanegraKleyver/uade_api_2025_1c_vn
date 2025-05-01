@@ -1,4 +1,3 @@
-// src/components/layout/Hero.jsx
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { keyframes } from '@emotion/react';
