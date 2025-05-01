@@ -48,7 +48,7 @@ const Contacto = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          📬 Contacto
+           Contacto
         </Typography>
 
         <Stack spacing={2} sx={{ mb: 4 }}>
