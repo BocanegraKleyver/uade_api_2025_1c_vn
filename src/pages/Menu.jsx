@@ -13,6 +13,7 @@ const Menu = () => {
   const [visible, setVisible] = useState(false);
   const cartaRef = useRef(null);
   const [busqueda, setBusqueda] = useState('');
+  const [inputBusqueda, setInputBusqueda] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setVisible(window.scrollY > 300);
@@ -28,15 +29,20 @@ const Menu = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const categoriasFiltradas = menuData
-    .map((cat) => ({
-      ...cat,
-      platos: cat.platos.filter((p) =>
-        p.nombre.toLowerCase().includes(busqueda.toLowerCase())
-      ),
-    }))
-    .filter((cat) => cat.platos.length > 0);
+  useEffect(() => {
+    if (inputBusqueda.trim() === '') {
+      setBusqueda(''); 
+    }
+  }, [inputBusqueda]);
 
+  const categoriasFiltradas = menuData
+      .map((cat) => ({
+        ...cat,
+        platos: cat.platos.filter((p) =>
+          p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+        ),
+      }))
+      .filter((cat) => cat.platos.length > 0);
   return (
     <>
       {/* Hero con fondo y botón */}
@@ -133,14 +139,35 @@ const Menu = () => {
           label="Buscar plato..."
           variant="outlined"
           fullWidth
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-          sx={{ mb: 4 }}
+          value={inputBusqueda}
+          onChange={(e) => setInputBusqueda(e.target.value)}
+          sx={{ mb: 2 }}
         />
+        <Button
+          variant="contained"
+          onClick={() => setBusqueda(inputBusqueda)} 
+          sx={{ mb: 4, 
+            backgroundColor: 'rgba(243, 206, 126, 0.9)',
+            color: '#000',
+            fontWeight: 'bold',
+            '&:hover': {
+              backgroundColor: 'rgba(236, 210, 155, 0.9)',
+            },}}
+        >
+          Filtrar
+        </Button>
+
 
         {categoriasFiltradas.map((categoria, index) => (
-          <MenuCategory key={index} {...categoria} />
-        ))}
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <MenuCategory {...categoria} />
+          </motion.div>
+          ))}
 
         {categoriasFiltradas.length === 0 && (
           <Typography variant="body1">

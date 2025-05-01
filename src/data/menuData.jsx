@@ -171,6 +171,20 @@ const menuData = [
         "etiquetas": []
       },
       {
+        "nombre": "Pollo a la Parrilla",
+        "descripcion": "Pollo a la parrilla con papas",
+        "ingredientes": [
+          "Pollo",
+          "Papas",
+          "Aceite",
+          "Sal",
+          "Pimienta"
+        ],
+        "precio": 9000,
+        "alergenos": [],
+        "etiquetas": []
+      },
+      {
         "nombre": "Suprema Napolitana",
         "descripcion": "Pechuga rebozada con salsa, jamón y queso",
         "ingredientes": [
@@ -293,6 +307,26 @@ const menuData = [
         "etiquetas": []
       },
       {
+        "nombre": "Tiramisú",
+        "descripcion": "Clásico postre italiano",
+        "ingredientes": [
+          "Queso mascarpone",
+          "Huevos",
+          "Azúcar",
+          "Bizcochos de soletilla",
+          "Café",
+          "Cacao en polvo",
+          "Licor (como amaretto o ron)"
+        ],
+        "precio": 3100,
+        "alergenos": [
+          "Huevos",
+          "Leche",
+          "Gluten",
+          "Alcohol (opcional)"
+        ]
+      },
+      {
         "nombre": "Volcán de Chocolate",
         "descripcion": "Bizcochuelo relleno con chocolate fundido",
         "ingredientes": [
@@ -353,7 +387,7 @@ const menuData = [
         "etiquetas": []
       },
       {
-        "nombre": "Cerveza IPA",
+        "nombre": "Cerveza Artesanal",
         "descripcion": "Cerveza artesanal con lúpulo intenso",
         "ingredientes": [
           "Agua",

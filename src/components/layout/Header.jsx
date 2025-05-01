@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 const Header = () => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const toggleDrawer = (state) => () => {
     setOpen(state);
@@ -21,13 +21,34 @@ const Header = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button component={Link} to="/">
+        <ListItem button component={Link} to="/"
+          sx={{
+           color: '#fff',
+           textDecoration: 'none',
+           '&:visited': { color: '#fff' },
+           '&:hover': { backgroundColor: '#222' }
+         }}
+        >
           <ListItemText primary="Carta" />
         </ListItem>
-        <ListItem button component={Link} to="/contacto">
+        <ListItem button component={Link} to="/contacto"
+          sx={{
+          color: '#fff',
+          textDecoration: 'none',
+          '&:visited': { color: '#fff' },
+          '&:hover': { backgroundColor: '#222' }
+          }}
+        >
           <ListItemText primary="Contacto" />
         </ListItem>
-        <ListItem button component={Link} to="/nosotros">
+        <ListItem button component={Link} to="/nosotros"
+          sx={{
+          color: '#fff',
+          textDecoration: 'none',
+          '&:visited': { color: '#fff' },
+          '&:hover': { backgroundColor: '#222' }
+          }}
+        >
           <ListItemText primary="Sobre Nosotros" />
         </ListItem>
       </List>
@@ -35,13 +56,14 @@ const Header = () => {
   );
 
   return (
+    <>
     <AppBar position="static" sx={{ backgroundColor: '#2c2c2c' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
         <Typography
           variant="h5"
           component={Link}
           to="/"
-          sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none' }}
+          sx={{ textAlign: 'center', color: 'inherit', textDecoration: 'none', fontFamily: 'Bebas Neue'}}
         >
           Sabores Urbanos
         </Typography>
@@ -52,16 +74,16 @@ const Header = () => {
             <Button
               component={Link}
               to="/contacto"
-              color="inherit"
-              sx={{ fontWeight: 'bold' }}
+              color="fff"
+              sx={{ fontWeight: 'bold', fontFamily: 'Noto Znamenny Musical Notation' }}
             >
               Contacto
             </Button>
             <Button
               component={Link}
               to="/nosotros"
-              color="inherit"
-              sx={{ fontWeight: 'bold' }}
+              color="fff"
+              sx={{ fontWeight: 'bold', fontFamily: 'Noto Znamenny Musical Notation' }}
             >
               Sobre Nosotros
             </Button>
@@ -80,13 +102,24 @@ const Header = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-              {drawerList}
-            </Drawer>
-          </>
+            <Drawer
+                anchor="right"
+                open={open}
+                onClose={toggleDrawer(false)}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: '#343434',
+                  }
+                }}
+              >
+                {drawerList}
+              </Drawer>
+            </>
         )}
       </Toolbar>
     </AppBar>
+    <Box sx={{ height: '4px', background: 'linear-gradient(to right, #ff5722, #ffc107)' }} />
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accordion,AccordionSummary,AccordionDetails,Typography,Card,Box,Rating,Chip,Stack,} from '@mui/material';
+import {Accordion,AccordionSummary,AccordionDetails,Typography,Card,Box,Rating,Chip,Stack,Button} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -33,7 +33,7 @@ import cheesecake from '../../assets/platos/cheesecake.jpg';
 import alfajores from '../../assets/platos/alfajores.jpg';
 
 import vinomalbec from '../../assets/platos/vinomalbec.jpg';
-import cervezaipa from '../../assets/platos/cervezaipa.jpg';
+import cervezaartesanal from '../../assets/platos/cervezaartesanal.jpg';
 import fernetconcoca from '../../assets/platos/fernetconcoca.jpg';
 
 import aguasaborizada from '../../assets/platos/aguasaborizada.jpg';
@@ -41,6 +41,8 @@ import gaseosacocacola from '../../assets/platos/gaseosacocacola.jpg';
 import limonadacasera from '../../assets/platos/limonadacasera.jpg';
 import aguamineralcongas from '../../assets/platos/aguamineralcongas.jpg';
 import aguamineralsingas from '../../assets/platos/aguamineralsingas.jpg';
+import tiramisu from '../../assets/platos/tiramisu.jpg';
+import polloalaparrilla from '../../assets/platos/polloalaparrilla.jpg';
 
 const imagenes = {
   empanadassaltenas,
@@ -55,6 +57,7 @@ const imagenes = {
   bondiolabraseada,
   supremanapolitana,
   polloalverdeo,
+  polloalaparrilla,
   truchapatagonica,
   merluzaallimon,
   noquisconsalsabolognesa,
@@ -65,20 +68,21 @@ const imagenes = {
   cheesecake,
   alfajores,
   vinomalbec,
-  cervezaipa,
+  cervezaartesanal,
   fernetconcoca,
   aguasaborizada,
   gaseosacocacola,
   limonadacasera,
   aguamineralcongas,
   aguamineralsingas,
+  tiramisu,
 };
 
 const getEtiquetaIcono = (etiqueta) => {
   switch (etiqueta) {
-    case 'Picante': return '🌶️';
-    case 'Vegano': return '🥬';
-    case 'Sin lactosa': return '🥛';
+    case 'Picante': return '';
+    case 'Vegano': return '';
+    case 'Sin lactosa': return '';
     default: return '';
   }
 };
@@ -155,7 +159,7 @@ const MenuCategory = ({ categoria, platos }) => {
                         position: 'absolute',
                         top: 8,
                         left: 8,
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        backgroundColor: 'rgba(10, 10, 10, 0.6)',
                         borderRadius: '8px',
                         px: 1.5,
                         py: 0.5,
@@ -175,7 +179,7 @@ const MenuCategory = ({ categoria, platos }) => {
                     sx={{
                       width: '100%',
                       backdropFilter: 'blur(6px)',
-                      background: 'rgba(0,0,0,0.4)',
+                      background: 'rgba(0, 0, 0, 0.4)',
                       padding: 2,
                     }}
                   >
@@ -190,7 +194,7 @@ const MenuCategory = ({ categoria, platos }) => {
                             size="small"
                             label={`${getEtiquetaIcono(et)} ${et}`}
                             sx={{
-                              bgcolor: 'rgba(255,255,255,0.85)',
+                              bgcolor: 'rgba(255, 255, 255, 0.85)',
                               color: '#333',
                               fontWeight: 'bold',
                             }}
@@ -198,6 +202,34 @@ const MenuCategory = ({ categoria, platos }) => {
                         ))}
                       </Stack>
                     )}
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      bottom: 8,
+                      right: 8,
+                    }}
+                  >
+                    <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      backgroundColor: 'rgba(255,255,255,0.9)',
+                      color: '#000',
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255,255,255,1)',
+                      },
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Evita que se dispare el onClick del Card
+                      const url = `${window.location.origin}/plato/${plato.nombre.toLowerCase().replace(/\s+/g, '-')}`;
+                      navigator.clipboard.writeText(url);
+                      alert('📋 Link copiado al portapapeles!');
+                    }}
+                  >
+                    Compartir
+                    </Button>
                   </Box>
                 </Card>
               </motion.div>
@@ -208,5 +240,6 @@ const MenuCategory = ({ categoria, platos }) => {
     </Accordion>
   );
 };
+
 
 export default MenuCategory;
