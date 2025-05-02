@@ -10,6 +10,7 @@ import '@fontsource/playfair-display';
 import { motion } from 'framer-motion';
 import { Card } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Rating } from '@mui/material';
 
 const Menu = () => {
   const [visible, setVisible] = useState(false);
@@ -42,6 +43,20 @@ const Menu = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+
+  const obtenerPromedioYCantidad = (nombrePlato) => {
+    const key = `reseñas_${nombrePlato}`;
+    const guardadas = localStorage.getItem(key);
+    if (!guardadas) return { promedio: 0, cantidad: 0 };
+    const lista = JSON.parse(guardadas);
+    const total = lista.reduce((acc, r) => acc + r.valoracion, 0);
+    return {
+      promedio: lista.length ? total / lista.length : 0,
+      cantidad: lista.length,
+    };
+  };
+
 
   const categoriasFiltradas = menuData
     .map((cat) => ({
@@ -206,6 +221,7 @@ const Menu = () => {
                     .replace(/\s+/g, '');
   
                   const imagen = require(`../assets/platos/${nombreFormateado}.jpg`);
+                  const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
   
                   return (
                     <motion.div
@@ -255,6 +271,33 @@ const Menu = () => {
                             ✅ Copiado al portapapeles
                           </Box>
                         )}
+
+                    {promedio > 0 && (
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              top: 8,
+                              left: 8,
+                              backgroundColor: 'rgba(10, 10, 10, 0.6)',
+                              borderRadius: '8px',
+                              px: 1.5,
+                              py: 0.5,
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'flex-start',
+                            }}
+                          >
+                    <Rating value={promedio} precision={0.5} readOnly size="small" />
+                    <Typography variant="caption" sx={{ color: '#fff' }}>
+                      ({cantidad} reseña{cantidad > 1 ? 's' : ''})
+                    </Typography>
+                  </Box>
+                )}
+
+
+
+
+
   
                         <Box
                           sx={{

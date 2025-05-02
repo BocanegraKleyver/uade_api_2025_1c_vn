@@ -244,27 +244,33 @@ const Platos = () => {
                     right: 8,
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      backgroundColor: 'rgba(255,255,255,0.9)',
-                      color: '#000',
-                      fontWeight: 'bold',
-                      '&:hover': {
-                        backgroundColor: 'rgba(255,255,255,1)',
-                      },
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const url = `${window.location.origin}/plato/${plato.id}`;
-                      navigator.clipboard.writeText(url);
-                      setCopiadoId(plato.id);
-                      setTimeout(() => setCopiadoId(null), 2000);
-                    }}
-                  >
-                    Compartir
-                  </Button>
+
+
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              fontFamily: 'Playfair Display',
+                              backgroundColor: '#1976d2',
+                              color: '#fff',
+                              fontWeight: 'bold',
+                              textTransform: 'none',
+                              fontSize: '0.85rem',
+                              '&:hover': {
+                                backgroundColor: '#115293',
+                              },
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const url = `${window.location.origin}/plato/${plato.id}`;
+                              navigator.clipboard.writeText(url);
+                              setCopiadoId(plato.id);
+                              setTimeout(() => setCopiadoId(null), 2000);
+                            }}
+                          >
+                            Compartir
+                          </Button>
+
                 </Box>
               </Card>
             </motion.div>
