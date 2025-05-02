@@ -4,6 +4,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import menuData from '../data/menuData';
+import Footer from '../components/layout/Footer';
 
 import empanadassaltenas from '../assets/platos/empanadassaltenas.jpg';
 import provoleta from '../assets/platos/provoleta.jpg';
@@ -110,6 +111,7 @@ const Platos = () => {
   };
 
   return (
+    <>
     <Container sx={{ py: 5 }}>
       <Typography variant="h4" gutterBottom>
         Todos los Platos
@@ -293,6 +295,9 @@ const Platos = () => {
         </Fab>
       )}
     </Container>
+
+    <Footer />
+    </>
   );
 };
 
