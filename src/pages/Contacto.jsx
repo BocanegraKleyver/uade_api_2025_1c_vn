@@ -136,9 +136,9 @@ const Contacto = () => {
         <Button
           sx={{ mt: 3 }}
           variant="contained"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
         >
-          ⬅ Volver
+          ⬅ Volver al Menú Principal
         </Button>
       </Container>
 

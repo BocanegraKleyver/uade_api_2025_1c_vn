@@ -67,13 +67,13 @@ const SobreNosotros = () => {
         <Box sx={{ textAlign: 'center', mt: 5 }}>
           <Button
             variant="contained"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/')}
             sx={{
               fontFamily: 'Noto Znamenny Musical Notation',
               fontWeight: 'bold',
             }}
           >
-            ⬅ Volver
+            ⬅ Volver al Menú Principal
           </Button>
         </Box>
       </Container>
