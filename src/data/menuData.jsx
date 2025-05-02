@@ -427,7 +427,7 @@ const menuData = [
         "etiquetas": []
       },
       {
-        "nombre": "Gaseosa Coca-Cola",
+        "nombre": "Gaseosa Coca Cola",
         "descripcion": "Gaseosa Coca-Cola 500ml",
         "ingredientes": [
           "Agua carbonatada",

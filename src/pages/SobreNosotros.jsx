@@ -29,7 +29,7 @@ const SobreNosotros = () => {
             mb: 4,
           }}
         >
-          🧑‍🍳 Sobre Nosotros
+          Sobre Nosotros
         </Typography>
 
         <Box sx={{ fontFamily: 'Noto Znamenny Musical Notation', fontSize: '1.1rem' }}>
