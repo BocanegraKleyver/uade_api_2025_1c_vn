@@ -6,6 +6,10 @@ import Platos from "./pages/Platos";
 import PlatoDetalle from "./pages/PlatoDetalle";
 import Contacto from "./pages/Contacto";
 import SobreNosotros from "./pages/SobreNosotros";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRoute from "./routes/AdminRoute";
+import GestionUsuarios from "./pages/GestionUsuarios";
 
 const App = () => {
   return (
@@ -17,6 +21,24 @@ const App = () => {
         <Route path="/plato/:id" element={<PlatoDetalle />} />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/nosotros" element={<SobreNosotros />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              {" "}
+              <AdminDashboard />{" "}
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/usuarios"
+          element={
+            <AdminRoute>
+              <GestionUsuarios />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </>
   );
