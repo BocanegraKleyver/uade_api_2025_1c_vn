@@ -20,9 +20,12 @@ const Login = () => {
 
   // ✅ Si ya estás logueado, redirige automáticamente
   useEffect(() => {
-    if (usuario) {
+    /*if (usuario) {
       navigate(usuario.rol === "admin" ? "/admin" : "/");
-    }
+    }*/
+      if (usuario) {
+      navigate("/admin");
+      }
   }, [usuario, navigate]);
 
   const handleSubmit = async (e) => {
@@ -43,7 +46,8 @@ const Login = () => {
 
       const data = await res.json();
       login(data.token);
-      navigate(data.rol === "admin" ? "/admin" : "/");
+     //navigate(data.rol === "admin" ? "/admin" : "/");
+      navigate("/admin");
     } catch (err) {
       setError(err.message);
     }

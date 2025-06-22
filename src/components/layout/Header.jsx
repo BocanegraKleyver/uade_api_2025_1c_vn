@@ -48,7 +48,7 @@ const Header = () => {
   // Solo mostrar "Cerrar sesión" si es admin
   const extras = [];
 
-if (usuario?.rol === "admin") {
+if (usuario) {
   extras.push({
     label: "Panel Admin",
     to: "/admin",
@@ -61,6 +61,7 @@ if (usuario?.rol === "admin") {
     },
   });
 }
+
 
 
   const drawerList = (

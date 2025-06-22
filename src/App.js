@@ -9,6 +9,7 @@ import SobreNosotros from "./pages/SobreNosotros";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./routes/AdminRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 import GestionUsuarios from "./pages/GestionUsuarios";
 
 const App = () => {
@@ -22,15 +23,18 @@ const App = () => {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/nosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<Login />} />
+
+        {/* ✅ Panel accesible a cualquier usuario logueado */}
         <Route
           path="/admin"
           element={
-            <AdminRoute>
-              {" "}
-              <AdminDashboard />{" "}
-            </AdminRoute>
+            <PrivateRoute>
+              <AdminDashboard />
+            </PrivateRoute>
           }
         />
+
+        {/* ✅ Gestión de usuarios SOLO para admins */}
         <Route
           path="/admin/usuarios"
           element={
