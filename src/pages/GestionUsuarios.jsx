@@ -1,4 +1,3 @@
-// src/pages/GestionUsuarios.jsx
 import React, { useEffect, useState, useCallback } from "react";
 import {
   Container,
@@ -13,215 +12,346 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Box,
   Tooltip,
   IconButton,
   Button,
   Dialog,
   DialogTitle,
   DialogActions,
+  Snackbar,
+  Alert as MuiAlert,
+  Stack,
 } from "@mui/material";
-import { useAuth } from "../context/AuthContext";
 import EditIcon from "@mui/icons-material/Edit";
-import Footer from "../components/layout/Footer";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useAuth } from "../context/AuthContext";
 import CrearUsuarioModal from "../components/admin/CrearUsuarioModal";
+import EditarPermisosModal from "../components/admin/EditarPermisosModal";
+import { useNavigate } from "react-router-dom";
+
 
 const GestionUsuarios = () => {
-  const { token } = useAuth();
+  const { token, usuario } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalAbierto, setModalAbierto] = useState(false);
-  const [confirmDialog, setConfirmDialog] = useState({
-    open: false,
-    usuarioId: null,
-    nuevoEstado: true,
-  });
+  const [confirmDialog, setConfirmDialog] = useState({ open: false, usuarioId: null, accion: "" });
+  const [rolDialog, setRolDialog] = useState({
+  open: false,
+  usuarioId: null,
+  nuevoRol: "",
+});
+const [editarPermisosModalAbierto, setEditarPermisosModalAbierto] = useState(false);
+const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+const navigate = useNavigate();
 
-  /*const fetchUsuarios = useCallback(async () => {
+
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
+  const fetchUsuarios = useCallback(async () => {
+    setLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/usuarios", {
+      const res = await fetch("http://localhost:3001/api/usuarios/todos", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      if (!Array.isArray(data)) throw new Error("Respuesta no válida");
-      setUsuarios(data);
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error);
+      setUsuarios(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setSnackbar({ open: true, message: "Error al cargar usuarios", severity: "error" });
     } finally {
       setLoading(false);
     }
-  }, [token]);*/
+  }, [token]);
 
-
-const fetchUsuarios = useCallback(async () => {
-  try {
-    const res = await fetch("http://localhost:3001/api/usuarios/todos", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log("fetch usuarios todos, status:", res.status);
-    const data = await res.json();
-    if (!Array.isArray(data)) throw new Error("Respuesta no válida");
-    setUsuarios(data);
-  } catch (error) {
-    console.error("Error al obtener usuarios:", error);
-  } finally {
-    setLoading(false);
-  }
-}, [token]);
+  useEffect(() => { fetchUsuarios(); }, [fetchUsuarios]);
 
 
 
-  useEffect(() => {
-    fetchUsuarios();
-  }, [fetchUsuarios]);
+const puedeEliminarFisico = (actor, target) => {
+  if (actor.rol === "root") return target.rol !== "root";
+  if (actor.rol === "admin") return target.rol === "usuario";
+  return false;
+};
+
+
+const puedeEditarPermisos = (actor, target) => {
+  if (actor.rol === "root") return target.rol !== "root"; 
+  if (actor.rol === "admin") return target.rol === "usuario";
+  return false;
+};
+
+
+  const puedeCambiarRol = (actor, target, nuevoRol) => {
+    const actorEsRoot = actor.rol === "root";
+    const targetEsRoot = target.rol === "root";
+    if (actorEsRoot) return !targetEsRoot && nuevoRol !== "root";
+    if (actor.rol === "admin") return target.rol === "usuario" && nuevoRol === "admin";
+    return false;
+  };
 
   const cambiarRol = async (id, nuevoRol) => {
+    const target = usuarios.find((u) => u._id === id);
+    if (!puedeCambiarRol(usuario, target, nuevoRol)) {
+      setSnackbar({ open: true, message: "No tenés permisos para ese cambio de rol", severity: "error" });
+      return;
+    }
+
     try {
-      await fetch(`http://localhost:3001/api/usuarios/${id}/rol`, {
+      const res = await fetch(`http://localhost:3001/api/usuarios/${id}/rol`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ rol: nuevoRol }),
       });
-      fetchUsuarios();
-    } catch (error) {
-      console.error("Error al cambiar rol:", error);
+      if (!res.ok) throw new Error("Error al cambiar rol");
+      await fetchUsuarios();
+      setSnackbar({ open: true, message: "Rol actualizado", severity: "success" });
+    } catch (err) {
+      setSnackbar({ open: true, message: err.message, severity: "error" });
     }
   };
 
-  // Abrir diálogo de confirmación
-  const openConfirm = (id, activoActual) => {
-    setConfirmDialog({
-      open: true,
-      usuarioId: id,
-      nuevoEstado: !activoActual,
-    });
-  };
+  const openConfirm = (id, accion) => setConfirmDialog({ open: true, usuarioId: id, accion });
 
-  // Confirmar activación/desactivación
   const handleConfirm = async () => {
-    const { usuarioId } = confirmDialog;
-    setConfirmDialog({ open: false, usuarioId: null, nuevoEstado: true });
+    const { usuarioId, accion } = confirmDialog;
+    let url = `http://localhost:3001/api/usuarios/${usuarioId}/desactivar`;
+    let method = "PUT";
+    if (accion === "reactivar") url = `http://localhost:3001/api/usuarios/${usuarioId}/reactivar`;
+    else if (accion === "fisico") { url = `http://localhost:3001/api/usuarios/${usuarioId}/fisico`; method = "DELETE"; }
 
     try {
-      await fetch(`http://localhost:3001/usuarios/${usuarioId}`, {
-  method: "DELETE",
-  headers: { Authorization: `Bearer ${token}` },
+      const res = await fetch(url, { method, headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) throw new Error("Error al procesar la acción");
+      await fetchUsuarios();
+      setSnackbar({
+        open: true,
+        message: accion === "fisico" ? "Usuario eliminado" : accion === "desactivar" ? "Usuario desactivado" : "Usuario reactivado",
+        severity: "success",
       });
-      fetchUsuarios();
     } catch (err) {
-      console.error(err);
+      setSnackbar({ open: true, message: err.message, severity: "error" });
+    } finally {
+      setConfirmDialog({ open: false, usuarioId: null, accion: "" });
     }
   };
 
+  const puedeGestionar = usuario.rol === "admin" || usuario.rol === "root";
+
   return (
-    <>
-      <Container sx={{ mt: 8, mb: 6, maxWidth: "1200px", mx: "auto", p: 6, borderRadius: 4, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(14px)", boxShadow: 4 }}>
-        <Typography variant="h4" sx={{ fontFamily: "Playfair Display", textAlign: "center", mb: 4, fontWeight: "bold" }}>
+    <Container
+      maxWidth="lg"
+      sx={{ mt: 10, display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Paper sx={{ width: "100%", p: 4, borderRadius: 3 }}>
+        <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
           Gestión de Usuarios
         </Typography>
 
         {loading ? (
-          <Typography>Cargando usuarios...</Typography>
+          <Typography align="center">Cargando usuarios...</Typography>
         ) : (
-          <Paper sx={{ overflowX: "auto" }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>Nombre</strong></TableCell>
-                  <TableCell><strong>Email</strong></TableCell>
-                  <TableCell><strong>Rol</strong></TableCell>
-                  <TableCell><strong>Activo</strong></TableCell>
-                  <TableCell><strong>Permisos</strong></TableCell>
-                  <TableCell><strong>Acciones</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {usuarios.map((u) => {
-                  const esRoot = u.email === "admin@saboresurbanos.com";
-                  return (
-                    <TableRow key={u._id}>
-                      <TableCell>{u.nombre}</TableCell>
-                      <TableCell>{u.email}</TableCell>
-                      <TableCell>
-                        <FormControl fullWidth>
-                          <Select
-                            value={u.rol}
-                            size="small"
-                            disabled={esRoot}
-                            onChange={(e) => cambiarRol(u._id, e.target.value)}
-                          >
-                            <MenuItem value="admin">Admin</MenuItem>
-                            <MenuItem value="usuario">Usuario</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={u.activo}
-                          onChange={() => openConfirm(u._id, u.activo)}
-                          disabled={esRoot}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        {u.permisos?.puedeEditarPlatos ? "Puede editar" : "No puede editar"}
-                      </TableCell>
-                      <TableCell>
-                        <Tooltip title="Editar permisos">
-                          <span>
-                            <IconButton
-                              color="primary"
-                              onClick={() => alert("Función de editar permisos en desarrollo")}
-                              disabled={esRoot}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </span>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Nombre</TableCell>
+                <TableCell>Apellido</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Rol</TableCell>
+                <TableCell>Activo</TableCell>
+                <TableCell>Permisos</TableCell>
+                <TableCell align="center">Acciones</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {usuarios.map((u) => {
+                const esRoot = u.rol === "root";
+                return (
+                  <TableRow key={u._id}>
+                    <TableCell>{u.nombre}</TableCell>
+                    <TableCell>{u.apellido}</TableCell>
+                    <TableCell>{u.email}</TableCell>
+                    <TableCell>
+  {u.rol === "root" ? (
+    <Typography fontWeight="bold">root</Typography>
+  ) : (
+    <FormControl fullWidth>
+      <Select
+        value={u.rol}
+        size="small"
+        onChange={(e) =>
+  setRolDialog({
+    open: true,
+    usuarioId: u._id,
+    nuevoRol: e.target.value,
+  })
+}
+        displayEmpty
+        renderValue={(selected) => {
+          if (!selected) return <em>Seleccione rol</em>;
+          return selected.charAt(0).toUpperCase() + selected.slice(1);
+        }}
+      >
+        
+        <MenuItem value={u.rol}>
+          {u.rol.charAt(0).toUpperCase() + u.rol.slice(1)}
+        </MenuItem>
+
+        
+        {u.rol !== "admin" && puedeCambiarRol(usuario, u, "admin") && (
+          <MenuItem value="admin">Admin</MenuItem>
+        )}
+        {u.rol !== "usuario" && puedeCambiarRol(usuario, u, "usuario") && (
+          <MenuItem value="usuario">Usuario</MenuItem>
+        )}
+      </Select>
+    </FormControl>
+  )}
+</TableCell>
+
+
+                    <TableCell>
+                      <Switch
+                        checked={u.activo}
+                        disabled={!puedeGestionar || esRoot}
+                        onChange={() =>
+                          openConfirm(u._id, u.activo ? "desactivar" : "reactivar")
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {[u.permisos.gestionarUsuarios && "Usuarios",
+                        u.permisos.gestionarPlatos && "Platos",
+                        u.permisos.gestionarLog && "Logs",
+                        u.permisos.gestionarResenas && "Reseñas"]
+                        .filter(Boolean).join(", ")}
+                    </TableCell>
+                    <TableCell align="center">
+
+                      {puedeEditarPermisos(usuario, u) && (
+  <Tooltip title="Editar permisos">
+
+    <IconButton 
+    
+    onClick={() => {
+  setUsuarioSeleccionado(u);
+  setEditarPermisosModalAbierto(true);
+}}
+    >
+      <EditIcon />
+    </IconButton>
+
+  </Tooltip>
+)}
+
+
+                      <Tooltip title="Eliminar">
+  <IconButton
+    onClick={() => openConfirm(u._id, "fisico")}
+    disabled={!puedeEliminarFisico(usuario, u)}
+  >
+    <DeleteIcon />
+  </IconButton>
+</Tooltip>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         )}
 
-        <Box mt={4} textAlign="center">
-          <Button variant="contained" onClick={() => setModalAbierto(true)}>
-            Crear nuevo usuario
-          </Button>
-        </Box>
+        <Stack
+  direction={{ xs: "column", sm: "row" }}
+  spacing={2}
+  justifyContent="center"
+  mt={4}
+>
+  <Button
+  variant="outlined"
+  onClick={() => navigate("/admin")}
+>
+  Volver al Panel
+</Button>
 
-        <CrearUsuarioModal
-          open={modalAbierto}
-          onClose={() => setModalAbierto(false)}
-          onUsuarioCreado={fetchUsuarios}
-        />
-      </Container>
+  <Button
+    variant="contained"
+    onClick={() => setModalAbierto(true)}
+    disabled={!puedeGestionar}
+  >
+    Crear nuevo usuario
+  </Button>
+</Stack>
 
-      {/* Diálogo de confirmación */}
-      <Dialog
-        open={confirmDialog.open}
-        onClose={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
-      >
+
+      </Paper>
+
+      <CrearUsuarioModal
+        open={modalAbierto}
+        onClose={() => setModalAbierto(false)}
+        onUsuarioCreado={fetchUsuarios}
+      />
+
+      <EditarPermisosModal
+  open={editarPermisosModalAbierto}
+  onClose={() => {
+    setEditarPermisosModalAbierto(false);
+    setUsuarioSeleccionado(null);
+  }}
+  usuarioEditar={usuarioSeleccionado}
+  onPermisosActualizados={fetchUsuarios}
+  setSnackbar={setSnackbar}
+/>
+
+      <Dialog open={confirmDialog.open} onClose={() => setConfirmDialog({ ...confirmDialog, open: false })}>
         <DialogTitle>
-          {confirmDialog.nuevoEstado ? "¿Activar usuario?" : "¿Desactivar usuario?"}
+          {confirmDialog.accion === "desactivar" && "¿Desactivar usuario?"}
+          {confirmDialog.accion === "reactivar" && "¿Reactivar usuario?"}
+          {confirmDialog.accion === "fisico" && "¿Eliminar usuario definitivamente?"}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}>
-            Cancelar
-          </Button>
+          <Button onClick={() => setConfirmDialog({ ...confirmDialog, open: false })}>Cancelar</Button>
           <Button onClick={handleConfirm} color="error">
-            {confirmDialog.nuevoEstado ? "Activar" : "Desactivar"}
+            {confirmDialog.accion === "fisico" ? "Eliminar" : confirmDialog.accion === "desactivar" ? "Desactivar" : "Reactivar"}
           </Button>
         </DialogActions>
       </Dialog>
 
-      <Footer />
-    </>
+<Dialog
+  open={rolDialog.open}
+  onClose={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}
+>
+  <DialogTitle>
+    {`¿Confirmás cambiar el rol a "${rolDialog.nuevoRol}"?`}
+  </DialogTitle>
+  <DialogActions>
+    <Button onClick={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}>
+      Cancelar
+    </Button>
+    <Button
+      color="primary"
+      onClick={() => {
+        cambiarRol(rolDialog.usuarioId, rolDialog.nuevoRol);
+        setRolDialog({ open: false, usuarioId: null, nuevoRol: "" });
+      }}
+    >
+      Confirmar
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <MuiAlert elevation={6} variant="filled" severity={snackbar.severity}>
+          {snackbar.message}
+        </MuiAlert>
+      </Snackbar>
+    </Container>
   );
 };
 

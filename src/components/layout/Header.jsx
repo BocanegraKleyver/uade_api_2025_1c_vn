@@ -45,7 +45,7 @@ const Header = () => {
     { label: "Sobre Nosotros", to: "/nosotros" },
   ];
 
-  // Solo mostrar "Cerrar sesión" si es admin
+  
   const extras = [];
 
 if (usuario) {
@@ -101,7 +101,7 @@ if (usuario) {
           </ListItem>
         ))}
 
-        {/* Extras (Login / Cerrar sesión) */}
+        
         {extras.map((item, i) => (
           <ListItem
             button
@@ -180,7 +180,7 @@ if (usuario) {
                 </Button>
               ))}
 
-              {/* Extras solo en escritorio */}
+              
               {extras.map((item, i) =>
                 item.to ? (
                   <Button

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
-  Container,
   Box,
   Typography,
   TextField,
@@ -18,14 +17,8 @@ const Login = () => {
   const [contraseña, setContraseña] = useState("");
   const [error, setError] = useState("");
 
-  // ✅ Si ya estás logueado, redirige automáticamente
   useEffect(() => {
-    /*if (usuario) {
-      navigate(usuario.rol === "admin" ? "/admin" : "/");
-    }*/
-      if (usuario) {
-      navigate("/admin");
-      }
+    if (usuario) navigate("/admin");
   }, [usuario, navigate]);
 
   const handleSubmit = async (e) => {
@@ -46,7 +39,6 @@ const Login = () => {
 
       const data = await res.json();
       login(data.token);
-     //navigate(data.rol === "admin" ? "/admin" : "/");
       navigate("/admin");
     } catch (err) {
       setError(err.message);
@@ -54,55 +46,73 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper
-        elevation={4}
-        sx={{
-          padding: 4,
-          backgroundColor: "rgba(255,255,255,0.85)",
-          borderRadius: 3,
-          backdropFilter: "blur(10px)",
-        }}
+<Box
+  sx={{
+    minHeight: "100vh",
+    backgroundColor: "#f5f7fa",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    p: 2,
+  }}
+>
+  <Paper
+    elevation={4}
+    sx={{
+      width: "100%",
+      maxWidth: 420,
+      p: 4,
+      backgroundColor: "#ffffff",
+      color: "#1f2d3d",
+      borderRadius: 3,
+    }}
+  >
+    <Typography
+  variant="h5"
+  align="center"
+  gutterBottom
+  sx={{ fontWeight: "bold", textTransform: "uppercase", letterSpacing: 1 }}
+>
+  LOGIN
+</Typography>
+
+    {error && (
+      <Alert severity="error" sx={{ mb: 2 }}>
+        {error}
+      </Alert>
+    )}
+
+    <Box component="form" onSubmit={handleSubmit}>
+      <TextField
+        label="Correo electrónico"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        fullWidth
+        required
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Contraseña"
+        type="password"
+        value={contraseña}
+        onChange={(e) => setContraseña(e.target.value)}
+        fullWidth
+        required
+        sx={{ mb: 3 }}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        sx={{ fontWeight: "bold", backgroundColor: "#1976d2" }}
       >
-        <Typography
-          variant="h4"
-          align="center"
-          sx={{ fontFamily: "Playfair Display", mb: 3 }}
-        >
-          Iniciar sesión
-        </Typography>
+        INGRESAR
+      </Button>
+    </Box>
+  </Paper>
+</Box>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            label="Correo electrónico"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            required
-            sx={{ mb: 3 }}
-          />
-          <TextField
-            label="Contraseña"
-            type="password"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            fullWidth
-            required
-            sx={{ mb: 3 }}
-          />
-          <Button type="submit" variant="contained" fullWidth>
-            Ingresar
-          </Button>
-        </Box>
-      </Paper>
-    </Container>
   );
 };
 
