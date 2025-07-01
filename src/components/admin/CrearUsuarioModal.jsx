@@ -17,7 +17,7 @@ const CrearUsuarioModal = ({ open, onClose, onUsuarioCreado }) => {
     permisos: {
       gestionarUsuarios: false,
       gestionarPlatos: false,
-      gestionarLog: false,
+      gestionarLogs: false,
       gestionarResenas: false,
     },
   };
@@ -48,7 +48,7 @@ useEffect(() => {
       permisos: {
         gestionarUsuarios: true,
         gestionarPlatos: true,
-        gestionarLog: true,
+        gestionarLogs: true,
         gestionarResenas: true,
       },
     }));
@@ -58,7 +58,7 @@ useEffect(() => {
       permisos: {
         gestionarUsuarios: false,
         gestionarPlatos: false,
-        gestionarLog: false,
+        gestionarLogs: false,
         gestionarResenas: false,
       },
     }));
@@ -215,29 +215,35 @@ if (form.rol === "usuario") {
         </TextField>
 
         <Typography variant="subtitle1" mt={2}>Permisos:</Typography>
-        {[
-          ["gestionarUsuarios", "Usuarios"],
-          ["gestionarPlatos", "Platos"],
-          ["gestionarLog", "Logs"],
-          ["gestionarResenas", "Reseñas"],
-        ].map(([key, label]) => (
-          <FormControlLabel
-            key={key}
-            control={
-              <Checkbox
-                name={`permisos.${key}`}
-                checked={form.permisos[key]}
-                onChange={handleChange}
-                disabled={
-  (form.rol === "usuario" && (key === "gestionarUsuarios" || key === "gestionarLog")) ||
-  form.rol === "admin" 
-}
+        {
+        [
+  ["gestionarUsuarios", "Usuarios"],
+  ["gestionarPlatos", "Platos"],
+  ["gestionarLogs", "Logs"],
+  ["gestionarResenas", "Reseñas"],
+].map(([key, label]) => (
+  <FormControlLabel
+    key={key}
+    control={
+      <Checkbox
+        name={`permisos.${key}`}
+        checked={form.permisos[key]}
+        onChange={handleChange}
+        disabled={
+          form.rol === "usuario" &&
+          (key === "gestionarUsuarios" || key === "gestionarLogs")
+        }
+      />
+    }
+    label={label}
+  />
+))
 
-              />
-            }
-            label={label}
-          />
-        ))}
+                       /* disabled={
+  (form.rol === "usuario" && (key === "gestionarUsuarios" || key === "gestionarLogs")) ||
+  form.rol === "admin" 
+            }*/
+        }
 
         {errorMsg && <Alert severity="error" sx={{ mt: 2 }}>{errorMsg}</Alert>}
         {successMsg && <Alert severity="success" sx={{ mt: 2 }}>{successMsg}</Alert>}

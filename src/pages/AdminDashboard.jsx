@@ -27,7 +27,8 @@ const isRoot = usuario?.isRoot;
 const puedeVer = {
   usuarios: isRoot || rol === "root" || permisos.gestionarUsuarios,
   platos: isRoot || rol === "root" || permisos.gestionarPlatos,
-  logs: isRoot || rol === "root" || permisos.gestionarLog,
+  logs: isRoot || rol === "root" || permisos.gestionarLogs,
+
   resenas: isRoot || rol === "root" || permisos.gestionarResenas,
 };
 
@@ -124,7 +125,7 @@ const puedeVer = {
                 backgroundColor: "#1976d2",
                 "&:hover": { backgroundColor: "#115293" },
               }}
-              onClick={() => navigate("/admin/resenas")}
+              onClick={() => navigate("/admin/resenias")}
             >
               Gestión de Reseñas
             </Button>

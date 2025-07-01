@@ -63,11 +63,12 @@ const App = () => {
         <Route
           path="logs"
           element={
-            <PermisoRoute permisoRequerido="gestionarLog">
+            <PermisoRoute permisoRequerido="gestionarLogs">
               <GestionLogs />
             </PermisoRoute>
           }
         />
+
         <Route
           path="resenias"
           element={

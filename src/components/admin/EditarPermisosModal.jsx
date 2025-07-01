@@ -12,7 +12,13 @@ import {
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 
-const EditarPermisosModal = ({ open, onClose, usuarioEditar, onPermisosActualizados, setSnackbar }) => {
+const EditarPermisosModal = ({
+  open,
+  onClose,
+  usuarioEditar,
+  onPermisosActualizados,
+  setSnackbar,
+}) => {
   const { token, usuario: actor } = useAuth();
   const [formPermisos, setFormPermisos] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
@@ -29,43 +35,40 @@ const EditarPermisosModal = ({ open, onClose, usuarioEditar, onPermisosActualiza
     setFormPermisos((prev) => ({ ...prev, [name]: checked }));
   };
 
-const isDisabled = (permiso) => {
-  const editadoRol = usuarioEditar?.rol;
-  const esASiMismo = actor._id === usuarioEditar._id;
+  const isDisabled = (permiso) => {
+    const editadoRol = usuarioEditar?.rol;
+    const esASiMismo = actor._id === usuarioEditar._id;
 
-  
-  if (actor.rol === "root" && editadoRol === "admin") return false;
+    if (actor.rol === "root" && editadoRol === "admin") return false;
 
-  
-  if (actor.rol === "root" && editadoRol === "usuario") {
-    return !(permiso === "gestionarPlatos" || permiso === "gestionarResenas");
-  }
+    if (actor.rol === "root" && editadoRol === "usuario") {
+      return !["gestionarPlatos", "gestionarResenas"].includes(permiso);
+    }
 
-  
-  if (actor.rol === "admin" && editadoRol === "usuario") {
-    return !(permiso === "gestionarPlatos" || permiso === "gestionarResenas");
-  }
+    if (actor.rol === "admin" && editadoRol === "usuario") {
+      return !["gestionarPlatos", "gestionarResenas"].includes(permiso);
+    }
 
-  
-  if (actor.rol === "usuario" && esASiMismo) {
-    return !(permiso === "gestionarPlatos" || permiso === "gestionarResenas");
-  }
+    if (actor.rol === "usuario" && esASiMismo) {
+      return !["gestionarPlatos", "gestionarResenas"].includes(permiso);
+    }
 
-  
-  return true;
-};
-
+    return true;
+  };
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch(`http://localhost:3001/api/usuarios/${usuarioEditar._id}/permisos`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ permisos: formPermisos }),
-      });
+      const res = await fetch(
+        `http://localhost:3001/api/usuarios/${usuarioEditar._id}/permisos`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ permisos: formPermisos }),
+        }
+      );
       if (!res.ok) throw new Error("Error al actualizar permisos");
 
       if (setSnackbar) {
@@ -96,30 +99,40 @@ const isDisabled = (permiso) => {
           Rol actual: <strong>{usuarioEditar.rol}</strong>
         </Typography>
 
-        {["gestionarUsuarios", "gestionarPlatos", "gestionarLog", "gestionarResenas"].map((permiso) => (
+        {[
+          { key: "gestionarUsuarios", label: "Usuarios" },
+          { key: "gestionarPlatos", label: "Platos" },
+          { key: "gestionarLogs", label: "Logs" },
+          { key: "gestionarResenas", label: "Reseñas" },
+        ].map(({ key, label }) => (
           <FormControlLabel
-            key={permiso}
+            key={key}
             control={
               <Checkbox
-                name={permiso}
-                checked={formPermisos[permiso] || false}
+                name={key}
+                checked={formPermisos[key] || false}
                 onChange={handleChange}
-                disabled={isDisabled(permiso)}
+                disabled={isDisabled(key)}
               />
             }
-            label={permiso.replace("gestionar", "Gestionar ")}
+            label={`Gestionar ${label}`}
           />
         ))}
 
-        {errorMsg && <Alert severity="error" sx={{ mt: 2 }}>{errorMsg}</Alert>}
+        {errorMsg && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {errorMsg}
+          </Alert>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
-        <Button variant="contained" onClick={handleSubmit}>Guardar</Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          Guardar
+        </Button>
       </DialogActions>
     </Dialog>
   );
 };
-
 
 export default EditarPermisosModal;

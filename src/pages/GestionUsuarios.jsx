@@ -29,24 +29,17 @@ import CrearUsuarioModal from "../components/admin/CrearUsuarioModal";
 import EditarPermisosModal from "../components/admin/EditarPermisosModal";
 import { useNavigate } from "react-router-dom";
 
-
 const GestionUsuarios = () => {
   const { token, usuario } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalAbierto, setModalAbierto] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState({ open: false, usuarioId: null, accion: "" });
-  const [rolDialog, setRolDialog] = useState({
-  open: false,
-  usuarioId: null,
-  nuevoRol: "",
-});
-const [editarPermisosModalAbierto, setEditarPermisosModalAbierto] = useState(false);
-const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
-const navigate = useNavigate();
-
-
+  const [rolDialog, setRolDialog] = useState({ open: false, usuarioId: null, nuevoRol: "" });
+  const [editarPermisosModalAbierto, setEditarPermisosModalAbierto] = useState(false);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const navigate = useNavigate();
 
   const fetchUsuarios = useCallback(async () => {
     setLoading(true);
@@ -64,23 +57,21 @@ const navigate = useNavigate();
     }
   }, [token]);
 
-  useEffect(() => { fetchUsuarios(); }, [fetchUsuarios]);
+  useEffect(() => {
+    fetchUsuarios();
+  }, [fetchUsuarios]);
 
+  const puedeEliminarFisico = (actor, target) => {
+    if (actor.rol === "root") return target.rol !== "root";
+    if (actor.rol === "admin") return target.rol === "usuario";
+    return false;
+  };
 
-
-const puedeEliminarFisico = (actor, target) => {
-  if (actor.rol === "root") return target.rol !== "root";
-  if (actor.rol === "admin") return target.rol === "usuario";
-  return false;
-};
-
-
-const puedeEditarPermisos = (actor, target) => {
-  if (actor.rol === "root") return target.rol !== "root"; 
-  if (actor.rol === "admin") return target.rol === "usuario";
-  return false;
-};
-
+  const puedeEditarPermisos = (actor, target) => {
+    if (actor.rol === "root") return target.rol !== "root";
+    if (actor.rol === "admin") return target.rol === "usuario";
+    return false;
+  };
 
   const puedeCambiarRol = (actor, target, nuevoRol) => {
     const actorEsRoot = actor.rol === "root";
@@ -103,9 +94,16 @@ const puedeEditarPermisos = (actor, target) => {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ rol: nuevoRol }),
       });
-      if (!res.ok) throw new Error("Error al cambiar rol");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error al cambiar rol");
+
       await fetchUsuarios();
-      setSnackbar({ open: true, message: "Rol actualizado", severity: "success" });
+
+      setSnackbar({
+        open: true,
+        message: data.mensaje || "Rol actualizado",
+        severity: "success",
+      });
     } catch (err) {
       setSnackbar({ open: true, message: err.message, severity: "error" });
     }
@@ -118,7 +116,10 @@ const puedeEditarPermisos = (actor, target) => {
     let url = `http://localhost:3001/api/usuarios/${usuarioId}/desactivar`;
     let method = "PUT";
     if (accion === "reactivar") url = `http://localhost:3001/api/usuarios/${usuarioId}/reactivar`;
-    else if (accion === "fisico") { url = `http://localhost:3001/api/usuarios/${usuarioId}/fisico`; method = "DELETE"; }
+    else if (accion === "fisico") {
+      url = `http://localhost:3001/api/usuarios/${usuarioId}/fisico`;
+      method = "DELETE";
+    }
 
     try {
       const res = await fetch(url, { method, headers: { Authorization: `Bearer ${token}` } });
@@ -139,10 +140,7 @@ const puedeEditarPermisos = (actor, target) => {
   const puedeGestionar = usuario.rol === "admin" || usuario.rol === "root";
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ mt: 10, display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <Container maxWidth="lg" sx={{ mt: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Paper sx={{ width: "100%", p: 4, borderRadius: 3 }}>
         <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
           Gestión de Usuarios
@@ -172,87 +170,70 @@ const puedeEditarPermisos = (actor, target) => {
                     <TableCell>{u.apellido}</TableCell>
                     <TableCell>{u.email}</TableCell>
                     <TableCell>
-  {u.rol === "root" ? (
-    <Typography fontWeight="bold">root</Typography>
-  ) : (
-    <FormControl fullWidth>
-      <Select
-        value={u.rol}
-        size="small"
-        onChange={(e) =>
-  setRolDialog({
-    open: true,
-    usuarioId: u._id,
-    nuevoRol: e.target.value,
-  })
-}
-        displayEmpty
-        renderValue={(selected) => {
-          if (!selected) return <em>Seleccione rol</em>;
-          return selected.charAt(0).toUpperCase() + selected.slice(1);
-        }}
-      >
-        
-        <MenuItem value={u.rol}>
-          {u.rol.charAt(0).toUpperCase() + u.rol.slice(1)}
-        </MenuItem>
-
-        
-        {u.rol !== "admin" && puedeCambiarRol(usuario, u, "admin") && (
-          <MenuItem value="admin">Admin</MenuItem>
-        )}
-        {u.rol !== "usuario" && puedeCambiarRol(usuario, u, "usuario") && (
-          <MenuItem value="usuario">Usuario</MenuItem>
-        )}
-      </Select>
-    </FormControl>
-  )}
-</TableCell>
-
-
+                      {u.rol === "root" ? (
+                        <Typography fontWeight="bold">root</Typography>
+                      ) : (
+                        <FormControl fullWidth>
+                          <Select
+                            value={u.rol}
+                            size="small"
+                            onChange={(e) => setRolDialog({ open: true, usuarioId: u._id, nuevoRol: e.target.value })}
+                            displayEmpty
+                            renderValue={(selected) =>
+                              !selected ? <em>Seleccione rol</em> : selected.charAt(0).toUpperCase() + selected.slice(1)
+                            }
+                          >
+                            <MenuItem value={u.rol}>
+                              {u.rol.charAt(0).toUpperCase() + u.rol.slice(1)}
+                            </MenuItem>
+                            {u.rol !== "admin" && puedeCambiarRol(usuario, u, "admin") && (
+                              <MenuItem value="admin">Admin</MenuItem>
+                            )}
+                            {u.rol !== "usuario" && puedeCambiarRol(usuario, u, "usuario") && (
+                              <MenuItem value="usuario">Usuario</MenuItem>
+                            )}
+                          </Select>
+                        </FormControl>
+                      )}
+                    </TableCell>
                     <TableCell>
                       <Switch
                         checked={u.activo}
                         disabled={!puedeGestionar || esRoot}
-                        onChange={() =>
-                          openConfirm(u._id, u.activo ? "desactivar" : "reactivar")
-                        }
+                        onChange={() => openConfirm(u._id, u.activo ? "desactivar" : "reactivar")}
                       />
                     </TableCell>
                     <TableCell>
-                      {[u.permisos.gestionarUsuarios && "Usuarios",
+                      {[
+                        u.permisos.gestionarUsuarios && "Usuarios",
                         u.permisos.gestionarPlatos && "Platos",
-                        u.permisos.gestionarLog && "Logs",
-                        u.permisos.gestionarResenas && "Reseñas"]
-                        .filter(Boolean).join(", ")}
+                        u.permisos.gestionarLogs && "Logs",
+                        u.permisos.gestionarResenas && "Reseñas",
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
                     </TableCell>
                     <TableCell align="center">
-
                       {puedeEditarPermisos(usuario, u) && (
-  <Tooltip title="Editar permisos">
-
-    <IconButton 
-    
-    onClick={() => {
-  setUsuarioSeleccionado(u);
-  setEditarPermisosModalAbierto(true);
-}}
-    >
-      <EditIcon />
-    </IconButton>
-
-  </Tooltip>
-)}
-
-
+                        <Tooltip title="Editar permisos">
+                          <IconButton
+                            onClick={() => {
+                              setUsuarioSeleccionado(u);
+                              setEditarPermisosModalAbierto(true);
+                            }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
                       <Tooltip title="Eliminar">
-  <IconButton
-    onClick={() => openConfirm(u._id, "fisico")}
-    disabled={!puedeEliminarFisico(usuario, u)}
-  >
-    <DeleteIcon />
-  </IconButton>
-</Tooltip>
+                        <IconButton
+                          onClick={() => openConfirm(u._id, "fisico")}
+                          disabled={!puedeEliminarFisico(usuario, u)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 );
@@ -261,29 +242,14 @@ const puedeEditarPermisos = (actor, target) => {
           </Table>
         )}
 
-        <Stack
-  direction={{ xs: "column", sm: "row" }}
-  spacing={2}
-  justifyContent="center"
-  mt={4}
->
-  <Button
-  variant="outlined"
-  onClick={() => navigate("/admin")}
->
-  Volver al Panel
-</Button>
-
-  <Button
-    variant="contained"
-    onClick={() => setModalAbierto(true)}
-    disabled={!puedeGestionar}
-  >
-    Crear nuevo usuario
-  </Button>
-</Stack>
-
-
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center" mt={4}>
+          <Button variant="outlined" onClick={() => navigate("/admin")}>
+            Volver al Panel
+          </Button>
+          <Button variant="contained" onClick={() => setModalAbierto(true)} disabled={!puedeGestionar}>
+            Crear nuevo usuario
+          </Button>
+        </Stack>
       </Paper>
 
       <CrearUsuarioModal
@@ -293,15 +259,15 @@ const puedeEditarPermisos = (actor, target) => {
       />
 
       <EditarPermisosModal
-  open={editarPermisosModalAbierto}
-  onClose={() => {
-    setEditarPermisosModalAbierto(false);
-    setUsuarioSeleccionado(null);
-  }}
-  usuarioEditar={usuarioSeleccionado}
-  onPermisosActualizados={fetchUsuarios}
-  setSnackbar={setSnackbar}
-/>
+        open={editarPermisosModalAbierto}
+        onClose={() => {
+          setEditarPermisosModalAbierto(false);
+          setUsuarioSeleccionado(null);
+        }}
+        usuarioEditar={usuarioSeleccionado}
+        onPermisosActualizados={fetchUsuarios}
+        setSnackbar={setSnackbar}
+      />
 
       <Dialog open={confirmDialog.open} onClose={() => setConfirmDialog({ ...confirmDialog, open: false })}>
         <DialogTitle>
@@ -312,34 +278,30 @@ const puedeEditarPermisos = (actor, target) => {
         <DialogActions>
           <Button onClick={() => setConfirmDialog({ ...confirmDialog, open: false })}>Cancelar</Button>
           <Button onClick={handleConfirm} color="error">
-            {confirmDialog.accion === "fisico" ? "Eliminar" : confirmDialog.accion === "desactivar" ? "Desactivar" : "Reactivar"}
+            {confirmDialog.accion === "fisico"
+              ? "Eliminar"
+              : confirmDialog.accion === "desactivar"
+              ? "Desactivar"
+              : "Reactivar"}
           </Button>
         </DialogActions>
       </Dialog>
 
-<Dialog
-  open={rolDialog.open}
-  onClose={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}
->
-  <DialogTitle>
-    {`¿Confirmás cambiar el rol a "${rolDialog.nuevoRol}"?`}
-  </DialogTitle>
-  <DialogActions>
-    <Button onClick={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}>
-      Cancelar
-    </Button>
-    <Button
-      color="primary"
-      onClick={() => {
-        cambiarRol(rolDialog.usuarioId, rolDialog.nuevoRol);
-        setRolDialog({ open: false, usuarioId: null, nuevoRol: "" });
-      }}
-    >
-      Confirmar
-    </Button>
-  </DialogActions>
-</Dialog>
-
+      <Dialog open={rolDialog.open} onClose={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}>
+        <DialogTitle>{`¿Confirmás cambiar el rol a "${rolDialog.nuevoRol}"?`}</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setRolDialog({ open: false, usuarioId: null, nuevoRol: "" })}>Cancelar</Button>
+          <Button
+            color="primary"
+            onClick={() => {
+              cambiarRol(rolDialog.usuarioId, rolDialog.nuevoRol);
+              setRolDialog({ open: false, usuarioId: null, nuevoRol: "" });
+            }}
+          >
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Snackbar
         open={snackbar.open}
