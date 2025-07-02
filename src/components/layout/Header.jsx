@@ -45,73 +45,37 @@ const Header = () => {
     { label: "Sobre Nosotros", to: "/nosotros" },
   ];
 
-  
   const extras = [];
 
-if (usuario) {
-  extras.push({
-    label: "Panel Admin",
-    to: "/admin",
-  });
-  extras.push({
-    label: "Cerrar sesión",
-    action: () => {
-      logout();
-      navigate("/login");
-    },
-  });
-}
-
-
+  if (usuario) {
+    extras.push({ label: "Panel Admin", to: "/admin" });
+    extras.push({
+      label: "Cerrar sesión",
+      action: () => {
+        logout();
+        navigate("/login");
+      },
+    });
+  }
 
   const drawerList = (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, px: 2 }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {menuItems.map((item) => (
+        {[...menuItems, ...extras].map((item, index) => (
           <ListItem
             button
-            key={item.to}
-            component={Link}
-            to={item.to}
-            sx={{
-              color: "#fff",
-              textDecoration: "none",
-              "&:hover": { backgroundColor: "#222" },
-            }}
-          >
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{
-                    fontFamily: "Noto Znamenny Musical Notation",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    color: "#fff",
-                  }}
-                >
-                  {item.label}
-                </Typography>
-              }
-            />
-          </ListItem>
-        ))}
-
-        
-        {extras.map((item, i) => (
-          <ListItem
-            button
-            key={`extra-${i}`}
+            key={`item-${index}`}
             component={item.to ? Link : "button"}
             to={item.to}
             onClick={item.action}
             sx={{
               color: "#fff",
-              '&:hover': { backgroundColor: '#333' },
+              "&:hover": { backgroundColor: "#333" },
             }}
           >
             <ListItemText
@@ -139,16 +103,15 @@ if (usuario) {
       <AppBar position="static" sx={{ backgroundColor: "#2c2c2c" }}>
         <Toolbar
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            px: 6,
+            minHeight: { xs: 64, sm: 72 },
+            px: { xs: 2, sm: 4, md: 6 },
             py: 1.5,
             position: "relative",
           }}
         >
+          
           <Typography
-            variant="h4"
+            variant="h5"
             component={Link}
             to="/"
             sx={{
@@ -160,31 +123,21 @@ if (usuario) {
               left: "50%",
               transform: "translateX(-50%)",
               whiteSpace: "nowrap",
+              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" },
             }}
           >
             Sabores Urbanos
           </Typography>
 
+          
           {!isMobile && (
             <Box
               sx={{ position: "absolute", right: 16, display: "flex", gap: 3 }}
             >
-              {menuItems.map((item) => (
-                <Button
-                  key={item.to}
-                  component={Link}
-                  to={item.to}
-                  sx={estiloBoton}
-                >
-                  {item.label}
-                </Button>
-              ))}
-
-              
-              {extras.map((item, i) =>
+              {[...menuItems, ...extras].map((item, i) =>
                 item.to ? (
                   <Button
-                    key={`extra-${i}`}
+                    key={`menu-${i}`}
                     component={Link}
                     to={item.to}
                     sx={estiloBoton}
@@ -193,7 +146,7 @@ if (usuario) {
                   </Button>
                 ) : (
                   <Button
-                    key={`extra-${i}`}
+                    key={`menu-${i}`}
                     onClick={item.action}
                     sx={estiloBoton}
                   >
@@ -204,6 +157,7 @@ if (usuario) {
             </Box>
           )}
 
+          
           {isMobile && (
             <>
               <IconButton
@@ -225,7 +179,8 @@ if (usuario) {
                     color: "#fff",
                     boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.5)",
                     borderLeft: "4px solid",
-                    borderImage: "linear-gradient(to bottom, #ff5722, #ffc107) 1",
+                    borderImage:
+                      "linear-gradient(to bottom, #ff5722, #ffc107) 1",
                   },
                 }}
               >
@@ -235,6 +190,8 @@ if (usuario) {
           )}
         </Toolbar>
       </AppBar>
+
+      
       <Box
         sx={{
           height: "4px",

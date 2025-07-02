@@ -15,6 +15,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { usuario } = useAuth();
@@ -37,6 +39,7 @@ const puedeVer = {
       maxWidth="sm"
       sx={{
         mt: 0,
+        px: 2,
         minHeight: "calc(100vh - 64px)",
         display: "flex",
         justifyContent: "center",

@@ -152,86 +152,145 @@ const GestionResenias = () => {
   });
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 10 }}>
-      <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
-            Gestión de Reseñas
-          </Typography>
-          <Button variant="outlined" onClick={() => navigate("/admin")}>Volver al Panel</Button>
-        </Stack>
+    <Container maxWidth="lg" sx={{ mt: { xs: 6, sm: 10 } }}>
+  <Paper sx={{ p: { xs: 2, sm: 4 }, borderRadius: 3 }}>
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={2}
+      justifyContent="space-between"
+      alignItems={{ xs: "flex-start", sm: "center" }}
+    >
+      <Typography variant="h5" fontWeight="bold" gutterBottom>
+        Gestión de Reseñas
+      </Typography>
+      <Button variant="outlined" onClick={() => navigate("/admin")}>
+        Volver al Panel
+      </Button>
+    </Stack>
 
-        <TableContainer sx={{ overflowX: "auto" }}>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell><TableSortLabel active={sortConfig.field === "plato"} direction={sortConfig.direction} onClick={() => handleSort("plato")}>Plato</TableSortLabel></TableCell>
-                <TableCell>Usuario</TableCell>
-                <TableCell>Comentario</TableCell>
-                <TableCell>Valoración</TableCell>
-                <TableCell>Respuesta</TableCell>
-                <TableCell><TableSortLabel active={sortConfig.field === "visible"} direction={sortConfig.direction} onClick={() => handleSort("visible")}>Visible</TableSortLabel></TableCell>
-                <TableCell align="center">Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedResenas.map((r) => (
-                <TableRow key={r._id}>
-                  <TableCell>{r.platoNombre}</TableCell>
-                  <TableCell>{r.nombre}</TableCell>
-                  <TableCell>{r.comentario}</TableCell>
-                  <TableCell>{r.valoracion} ⭐</TableCell>
-                  <TableCell>
-                    {r.respuesta?.texto && !editando[r._id] ? (
-                      <Stack spacing={0.5}>
-                        <Typography variant="body2">{r.respuesta.texto}</Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          — <b>{r.respuesta.respondidoPor}</b> {(r.respuesta.editado ? "(editado)" : "")}<br />
-                          <span style={{ fontSize: "0.75rem", color: "#666" }}>{new Date(r.respuesta.fecha).toLocaleString("es-AR")}</span>
-                        </Typography>
-                        <Tooltip title="Editar respuesta">
-                          <IconButton onClick={() => {
-                            setEditando({ ...editando, [r._id]: true });
-                            setRespuesta({ ...respuesta, [r._id]: r.respuesta.texto });
-                          }}><Edit /></IconButton>
-                        </Tooltip>
-                      </Stack>
-                    ) : (
-                      <Stack direction="row" spacing={1} alignItems="center">
-                        <TextField
-                          size="small"
-                          placeholder="Escribir respuesta"
-                          inputProps={{ maxLength: 280 }}
-                          value={respuesta[r._id] || ""}
-                          onChange={(e) => setRespuesta({ ...respuesta, [r._id]: e.target.value })}
-                        />
-                        {editando[r._id] ? (
-                          <Tooltip title="Guardar edición">
-                            <IconButton onClick={() => setEditarDialog({ open: true, id: r._id })}>
-  <Save />
-</IconButton>
-
-                          </Tooltip>
-                        ) : (
-                          <IconButton onClick={() => setResponderDialog({ open: true, id: r._id })}><Reply /></IconButton>
-                        )}
-                      </Stack>
-                    )}
-                  </TableCell>
-                  <TableCell>{r.activo ? "Sí" : "No"}</TableCell>
-                  <TableCell align="center">
-                    <Tooltip title={r.activo ? "Ocultar reseña" : "Mostrar reseña"}>
-                      <IconButton onClick={() => handleToggleActivo(r._id, r.activo)}>
-                        {r.activo ? <VisibilityOff /> : <Visibility />}
+    <TableContainer sx={{ mt: 3, overflowX: "auto" }}>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ minWidth: 120 }}>
+              <TableSortLabel
+                active={sortConfig.field === "plato"}
+                direction={sortConfig.direction}
+                onClick={() => handleSort("plato")}
+              >
+                Plato
+              </TableSortLabel>
+            </TableCell>
+            <TableCell>Usuario</TableCell>
+            <TableCell>Comentario</TableCell>
+            <TableCell>Valoración</TableCell>
+            <TableCell>Respuesta</TableCell>
+            <TableCell>
+              <TableSortLabel
+                active={sortConfig.field === "visible"}
+                direction={sortConfig.direction}
+                onClick={() => handleSort("visible")}
+              >
+                Visible
+              </TableSortLabel>
+            </TableCell>
+            <TableCell align="center" sx={{ minWidth: 120 }}>
+              Acciones
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {sortedResenas.map((r) => (
+            <TableRow key={r._id}>
+              <TableCell>{r.platoNombre}</TableCell>
+              <TableCell>{r.nombre}</TableCell>
+              <TableCell>{r.comentario}</TableCell>
+              <TableCell>{r.valoracion} ⭐</TableCell>
+              <TableCell>
+                {r.respuesta?.texto && !editando[r._id] ? (
+                  <Stack spacing={0.5}>
+                    <Typography variant="body2">{r.respuesta.texto}</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      — <b>{r.respuesta.respondidoPor}</b>{" "}
+                      {r.respuesta.editado ? "(editado)" : ""}
+                      <br />
+                      <span style={{ fontSize: "0.75rem", color: "#666" }}>
+                        {new Date(r.respuesta.fecha).toLocaleString("es-AR")}
+                      </span>
+                    </Typography>
+                    <Tooltip title="Editar respuesta">
+                      <IconButton
+                        onClick={() => {
+                          setEditando({ ...editando, [r._id]: true });
+                          setRespuesta({
+                            ...respuesta,
+                            [r._id]: r.respuesta.texto,
+                          });
+                        }}
+                      >
+                        <Edit />
                       </IconButton>
                     </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+                  </Stack>
+                ) : (
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    spacing={1}
+                    alignItems="flex-start"
+                    sx={{ width: "100%" }}
+                  >
+                    <TextField
+                      size="small"
+                      fullWidth
+                      placeholder="Escribir respuesta"
+                      inputProps={{ maxLength: 280 }}
+                      value={respuesta[r._id] || ""}
+                      onChange={(e) =>
+                        setRespuesta({ ...respuesta, [r._id]: e.target.value })
+                      }
+                    />
+                    {editando[r._id] ? (
+                      <Tooltip title="Guardar edición">
+                        <IconButton
+                          onClick={() =>
+                            setEditarDialog({ open: true, id: r._id })
+                          }
+                        >
+                          <Save />
+                        </IconButton>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Responder">
+                        <IconButton
+                          onClick={() =>
+                            setResponderDialog({ open: true, id: r._id })
+                          }
+                        >
+                          <Reply />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </Stack>
+                )}
+              </TableCell>
+              <TableCell>{r.activo ? "Sí" : "No"}</TableCell>
+              <TableCell align="center">
+                <Tooltip
+                  title={r.activo ? "Ocultar reseña" : "Mostrar reseña"}
+                >
+                  <IconButton
+                    onClick={() => handleToggleActivo(r._id, r.activo)}
+                  >
+                    {r.activo ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Paper>
 
       
       <Dialog open={confirmDialog.open} onClose={() => setConfirmDialog({ open: false, id: null, accion: "" })}>

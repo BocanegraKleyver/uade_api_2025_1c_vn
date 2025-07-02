@@ -14,7 +14,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import usePlatos from '../hooks/usePlatos';
-import Footer from '../components/layout/Footer';
 
 const Platos = () => {
   const navigate = useNavigate();
@@ -22,6 +21,7 @@ const Platos = () => {
   const [copiadoId, setCopiadoId] = useState(null);
   const { platos, cargando, error } = usePlatos();
 
+  
   useEffect(() => {
     const handleScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener('scroll', handleScroll);
@@ -32,23 +32,12 @@ const Platos = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const obtenerPromedioYCantidad = (nombrePlato) => {
-    const key = `reseñas_${nombrePlato}`;
-    const guardadas = localStorage.getItem(key);
-    if (!guardadas) return { promedio: 0, cantidad: 0 };
-    const lista = JSON.parse(guardadas);
-    const total = lista.reduce((acc, r) => acc + r.valoracion, 0);
-    return {
-      promedio: lista.length ? total / lista.length : 0,
-      cantidad: lista.length,
-    };
-  };
-
   if (cargando) return <Typography>Cargando platos...</Typography>;
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
     <>
+    
       <Container sx={{ py: 5 }}>
         <Typography variant="h4" gutterBottom>
           Todos los Platos
@@ -71,12 +60,14 @@ const Platos = () => {
         </Button>
 
         <Box display="flex" flexDirection="column" gap={4}>
-          {platos.map((plato, index) => {
+          {[...platos]
+  .sort((a, b) => a.nombre.localeCompare(b.nombre))
+  .map((plato, index) => {
             const imagen = plato.imagen
-  ? `${process.env.REACT_APP_API_URL}/uploads/${plato.imagen}`
-  : 'https://via.placeholder.com/400x240?text=Sin+imagen';
+              ? `${process.env.REACT_APP_API_URL}/uploads/${plato.imagen}`
+              : 'https://via.placeholder.com/400x240?text=Sin+imagen';
 
-            const { promedio, cantidad } = obtenerPromedioYCantidad(plato.nombre);
+            const promedio = plato.promedioValoracion;
 
             return (
               <motion.div
@@ -88,7 +79,7 @@ const Platos = () => {
                 <Card
                   onClick={() => navigate(`/plato/${plato._id}`)}
                   sx={{
-                    height: 240,
+                    height: { xs: 'auto', sm: 240 },
                     position: 'relative',
                     color: 'white',
                     backgroundImage: `url(${imagen})`,
@@ -104,6 +95,7 @@ const Platos = () => {
                     '&:hover': {
                       transform: 'scale(1.02)',
                     },
+                    minHeight: 200,
                   }}
                 >
                   {copiadoId === plato._id && (
@@ -117,7 +109,6 @@ const Platos = () => {
                         fontWeight: 'bold',
                         padding: '6px 12px',
                         borderRadius: '8px',
-                        boxShadow: 3,
                         fontSize: '0.85rem',
                         zIndex: 10,
                       }}
@@ -126,7 +117,7 @@ const Platos = () => {
                     </Box>
                   )}
 
-                  {promedio > 0 && (
+                  {promedio !== null && (
                     <Box
                       sx={{
                         position: 'absolute',
@@ -143,7 +134,7 @@ const Platos = () => {
                     >
                       <Rating value={promedio} precision={0.5} readOnly size="small" />
                       <Typography variant="caption" sx={{ color: '#fff' }}>
-                        ({cantidad} reseña{cantidad > 1 ? 's' : ''})
+                        {`(${plato?.cantidadResenas || 0} reseña${plato?.cantidadResenas !== 1 ? 's' : ''})`}
                       </Typography>
                     </Box>
                   )}
@@ -160,7 +151,11 @@ const Platos = () => {
                     <Typography variant="body2">${plato.precio}</Typography>
 
                     {plato.etiquetas?.length > 0 && (
-                      <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: 'wrap' }}>
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ mt: 1, flexWrap: 'wrap' }}
+                      >
                         {plato.etiquetas.map((et, i) => (
                           <Chip
                             key={i}
@@ -225,7 +220,7 @@ const Platos = () => {
         )}
       </Container>
 
-      <Footer />
+      
     </>
   );
 };

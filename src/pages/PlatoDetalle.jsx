@@ -13,7 +13,6 @@ import {
   Fab,
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Footer from '../components/layout/Footer';
 import { axiosPublic } from "../utils/axios";
 
 
@@ -69,8 +68,6 @@ const PlatoDetalle = () => {
   if (tieneError.nombre || tieneError.comentario || tieneError.valoracion) return;
 
   try {
-    
-
     const nueva = {
       platoId: plato._id,
       platoNombre: plato.nombre,
@@ -86,10 +83,24 @@ const PlatoDetalle = () => {
     setComentario('');
     setValoracion(0);
     setErrores({ nombre: false, comentario: false, valoracion: false });
+
+    
+    const claveLocal = `reseñas_${plato.nombre}`;
+    const existentes = JSON.parse(localStorage.getItem(claveLocal)) || [];
+
+    const nuevaMini = {
+      valoracion: res.data.valoracion,
+      fecha: res.data.fecha,
+    };
+
+    const actualizadas = [...existentes, nuevaMini];
+    localStorage.setItem(claveLocal, JSON.stringify(actualizadas));
   } catch (error) {
     console.error("Error al guardar reseña:", error);
   }
 };
+
+
 
 
   if (!plato) {
@@ -187,7 +198,7 @@ const PlatoDetalle = () => {
         </Fab>
       )}
 
-      <Footer />
+      
     </>
   );
 };

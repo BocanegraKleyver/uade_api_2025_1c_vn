@@ -9,6 +9,7 @@ import {
   Paper,
   Alert,
 } from "@mui/material";
+import fondoAdmin from "../assets/fondo-admin.jpg";
 
 const Login = () => {
   const { login, usuario } = useAuth();
@@ -49,32 +50,47 @@ const Login = () => {
 <Box
   sx={{
     minHeight: "100vh",
-    backgroundColor: "#f5f7fa",
+    backgroundImage: `url(${fondoAdmin})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    position: "relative",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     p: 2,
   }}
 >
-  <Paper
-    elevation={4}
+  
+  <Box
     sx={{
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      bgcolor: "rgba(0, 0, 0, 0.5)",
+      zIndex: 0,
+    }}
+  />
+
+  <Paper
+    elevation={6}
+    sx={{
+      zIndex: 1,
       width: "100%",
       maxWidth: 420,
       p: 4,
-      backgroundColor: "#ffffff",
-      color: "#1f2d3d",
+      backgroundColor: "rgba(255,255,255,0.95)",
       borderRadius: 3,
+      boxShadow: 6,
     }}
   >
     <Typography
-  variant="h5"
-  align="center"
-  gutterBottom
-  sx={{ fontWeight: "bold", textTransform: "uppercase", letterSpacing: 1 }}
->
-  LOGIN
-</Typography>
+      variant="h5"
+      align="center"
+      gutterBottom
+      sx={{ fontWeight: "bold", textTransform: "uppercase", letterSpacing: 1 }}
+    >
+      LOGIN
+    </Typography>
 
     {error && (
       <Alert severity="error" sx={{ mb: 2 }}>
@@ -112,6 +128,7 @@ const Login = () => {
     </Box>
   </Paper>
 </Box>
+
 
   );
 };

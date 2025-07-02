@@ -50,18 +50,22 @@ const GestionLogs = () => {
 
   useEffect(() => {
     fetchLogs();
-
     const handleScroll = () => setMostrarScrollTop(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchLogs]);
 
   return (
-    <Container sx={{ mt: 10 }}>
-      <Paper sx={{ p: 4, borderRadius: 3 }}>
-        
-        <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" sx={{ mb: 2 }}>
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: { xs: 6, sm: 10 } }}>
+      <Paper sx={{ p: { xs: 2, sm: 4 }, borderRadius: 3 }}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", sm: "center" }}
+          sx={{ mb: 2 }}
+        >
+          <Typography variant="h5" fontWeight="bold">
             Gestión de Logs
           </Typography>
           <Button variant="outlined" onClick={() => navigate("/admin")}>
@@ -69,10 +73,26 @@ const GestionLogs = () => {
           </Button>
         </Stack>
 
-        
-        <Stack direction="row" spacing={2} sx={{ mb: 3, flexWrap: "wrap" }}>
-          <TextField label="Email" size="small" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <TextField label="Acción" size="small" value={accion} onChange={(e) => setAccion(e.target.value)} />
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          useFlexGap
+          sx={{ mb: 3 }}
+        >
+          <TextField
+            label="Email"
+            size="small"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label="Acción"
+            size="small"
+            value={accion}
+            onChange={(e) => setAccion(e.target.value)}
+            fullWidth
+          />
           <TextField
             label="Desde"
             size="small"
@@ -80,6 +100,7 @@ const GestionLogs = () => {
             InputLabelProps={{ shrink: true }}
             value={desde}
             onChange={(e) => setDesde(e.target.value)}
+            fullWidth
           />
           <TextField
             label="Hasta"
@@ -88,15 +109,15 @@ const GestionLogs = () => {
             InputLabelProps={{ shrink: true }}
             value={hasta}
             onChange={(e) => setHasta(e.target.value)}
+            fullWidth
           />
           <Button variant="contained" onClick={fetchLogs}>
             Aplicar filtros
           </Button>
         </Stack>
 
-        
-        <TableContainer sx={{ maxHeight: "60vh" }}>
-          <Table size="small">
+        <TableContainer sx={{ overflowX: "auto", maxHeight: "60vh" }}>
+          <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>Email</TableCell>
@@ -122,7 +143,6 @@ const GestionLogs = () => {
           </Table>
         </TableContainer>
 
-        
         <Snackbar
           open={snackbar.open}
           autoHideDuration={3000}
@@ -133,7 +153,6 @@ const GestionLogs = () => {
         </Snackbar>
       </Paper>
 
-      
       {mostrarScrollTop && (
         <Button
           variant="contained"

@@ -1,69 +1,123 @@
-Sabores Urbanos
+# 🍽️ Sabores Urbanos - Frontend
 
-Bienvenido a Sabores Urbanos, una carta digital interactiva desarrollada como parte del proyecto académico para la materia Aplicaciones Interactivas - UADE.
+Bienvenido a **Sabores Urbanos**, una carta digital interactiva desarrollada como parte del proyecto académico para la materia **Aplicaciones Interactivas 2025 1C VN- UADE**.
 
-Este proyecto representa una carta profesional para un restaurante argentino, diseñada con enfoque mobile-first, moderna, responsiva y con experiencia de usuario cuidada.
+Este proyecto representa una carta profesional para un restaurante argentino, diseñada con enfoque mobile-first, moderna, responsiva, con una experiencia de usuario cuidada tanto para el público general como para el panel administrativo.
 
-🍽️ Descripción
+---
 
-Sabores Urbanos permite visualizar y explorar platos organizados por categoría, filtrarlos con un buscador en tiempo real y ver detalles individuales con imagen, precio, alérgenos, etiquetas (🥬 Vegano, 🌶️ Picante, 🥛 Sin lactosa), y sistema de reseñas con estrellas y comentarios.
+## ✨ Descripción General
 
-Además, incluye una sección de contacto, botón flotante para volver arriba, animaciones suaves, estilo glassmorphism, integración con localStorage, y QR para acceder desde celular.
+La app permite:
 
-🔧 Tecnologías utilizadas
+- Visualizar y explorar platos organizados por categorías
+- Buscar en tiempo real
+- Ver detalles con imagen, precio, alérgenos, etiquetas visuales (Vegano, Picante, Sin lactosa)
+- Agregar reseñas con estrellas y comentarios
+- Acceder a sección de contacto, QR, mapa
+- Volver arriba con botón flotante
+- Animaciones suaves con Framer Motion
+- Diseño moderno con estilo glassmorphism
 
-React (Vite)
+### 🛠️ Panel de Administración (Privado)
 
-Material UI (MUI)
+Ubicado en `/admin`, cuenta con:
 
-Framer Motion (animaciones)
+- Login con JWT y persistencia de sesión
+- Control de acceso por roles y permisos
+- Vista responsive adaptada a escritorio y móvil
 
-React Router DOM
+#### Módulos de gestión:
 
-LocalStorage (para persistir reseñas)
+✅ Gestión de Usuarios  
+✅ Gestión de Platos (CRUD completo con imágenes)  
+✅ Gestión de Reseñas (moderar, responder, ordenar)  
+✅ Gestión de Logs (acciones del sistema)
 
-🚀 Cómo correr el proyecto
+---
 
-Clonar el repositorio:
+## 🧰 Tecnologías utilizadas
 
+- **React** (Create React App)
+- **React Router DOM**
+- **Material UI (MUI)**
+- **Framer Motion**
+- **Axios**
+- **LocalStorage** (reseñas públicas)
+- **JWT Decode**
+- **Fontsource** (Inter, Rubik, Playfair)
+
+---
+
+## 🚀 Cómo correr el proyecto
+
+### Clonar el repositorio:
+
+```bash
 git clone https://github.com/BocanegraKleyver/uade_api_2025_1c_vn.git
+```
 
-Instalar dependencias:
+### Instalar dependencias:
 
+```bash
 npm install
-npm install @mui/material @emotion/react @emotion/styled
-npm install @mui/icons-material
-npm install @fontsource/playfair-display
-npm install framer-motion
-npm install @fontsource/inter
-npm install @fontsource/rubik
+```
 
-Iniciar en entorno local:
+### Iniciar entorno local:
 
+```bash
 npm start
+```
 
-Abrí http://localhost:3000 para verlo en el navegador.
+La app se abrirá en:  
+📍 `http://localhost:3000`
 
-🌐 Versión desplegada (Vercel)
+### Configurar `.env`:
+
+```env
+REACT_APP_API_URL=http://localhost:3001
+```
+
+---
+
+## 🌐 Versión desplegada (Vercel)
 
 🔗 https://uade-api-2025-1c-vn.vercel.app
 
-📱 QR de acceso
+### 📱 QR de acceso
 
 Escaneá con tu celular para acceder directamente:
 
 <img src="./src/assets/QR-Sabores_Urbanos.png" alt="QR Sabores Urbanos" width="200"/>
 
-📬 Contacto
+---
 
-Dirección: Lima 717, CABA Teléfono: (011) 9999-9999 Email: info@saboresurbanos.com
+## 🧑‍🏫 Docentes
 
-👨‍💻 Autores
+- Sarasa, María Paula
+- Fares, Francisco Joaquín
 
-Bocanegra Kleyver - Legajo 1116590 - UADE - API 2025 - 1C - Viernes Turno Noche
-Lazbal Santiago - Legajo 1130853 - UADE - API 2025 - 1C - Viernes Turno Noche
+## 👨‍💻 Autores
 
-Profesores
+- **Bocanegra Kleyver** - Legajo 1116590 - UADE - API 2025 - 1C - Viernes Turno Noche
+- **Lazbal Santiago** - Legajo 1130853 - UADE - API 2025 - 1C - Viernes Turno Noche
 
-Sarasa, Maria Paula
-Fares, Francisco Joaquín
+---
+
+## 🗃️ Estructura del proyecto
+
+```
+src/
+├── components/        # Componentes reutilizables
+├── pages/             # Home, Menú, Contacto, etc.
+├── admin/             # Pantallas privadas: Dashboard, CRUDs
+├── context/           # Contexto de autenticación
+├── routes/            # Rutas protegidas
+├── services/          # Llamadas Axios al backend
+├── styles/            # Temas y estilos
+└── utils/             # Helpers
+```
+
+---
+
+Este proyecto demuestra una integración completa **frontend + backend**, respetando buenas prácticas, control de acceso y diseño moderno.

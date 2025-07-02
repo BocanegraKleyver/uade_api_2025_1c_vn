@@ -1,9 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
-import { Box } from "@mui/material";
+import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 
 const AdminLayout = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
@@ -14,9 +17,18 @@ const AdminLayout = () => {
       }}
     >
       <AdminHeader />
-      <Box sx={{ flexGrow: 1 }}>
+
+      <Container
+        maxWidth="xl"
+        sx={{
+          flexGrow: 1,
+          pt: 3,
+          pb: 6,
+          px: isMobile ? 2 : 4,
+        }}
+      >
         <Outlet />
-      </Box>
+      </Container>
     </Box>
   );
 };

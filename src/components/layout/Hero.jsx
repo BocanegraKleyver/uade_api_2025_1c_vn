@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, useMediaQuery } from '@mui/material';
 import { keyframes } from '@emotion/react';
+import { useTheme } from '@mui/material/styles';
 import fondoHero from '../../assets/fondo-hero.jpg';
 
 const fadeIn = keyframes`
@@ -9,6 +10,9 @@ const fadeIn = keyframes`
 `;
 
 const Hero = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const scrollToMenu = () => {
     const seccionCarta = document.getElementById('carta');
     if (seccionCarta) {
@@ -29,7 +33,8 @@ const Hero = () => {
         alignItems: 'center',
         textAlign: 'center',
         color: '#fff',
-        padding: 4,
+        px: 2,
+        py: 4,
       }}
     >
       <Typography
@@ -38,7 +43,8 @@ const Hero = () => {
           animation: `${fadeIn} 1.5s ease-out forwards`,
           fontWeight: 'bold',
           textShadow: '2px 2px 10px rgba(0,0,0,0.7)',
-          mb: 4
+          mb: 4,
+          fontSize: { xs: '2.2rem', sm: '3rem', md: '4rem' },
         }}
       >
         Sabores Urbanos
@@ -48,14 +54,16 @@ const Hero = () => {
         size="large"
         onClick={scrollToMenu}
         sx={{
-          backgroundColor: 'rgba(255,255,255,0.1)',
+          fontSize: { xs: '0.9rem', sm: '1.1rem' },
+          px: 4,
+          py: 1.5,
+          backgroundColor: 'rgba(255,255,255,0.15)',
           backdropFilter: 'blur(6px)',
           border: '1px solid white',
           color: 'white',
-          fontWeight: 'bold',
           '&:hover': {
-            backgroundColor: 'rgba(255,255,255,0.2)'
-          }
+            backgroundColor: 'rgba(255,255,255,0.25)',
+          },
         }}
       >
         Ver Carta

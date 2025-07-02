@@ -94,7 +94,14 @@ const EditarPermisosModal = ({
       <DialogTitle>
         Editar permisos de {usuarioEditar.nombre} {usuarioEditar.apellido}
       </DialogTitle>
-      <DialogContent>
+
+      <DialogContent
+        dividers
+        sx={{
+          maxHeight: { xs: "70vh", sm: "none" },
+          overflowY: { xs: "auto", sm: "visible" },
+        }}
+      >
         <Typography variant="subtitle1" gutterBottom>
           Rol actual: <strong>{usuarioEditar.rol}</strong>
         </Typography>
@@ -125,6 +132,7 @@ const EditarPermisosModal = ({
           </Alert>
         )}
       </DialogContent>
+
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
         <Button variant="contained" onClick={handleSubmit}>

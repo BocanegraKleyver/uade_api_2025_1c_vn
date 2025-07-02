@@ -158,7 +158,7 @@ const CrearEditarPlatoModal = ({ open, onClose, onPlatoGuardado, platoEditar = n
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>{platoEditar ? "Editar plato" : "Crear nuevo plato"}</DialogTitle>
       <DialogContent>
-        <Stack spacing={2} mt={1}>
+        <Stack spacing={2} mt={1} sx={{ px: { xs: 1, sm: 2 } }}>
           <TextField
             label="Nombre"
             name="nombre"
@@ -233,16 +233,20 @@ const CrearEditarPlatoModal = ({ open, onClose, onPlatoGuardado, platoEditar = n
             helperText={errores.etiquetas}
             fullWidth
           />
-          <Button variant="outlined" component="label">
-            {form.imagen ? form.imagen.name : "Seleccionar imagen"}
-            <input
-              type="file"
-              hidden
-              name="imagen"
-              onChange={handleChange}
-              accept="image/jpeg,image/png,image/gif"
-            />
-          </Button>
+          <Button
+  variant="outlined"
+  component="label"
+  sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", maxWidth: "100%" }}
+>
+  {form.imagen ? form.imagen.name : "Seleccionar imagen"}
+  <input
+    type="file"
+    hidden
+    name="imagen"
+    onChange={handleChange}
+    accept="image/jpeg,image/png,image/gif"
+  />
+</Button>
           {errores.imagen && <Alert severity="warning">{errores.imagen}</Alert>}
           <FormControlLabel
             control={

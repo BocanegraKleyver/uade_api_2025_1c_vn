@@ -1,7 +1,6 @@
 import React from 'react';
 import {Container,Typography,Button,Box,Divider} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/layout/Footer';
 
 const SobreNosotros = () => {
   const navigate = useNavigate();
@@ -33,35 +32,43 @@ const SobreNosotros = () => {
         </Typography>
 
         <Box sx={{ fontFamily: 'Noto Znamenny Musical Notation', fontSize: '1.1rem' }}>
-          <Typography sx={{ mb: 3 }}>
-            <strong>Sabores Urbanos</strong> nace como una propuesta gastronómica moderna que combina la tradición culinaria argentina con la innovación digital.
-          </Typography>
 
           <Typography sx={{ mb: 3 }}>
-            Esta carta digital fue desarrollada por estudiantes de <strong>UADE</strong> como parte de un proyecto académico para la materia <em>Aplicaciones Interactivas</em>.
-          </Typography>
+  <strong>Sabores Urbanos</strong> nace como una propuesta gastronómica moderna que combina la tradición culinaria argentina con la innovación digital.
+</Typography>
 
-          <Typography sx={{ mb: 3 }}>
-            Nuestro objetivo es brindar una experiencia visualmente atractiva, rápida y accesible tanto para comensales como para el personal del restaurante. La aplicación fue diseñada con tecnologías modernas como <strong>React</strong>, <strong>Material UI</strong> y animaciones con <strong>Framer Motion</strong>.
-          </Typography>
+<Typography sx={{ mb: 3 }}>
+  Esta carta digital fue desarrollada por estudiantes de la Universidad Argentina de la Empresa - <strong>UADE</strong> como parte de un proyecto académico para la materia <em>Aplicaciones Interactivas</em>.
+</Typography>
 
-          <Typography sx={{ mb: 3 }}>
-            Agradecemos tu visita y esperamos que disfrutes de nuestra propuesta tanto como nosotros disfrutamos desarrollarla.
-          </Typography>
+<Typography sx={{ mb: 3 }}>
+  La aplicación está construida con un enfoque <strong>fullstack</strong>, utilizando <strong>React</strong> para el frontend y <strong>Node.js + Express</strong> junto con <strong>MongoDB</strong> para el backend. Además, implementa <strong>autenticación de usuarios</strong>, <strong>panel de administración</strong>, <strong>gestión de platos, reseñas y logs</strong> con control de roles y permisos.
+</Typography>
 
-          <Divider sx={{ my: 4 }} />
+<Typography sx={{ mb: 3 }}>
+  Nuestro objetivo es brindar una experiencia visualmente atractiva, rápida y accesible tanto para comensales como para el personal del restaurante. También incorporamos animaciones con <strong>Framer Motion</strong> y estilos modernos mediante <strong>Material UI</strong>.
+</Typography>
 
-          <Typography
-            variant="body2"
-            sx={{
-              fontStyle: 'italic',
-              textAlign: 'center',
-              fontSize: '1rem',
-              opacity: 0.85,
-            }}
-          >
-            “La pasión por la cocina también se sirve con buen diseño.”
-          </Typography>
+<Typography sx={{ mb: 3 }}>
+  Agradecemos tu visita y esperamos que disfrutes de nuestra propuesta tanto como nosotros disfrutamos desarrollarla.
+</Typography>
+
+<Divider sx={{ my: 4 }} />
+
+<Typography
+  variant="body2"
+  sx={{
+    fontStyle: 'italic',
+    textAlign: 'center',
+    fontSize: '1rem',
+    opacity: 0.85,
+  }}
+>
+  “La pasión por la cocina también se sirve con buen diseño.”
+</Typography>
+
+
+
         </Box>
 
         <Box sx={{ textAlign: 'center', mt: 5 }}>
@@ -78,7 +85,7 @@ const SobreNosotros = () => {
         </Box>
       </Container>
 
-      <Footer />
+    
     </>
   );
 };

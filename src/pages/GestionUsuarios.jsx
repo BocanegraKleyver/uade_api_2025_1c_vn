@@ -21,6 +21,7 @@ import {
   Snackbar,
   Alert as MuiAlert,
   Stack,
+  Box,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -141,7 +142,14 @@ const GestionUsuarios = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Paper sx={{ width: "100%", p: 4, borderRadius: 3 }}>
+      <Paper
+        sx={{
+          width: "100%",
+          p: { xs: 2, sm: 4 },
+          borderRadius: 3,
+          overflowX: "auto",
+        }}
+      >
         <Typography variant="h4" align="center" gutterBottom fontWeight="bold">
           Gestión de Usuarios
         </Typography>
@@ -149,97 +157,105 @@ const GestionUsuarios = () => {
         {loading ? (
           <Typography align="center">Cargando usuarios...</Typography>
         ) : (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Apellido</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Rol</TableCell>
-                <TableCell>Activo</TableCell>
-                <TableCell>Permisos</TableCell>
-                <TableCell align="center">Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {usuarios.map((u) => {
-                const esRoot = u.rol === "root";
-                return (
-                  <TableRow key={u._id}>
-                    <TableCell>{u.nombre}</TableCell>
-                    <TableCell>{u.apellido}</TableCell>
-                    <TableCell>{u.email}</TableCell>
-                    <TableCell>
-                      {u.rol === "root" ? (
-                        <Typography fontWeight="bold">root</Typography>
-                      ) : (
-                        <FormControl fullWidth>
-                          <Select
-                            value={u.rol}
-                            size="small"
-                            onChange={(e) => setRolDialog({ open: true, usuarioId: u._id, nuevoRol: e.target.value })}
-                            displayEmpty
-                            renderValue={(selected) =>
-                              !selected ? <em>Seleccione rol</em> : selected.charAt(0).toUpperCase() + selected.slice(1)
-                            }
-                          >
-                            <MenuItem value={u.rol}>
-                              {u.rol.charAt(0).toUpperCase() + u.rol.slice(1)}
-                            </MenuItem>
-                            {u.rol !== "admin" && puedeCambiarRol(usuario, u, "admin") && (
-                              <MenuItem value="admin">Admin</MenuItem>
-                            )}
-                            {u.rol !== "usuario" && puedeCambiarRol(usuario, u, "usuario") && (
-                              <MenuItem value="usuario">Usuario</MenuItem>
-                            )}
-                          </Select>
-                        </FormControl>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Switch
-                        checked={u.activo}
-                        disabled={!puedeGestionar || esRoot}
-                        onChange={() => openConfirm(u._id, u.activo ? "desactivar" : "reactivar")}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {[
-                        u.permisos.gestionarUsuarios && "Usuarios",
-                        u.permisos.gestionarPlatos && "Platos",
-                        u.permisos.gestionarLogs && "Logs",
-                        u.permisos.gestionarResenas && "Reseñas",
-                      ]
-                        .filter(Boolean)
-                        .join(", ")}
-                    </TableCell>
-                    <TableCell align="center">
-                      {puedeEditarPermisos(usuario, u) && (
-                        <Tooltip title="Editar permisos">
+          <Box
+  sx={{
+    overflowX: "auto",
+    "&::-webkit-scrollbar": { height: 6 },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#ccc",
+      borderRadius: 3,
+    },
+  }}
+>
+
+
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Apellido</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Rol</TableCell>
+                  <TableCell>Activo</TableCell>
+                  <TableCell>Permisos</TableCell>
+                  <TableCell align="center">Acciones</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {usuarios.map((u) => {
+                  const esRoot = u.rol === "root";
+                  return (
+                    <TableRow key={u._id}>
+                      <TableCell>{u.nombre}</TableCell>
+                      <TableCell>{u.apellido}</TableCell>
+                      <TableCell>{u.email}</TableCell>
+                      <TableCell>
+                        {u.rol === "root" ? (
+                          <Typography fontWeight="bold">root</Typography>
+                        ) : (
+                          <FormControl fullWidth>
+                            <Select
+                              value={u.rol}
+                              size="small"
+                              onChange={(e) => setRolDialog({ open: true, usuarioId: u._id, nuevoRol: e.target.value })}
+                              displayEmpty
+                              renderValue={(selected) =>
+                                !selected ? <em>Seleccione rol</em> : selected.charAt(0).toUpperCase() + selected.slice(1)
+                              }
+                            >
+                              <MenuItem value={u.rol}>
+                                {u.rol.charAt(0).toUpperCase() + u.rol.slice(1)}
+                              </MenuItem>
+                              {u.rol !== "admin" && puedeCambiarRol(usuario, u, "admin") && (
+                                <MenuItem value="admin">Admin</MenuItem>
+                              )}
+                              {u.rol !== "usuario" && puedeCambiarRol(usuario, u, "usuario") && (
+                                <MenuItem value="usuario">Usuario</MenuItem>
+                              )}
+                            </Select>
+                          </FormControl>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={u.activo}
+                          disabled={!puedeGestionar || esRoot}
+                          onChange={() => openConfirm(u._id, u.activo ? "desactivar" : "reactivar")}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {[u.permisos.gestionarUsuarios && "Usuarios", u.permisos.gestionarPlatos && "Platos", u.permisos.gestionarLogs && "Logs", u.permisos.gestionarResenas && "Reseñas"]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </TableCell>
+                      <TableCell align="center">
+                        {puedeEditarPermisos(usuario, u) && (
+                          <Tooltip title="Editar permisos">
+                            <IconButton
+                              onClick={() => {
+                                setUsuarioSeleccionado(u);
+                                setEditarPermisosModalAbierto(true);
+                              }}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        <Tooltip title="Eliminar">
                           <IconButton
-                            onClick={() => {
-                              setUsuarioSeleccionado(u);
-                              setEditarPermisosModalAbierto(true);
-                            }}
+                            onClick={() => openConfirm(u._id, "fisico")}
+                            disabled={!puedeEliminarFisico(usuario, u)}
                           >
-                            <EditIcon />
+                            <DeleteIcon />
                           </IconButton>
                         </Tooltip>
-                      )}
-                      <Tooltip title="Eliminar">
-                        <IconButton
-                          onClick={() => openConfirm(u._id, "fisico")}
-                          disabled={!puedeEliminarFisico(usuario, u)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Box>
         )}
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center" mt={4}>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useCallback } from "react";
 import {
   Container,
@@ -88,7 +87,7 @@ const GestionPlatos = () => {
 
   const handleConfirmToggle = async () => {
     const { platoId, accion } = confirmDialog;
-    let endpoint = accion === "desactivar" ? "desactivar" : "reactivar";
+    const endpoint = accion === "desactivar" ? "desactivar" : "reactivar";
 
     try {
       await fetch(`http://localhost:3001/api/platos/${platoId}/${endpoint}`, {
@@ -131,13 +130,21 @@ const GestionPlatos = () => {
   });
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 10 }}>
-      <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <Box display="flex" justifyContent="space-between" flexWrap="wrap" alignItems="center">
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: 10, mb: 6 }}>
+      <Paper sx={{ p: 3, borderRadius: 3 }}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+          rowGap={2}
+          mb={2}
+        >
+          <Typography variant="h4" fontWeight="bold">
             Gestión de Platos
           </Typography>
-          <Stack direction="row" spacing={2}>
+
+          <Stack direction="row" spacing={2} flexWrap="wrap">
             <Button variant="outlined" onClick={() => navigate("/admin")}>
               Volver al Panel
             </Button>

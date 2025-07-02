@@ -51,7 +51,14 @@ const CambiarPasswordModal = ({ open, onClose, usuario, logout, navigate }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogTitle>Cambiar Contraseña</DialogTitle>
-      <DialogContent>
+
+      <DialogContent
+        dividers
+        sx={{
+          maxHeight: { xs: "70vh", sm: "none" },
+          overflowY: { xs: "auto", sm: "visible" },
+        }}
+      >
         <TextField
           label="Nueva contraseña"
           type="password"
@@ -77,6 +84,7 @@ const CambiarPasswordModal = ({ open, onClose, usuario, logout, navigate }) => {
           </Alert>
         )}
       </DialogContent>
+
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
         <Button variant="contained" onClick={handleSubmit}>

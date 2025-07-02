@@ -3,6 +3,9 @@ import {
   Toolbar,
   Typography,
   Button,
+  Box,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -14,20 +17,49 @@ const AdminHeader = () => {
   const navigate = useNavigate();
   const [abrirModalPass, setAbrirModalPass] = useState(false);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#1f2d3d" }}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
-            ADMIN
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#1f2d3d",
+        }}
+      >
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            minHeight: { xs: 64, sm: 72 },
+            px: { xs: 2, sm: 4 },
+          }}
+        >
+          <Typography
+            variant={isMobile ? "h6" : "h5"}
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              fontFamily: "Playfair Display",
+            }}
+          >
+            Sabores Urbanos ADMIN
           </Typography>
+
           {usuario && (
-            <>
-              <Button color="inherit" onClick={() => setAbrirModalPass(true)}>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="small"
+                onClick={() => setAbrirModalPass(true)}
+              >
                 Cambiar contraseña
               </Button>
               <Button
-                color="inherit"
+                variant="contained"
+                color="error"
+                size="small"
                 onClick={() => {
                   logout();
                   navigate("/login");
@@ -35,7 +67,7 @@ const AdminHeader = () => {
               >
                 Cerrar sesión
               </Button>
-            </>
+            </Box>
           )}
         </Toolbar>
       </AppBar>

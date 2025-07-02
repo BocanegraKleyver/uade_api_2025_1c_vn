@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import {Container, Typography, TextField, Button, Box, Stack, Paper, Snackbar, Alert} from '@mui/material';
+import {
+  Container, Typography, TextField, Button, Box, Stack, Paper,
+  Snackbar, Alert, useMediaQuery, useTheme
+} from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/layout/Footer';
 
 const Contacto = () => {
   const [nombre, setNombre] = useState('');
@@ -12,6 +14,9 @@ const Contacto = () => {
   const [mensaje, setMensaje] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errores, setErrores] = useState({ nombre: false, email: false, mensaje: false });
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
 
   const validarEmail = (correo) =>
@@ -38,20 +43,19 @@ const Contacto = () => {
   return (
     <>
       <Container
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
           my: 6,
           background: 'rgba(255,255,255,0.85)',
           borderRadius: 3,
-          padding: 4,
+          p: { xs: 3, md: 5 },
           pb: 8,
           backdropFilter: 'blur(10px)',
           boxShadow: 4,
-          mx: 'auto',
         }}
       >
         <Typography
-          variant="h3"
+          variant={isMobile ? 'h4' : 'h3'}
           gutterBottom
           sx={{
             fontFamily: 'Playfair Display',
@@ -64,24 +68,24 @@ const Contacto = () => {
         </Typography>
 
         <Stack spacing={2} sx={{ mb: 4 }}>
-          <Box display="flex" alignItems="center" gap={1}>
+          <Stack direction="row" spacing={1} alignItems="center">
             <LocationOnIcon />
-            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+            <Typography noWrap sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
               Lima 717, CABA
             </Typography>
-          </Box>
-          <Box display="flex" alignItems="center" gap={1}>
+          </Stack>
+          <Stack direction="row" spacing={1} alignItems="center">
             <PhoneIcon />
-            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+            <Typography noWrap sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
               (011) 9999-9999
             </Typography>
-          </Box>
-          <Box display="flex" alignItems="center" gap={1}>
+          </Stack>
+          <Stack direction="row" spacing={1} alignItems="center">
             <EmailIcon />
-            <Typography sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
-              info@saboresurbanos.com
+            <Typography noWrap sx={{ fontFamily: 'Noto Znamenny Musical Notation' }}>
+              admin@saboresurbanos.com
             </Typography>
-          </Box>
+          </Stack>
         </Stack>
 
         <Paper elevation={3} sx={{ p: { xs: 3, md: 5 }, borderRadius: 2 }}>
@@ -133,13 +137,19 @@ const Contacto = () => {
           </Stack>
         </Paper>
 
-        <Button
-          sx={{ mt: 3 }}
-          variant="contained"
-          onClick={() => navigate('/')}
-        >
-          ⬅ Volver al Menú Principal
-        </Button>
+        <Box mt={4} textAlign="center">
+          <Button
+            variant="contained"
+            onClick={() => navigate('/')}
+            sx={{
+              fontWeight: 'bold',
+              px: 4,
+              py: 1.5,
+            }}
+          >
+            ⬅ Volver al Menú Principal
+          </Button>
+        </Box>
       </Container>
 
       <Snackbar
@@ -159,7 +169,7 @@ const Contacto = () => {
         </Alert>
       </Snackbar>
 
-      <Footer />
+      
     </>
   );
 };

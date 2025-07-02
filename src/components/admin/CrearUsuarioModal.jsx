@@ -150,104 +150,115 @@ if (form.rol === "usuario") {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Crear nuevo usuario</DialogTitle>
-      <DialogContent>
+  <DialogTitle>Crear nuevo usuario</DialogTitle>
+  
+  <DialogContent
+    dividers
+    sx={{
+      maxHeight: { xs: "70vh", sm: "none" },
+      overflowY: { xs: "auto", sm: "visible" },
+    }}
+  >
+    <TextField
+      label="Nombre"
+      name="nombre"
+      value={form.nombre}
+      onChange={handleChange}
+      fullWidth
+      margin="normal"
+      inputProps={{ minLength: 2, maxLength: 30 }}
+      error={!!errors.nombre}
+      helperText={errors.nombre}
+    />
 
-<TextField
-  label="Nombre"
-  name="nombre"
-  value={form.nombre}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  inputProps={{ minLength: 2, maxLength: 30 }}
-  error={!!errors.nombre}
-  helperText={errors.nombre}
-/>
+    <TextField
+      label="Apellido"
+      name="apellido"
+      value={form.apellido}
+      onChange={handleChange}
+      fullWidth
+      margin="normal"
+      inputProps={{ minLength: 2, maxLength: 30 }}
+      error={!!errors.apellido}
+      helperText={errors.apellido}
+    />
 
-<TextField
-  label="Apellido"
-  name="apellido"
-  value={form.apellido}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  inputProps={{ minLength: 2, maxLength: 30 }}
-  error={!!errors.apellido}
-  helperText={errors.apellido}
-/>
+    <TextField
+      label="Email"
+      name="email"
+      type="email"
+      value={form.email}
+      onChange={handleChange}
+      fullWidth
+      margin="normal"
+      inputProps={{ maxLength: 50 }}
+      error={!!errors.email}
+      helperText={errors.email}
+    />
 
-<TextField
-  label="Email"
-  name="email"
-  type="email"
-  value={form.email}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  inputProps={{ maxLength: 50 }}
-  error={!!errors.email}
-  helperText={errors.email}
-/>
+    <TextField
+      label="Contraseña"
+      name="password"
+      type="password"
+      value={form.password}
+      onChange={handleChange}
+      fullWidth
+      margin="normal"
+      inputProps={{ minLength: 6, maxLength: 20 }}
+      error={!!errors.password}
+      helperText={errors.password}
+    />
 
-<TextField
-  label="Contraseña"
-  name="password"
-  type="password"
-  value={form.password}
-  onChange={handleChange}
-  fullWidth
-  margin="normal"
-  inputProps={{ minLength: 6, maxLength: 20 }}
-  error={!!errors.password}
-  helperText={errors.password}
-/>
+    <TextField
+      select
+      label="Rol"
+      name="rol"
+      value={form.rol}
+      onChange={handleChange}
+      fullWidth
+      margin="normal"
+    >
+      <MenuItem value="usuario">Usuario</MenuItem>
+      <MenuItem value="admin">Admin</MenuItem>
+    </TextField>
 
-        
+    <Typography variant="subtitle1" mt={2}>
+      Permisos:
+    </Typography>
 
-        <TextField
-          select label="Rol" name="rol"
-          value={form.rol} onChange={handleChange}
-          fullWidth margin="normal"
-        >
-          <MenuItem value="usuario">Usuario</MenuItem>
-          <MenuItem value="admin">Admin</MenuItem>
-        </TextField>
-
-        <Typography variant="subtitle1" mt={2}>Permisos:</Typography>
-        {
-        [
-  ["gestionarUsuarios", "Usuarios"],
-  ["gestionarPlatos", "Platos"],
-  ["gestionarLogs", "Logs"],
-  ["gestionarResenas", "Reseñas"],
-].map(([key, label]) => (
-  <FormControlLabel
-    key={key}
-    control={
-      <Checkbox
-        name={`permisos.${key}`}
-        checked={form.permisos[key]}
-        onChange={handleChange}
-        disabled={
-          form.rol === "usuario" &&
-          (key === "gestionarUsuarios" || key === "gestionarLogs")
+    {[
+      ["gestionarUsuarios", "Usuarios"],
+      ["gestionarPlatos", "Platos"],
+      ["gestionarLogs", "Logs"],
+      ["gestionarResenas", "Reseñas"],
+    ].map(([key, label]) => (
+      <FormControlLabel
+        key={key}
+        control={
+          <Checkbox
+            name={`permisos.${key}`}
+            checked={form.permisos[key]}
+            onChange={handleChange}
+            disabled={
+              form.rol === "usuario" &&
+              (key === "gestionarUsuarios" || key === "gestionarLogs")
+            }
+          />
         }
+        label={label}
       />
-    }
-    label={label}
-  />
-))
-        }
+    ))}
 
-        {errorMsg && <Alert severity="error" sx={{ mt: 2 }}>{errorMsg}</Alert>}
-        {successMsg && <Alert severity="success" sx={{ mt: 2 }}>{successMsg}</Alert>}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => { resetForm(); onClose(); }}>Cancelar</Button>
-        <Button variant="contained" onClick={handleSubmit}>Crear</Button>
-      </DialogActions>
-    </Dialog>
+    {errorMsg && <Alert severity="error" sx={{ mt: 2 }}>{errorMsg}</Alert>}
+    {successMsg && <Alert severity="success" sx={{ mt: 2 }}>{successMsg}</Alert>}
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={() => { resetForm(); onClose(); }}>Cancelar</Button>
+    <Button variant="contained" onClick={handleSubmit}>Crear</Button>
+  </DialogActions>
+</Dialog>
+
   );
 };
 
