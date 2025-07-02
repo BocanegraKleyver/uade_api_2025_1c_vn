@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Footer from '../components/layout/Footer';
-import { axiosPublic } from "../utils/axios"; // ← import nuevo
+import { axiosPublic } from "../utils/axios";
 
 
 const PlatoDetalle = () => {
@@ -78,14 +78,6 @@ const PlatoDetalle = () => {
       comentario: comentario.trim(),
       valoracion,
     };
-
-    /*const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/resenas`,
-      nueva,
-      {
-        headers: token ? { Authorization: `Bearer ${token}` } : {}, // 👈 Agrega el token solo si existe
-      }
-    );*/
 
     const res = await axiosPublic.post(`/resenas`, nueva);
 

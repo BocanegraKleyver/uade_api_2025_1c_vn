@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { axiosPrivado } from "../utils/axios";
 
 const AuthContext = createContext();
 
@@ -27,27 +28,23 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
   };
 
-  
-  const logout = async () => {
-    try {
-      if (usuario?.token) {
-        await fetch("http://localhost:3001/api/usuarios/logout", {
 
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${usuario.token}`,
-          },
-          body: JSON.stringify({ email: usuario.email }),
-        });
-      }
-    } catch (error) {
-      console.error("Error al registrar logout:", error.message);
-    } finally {
-      setUsuario(null);
-      localStorage.removeItem("token");
+  const logout = async () => {
+  try {
+    if (usuario?.token) {
+      const clientePrivado = axiosPrivado(usuario.token);
+
+      await clientePrivado.post("/usuarios/logout", {
+        email: usuario.email,
+      });
     }
-  };
+  } catch (error) {
+    console.error("Error al registrar logout:", error.message);
+  } finally {
+    setUsuario(null);
+    localStorage.removeItem("token");
+  }
+};
 
   return (
     <AuthContext.Provider value={{ usuario, login, logout, token: usuario?.token }}>

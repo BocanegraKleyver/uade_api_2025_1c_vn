@@ -238,11 +238,6 @@ if (form.rol === "usuario") {
     label={label}
   />
 ))
-
-                       /* disabled={
-  (form.rol === "usuario" && (key === "gestionarUsuarios" || key === "gestionarLogs")) ||
-  form.rol === "admin" 
-            }*/
         }
 
         {errorMsg && <Alert severity="error" sx={{ mt: 2 }}>{errorMsg}</Alert>}
