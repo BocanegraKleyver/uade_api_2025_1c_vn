@@ -67,37 +67,47 @@ const Header = () => {
     >
       <List>
         {[...menuItems, ...extras].map((item, index) => (
-          <ListItem
-            button
-            key={`item-${index}`}
-            component={item.to ? Link : "button"}
-            to={item.to}
-            onClick={item.action}
-            sx={{
-              color: "#fff",
-              "&:hover": { backgroundColor: "#333" },
-            }}
-          >
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{
-                    fontFamily: "Noto Znamenny Musical Notation",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    color: "#fff",
-                  }}
-                >
-                  {item.label}
-                </Typography>
-              }
-            />
-          </ListItem>
+          <Box key={`item-${index}`} sx={{ mb: 1 }}>
+            {item.to ? (
+              <Button
+                component={Link}
+                to={item.to}
+                fullWidth
+                variant="text"
+                sx={{
+                  ...estiloBoton,
+                  justifyContent: "flex-start",
+                  px: 2,
+                }}
+              >
+                {item.label}
+              </Button>
+            ) : (
+              <Button
+                onClick={item.action}
+                fullWidth
+                variant="contained"
+                color="error"
+                sx={{
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  color: "#fff",
+                  fontFamily: "Noto Znamenny Musical Notation",
+                  fontSize: "1rem",
+                  px: 2,
+                  "&:hover": {
+                    backgroundColor: "#b71c1c",
+                  },
+                }}
+              >
+                {item.label}
+              </Button>
+            )}
+          </Box>
         ))}
       </List>
     </Box>
   );
-
   return (
     <>
       <AppBar position="static" sx={{ backgroundColor: "#2c2c2c" }}>
@@ -131,33 +141,45 @@ const Header = () => {
 
           
           {!isMobile && (
-            <Box
-              sx={{ position: "absolute", right: 16, display: "flex", gap: 3 }}
-            >
-              {[...menuItems, ...extras].map((item, i) =>
-                item.to ? (
-                  <Button
-                    key={`menu-${i}`}
-                    component={Link}
-                    to={item.to}
-                    sx={estiloBoton}
-                  >
-                    {item.label}
-                  </Button>
-                ) : (
-                  <Button
-                    key={`menu-${i}`}
-                    onClick={item.action}
-                    sx={estiloBoton}
-                  >
-                    {item.label}
-                  </Button>
-                )
-              )}
-            </Box>
+              <Box sx={{ position: "absolute", right: 16, display: "flex", gap: 3 }}>
+                {[...menuItems, ...extras].map((item, i) =>
+                  item.to ? (
+                    <Button
+                      key={`menu-${i}`}
+                      component={Link}
+                      to={item.to}
+                      sx={estiloBoton}
+                    >
+                      {item.label}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={`menu-${i}`}
+                      onClick={item.action}
+                      variant={item.label === "Cerrar sesión" ? "contained" : "text"}
+                      color={item.label === "Cerrar sesión" ? "error" : "inherit"}
+                      sx={
+                        item.label === "Cerrar sesión"
+                          ? {
+                              fontWeight: "bold",
+                              textTransform: "none",
+                              color: "#fff",
+                              fontFamily: "Noto Znamenny Musical Notation",
+                              fontSize: "1rem",
+                              "&:hover": {
+                                backgroundColor: "#b71c1c",
+                              },
+                            }
+                          : estiloBoton
+                      }
+                    >
+                      {item.label}
+                    </Button>
+                  )
+                )}
+              </Box>
           )}
-
-          
+ 
           {isMobile && (
             <>
               <IconButton

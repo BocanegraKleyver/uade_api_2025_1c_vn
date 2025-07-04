@@ -11,6 +11,8 @@ import {
   Paper,
   Stack,
   Fab,
+  Card, 
+  CardMedia
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { axiosPublic } from "../utils/axios";
@@ -124,7 +126,30 @@ const PlatoDetalle = () => {
     <>
       <Container sx={{ background: 'rgba(255,255,255,0.85)', borderRadius: 3, p: { xs: 2, md: 6 }, backdropFilter: 'blur(10px)', boxShadow: 4, mt: 6, mb: 6 }}>
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4, mb: 4 }}>
-          <Box component="img" src={imagen} alt={plato.nombre} sx={{ width: { xs: '100%', md: '50%' }, borderRadius: 2, objectFit: 'cover' }} />
+        <Card
+            sx={{
+              width: { xs: '100%', md: '50%' },
+              height: 300,
+              borderRadius: 2,
+              overflow: 'hidden',
+              boxShadow: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: 'transparent',
+            }}
+          >
+            <CardMedia
+              component="img"
+              image={imagen}
+              alt={plato.nombre}
+              sx={{
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'contain',
+              }}
+            />
+          </Card>
           <Box sx={{ flex: 1 }}>
             <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Playfair Display', fontSize: { xs: '2rem', md: '3.5rem' } }}>{plato.nombre}</Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>{plato.descripcion}</Typography>
