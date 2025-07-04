@@ -47,7 +47,7 @@ const Footer = () => {
   spacing={6}
   sx={{ flexWrap: 'wrap', mb: 4 }}
 >
-  {/* Contacto */}
+  
   <Stack
     spacing={2}
     sx={{
@@ -80,7 +80,7 @@ const Footer = () => {
     </Box>
   </Stack>
 
-  {/* Acceso Rápido */}
+  
   <Stack
     spacing={2}
     sx={{
@@ -110,7 +110,7 @@ const Footer = () => {
     />
   </Stack>
 
-  {/* Ubicación */}
+  
   <Stack
     spacing={2}
     sx={{
